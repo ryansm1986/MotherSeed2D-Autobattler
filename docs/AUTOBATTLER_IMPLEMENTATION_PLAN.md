@@ -31,7 +31,7 @@ Current slice:
 - `[x]` Phase 1: round phase state, AI-controlled battles, victory/defeat resolution, one-time gold rewards, and shop placeholder.
 - `[x]` Phase 3 slice: first functional shop loop: roll gear, buy to backpack, reroll, and start the next fight.
 - `[ ]` Phase 2: shared combatant model.
-- `[ ]` Phase 4: authored encounter progression data.
+- `[~]` Phase 4: authored encounter progression data, rewards, and shop unlock metadata.
 - `[ ]` Phase 5: serializable AI intents and roles.
 - `[ ]` Phase 6: dedicated party/formation preparation screen.
 - `[ ]` Phase 7: PvP / CPU player groups.
@@ -40,6 +40,7 @@ Progress log:
 
 - 2026-05-15: Added `GamePhase` / round state, drove active player through party AI during battle, awarded gold once on victory, returned victory/defeat to a shop placeholder, and surfaced gold/phase/result in HUD.
 - 2026-05-15: Completed the first functional Phase 3 shop loop with rolled gear offers, gold costs, buying into the backpack, rerolls, persisted shop state, and a start-next-fight action.
+- 2026-05-15: Started Phase 4 with an authored encounter plan that drives room spawns, debug teleport options, gold rewards, and shop offer/reroll unlocks.
 
 ## Phase 1: Auto Battler MVP
 
@@ -129,23 +130,23 @@ Goal: make the game feel like a run.
 
 Add encounter tiers:
 
-- Fight 1-3: small monster packs.
-- Fight 4: elite.
-- Fight 5: shop upgrade unlock.
-- Fight 8 or 10: boss.
+- `[x]` Fight 1-3: small monster packs.
+- `[x]` Fight 4: elite.
+- `[x]` Fight 5: shop upgrade unlock.
+- `[x]` Fight 8 or 10: boss.
 
 Content should live in data, not frame-loop conditionals:
 
 - `src/game/content/enemies.ts`
+- `src/game/content/encounters.ts`
 - `src/game/content/monster-fights/*.fight.ts`
-- Possibly new `src/game/content/encounters.ts`
 
 Add rewards:
 
-- Gold.
+- `[x]` Gold.
 - Item drops.
 - Party XP or unit upgrades.
-- New shop tier unlocks.
+- `[x]` New shop tier unlocks.
 
 ## Phase 5: Real Auto Battler Decisions
 

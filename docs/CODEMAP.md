@@ -29,6 +29,7 @@
 
 - `src/game/content/classes.ts` is character select data, stats, ability metadata, portraits, and order.
 - `src/game/content/enemies.ts` is enemy identity, timings, draw profile data, and enemy audio constants.
+- `src/game/content/encounters.ts` is the authored autobattler run plan, including enemy groups, encounter tiers, gold rewards, and shop unlock metadata.
 - `src/game/content/world-assets.ts` is stable world asset rect data.
 - `src/game/world/arena.ts` is current arena size, routes, clearings, and decorative placement.
 - `src/game/world/collision.ts` is gameplay collision and arena clamping.

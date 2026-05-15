@@ -1,4 +1,4 @@
-import { enemyRoster, enemiesForRoom } from "./content/enemies";
+import { encounterEnemiesForRoom, encounterLabel, encounterPlan } from "./content/encounters";
 import {
   beginBattleRound,
   createAutoAttackLoopState,
@@ -18,23 +18,21 @@ export type DebugEncounterOption = {
 };
 
 export function debugEncounterOptions(): DebugEncounterOption[] {
-  const roomCount = enemyRoster.length * 2;
-  return Array.from({ length: roomCount }, (_, encounterIndex) => {
+  return encounterPlan.map((encounter, encounterIndex) => {
     const roomIndex = encounterIndex + 1;
-    const encounter = enemiesForRoom(encounterIndex);
-    const names = encounter.map((enemy) => enemy.name);
+    const names = encounterEnemiesForRoom(roomIndex).map((enemy) => enemy.name);
     return {
       encounterIndex,
       roomIndex,
-      label: `Room ${roomIndex}: ${names.join(" + ")}`,
-      detail: names.length > 1 ? "Duo encounter" : "Solo encounter",
+      label: `Room ${roomIndex}: ${encounter.name}`,
+      detail: `${encounter.tier.toUpperCase()} - ${names.join(" + ")} - ${encounter.goldReward}g`,
     };
   });
 }
 
 export function teleportToDebugEncounter(state: GameState, encounterIndex: number): GameEvent[] {
   ensureCombatRuntimeState(state);
-  const maxEncounterIndex = enemyRoster.length * 2 - 1;
+  const maxEncounterIndex = encounterPlan.length - 1;
   const safeEncounterIndex = Math.max(0, Math.min(maxEncounterIndex, Math.floor(encounterIndex)));
   const roomIndex = safeEncounterIndex + 1;
 
@@ -63,5 +61,5 @@ export function teleportToDebugEncounter(state: GameState, encounterIndex: numbe
   beginBattleRound(state);
 
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
-  return [logEvent("Debug teleport", `Room ${roomIndex}: ${encounterNames}`)];
+  return [logEvent("Debug teleport", `${encounterLabel(roomIndex)}: ${encounterNames}`)];
 }

@@ -1,5 +1,6 @@
 import { addGearToInventory, gearDisplaySlot, generateGear } from "./combat/gear";
 import { characterClasses } from "./content/classes";
+import { encounterRerollCost, encounterShopOfferCount } from "./content/encounters";
 import { ensureRoundState, logEvent, type GameEvent, type GameState, type ShopItemState } from "./state";
 import type { ClassId, GearDrop } from "./types";
 
@@ -12,6 +13,8 @@ export function gearShopPrice(gear: GearDrop) {
 export function rollShopInventory(state: GameState): GameEvent[] {
   ensureRoundState(state);
   const shop = state.round.shop;
+  shop.inventorySize = encounterShopOfferCount(Math.max(1, state.combat.roomIndex));
+  shop.rerollCost = rerollCostForRound(state);
   const partyClassIds = shopClassIds(state);
   const itemCount = Math.max(3, Math.min(5, Math.floor(shop.inventorySize)));
   shop.inventory = Array.from({ length: itemCount }, (_, index) => {
@@ -19,7 +22,6 @@ export function rollShopInventory(state: GameState): GameEvent[] {
     const gear = generateGear(classId);
     return createShopItem(state, gear, classId);
   });
-  shop.rerollCost = rerollCostForRound(state);
   shop.message = "Fresh gear has rooted into the shop.";
   return [logEvent("Shop refreshed", `${itemCount} offers available`)];
 }
@@ -82,5 +84,5 @@ function shopClassIds(state: GameState): ClassId[] {
 }
 
 function rerollCostForRound(state: GameState) {
-  return 2 + Math.floor(Math.max(0, state.round.roundIndex - 1) / 3);
+  return encounterRerollCost(Math.max(1, state.combat.roomIndex));
 }

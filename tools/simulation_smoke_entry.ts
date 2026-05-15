@@ -13,12 +13,13 @@ import {
   unequipGearSlot,
 } from "../src/game/combat/gear";
 import { debugEncounterOptions, teleportToDebugEncounter } from "../src/game/debug";
+import { encounterGoldReward, encounterPlan, encounterRerollCost, encounterShopOfferCount } from "../src/game/content/encounters";
 import { dealEnemyDamage, dealPartyMemberDamage, defeatPlayer } from "../src/game/combat/damage";
 import { clampToArena } from "../src/game/world/collision";
 import { world } from "../src/game/world/arena";
 import { distance } from "../src/game/math";
 import { createInputState } from "../src/game/input-actions";
-import { buyShopItem, rerollShop } from "../src/game/shop";
+import { buyShopItem, rerollShop, rollShopInventory } from "../src/game/shop";
 import { updateSimulation } from "../src/game/simulation";
 import { clearRoomProjectiles, spawnRoomEnemy, startNextAutobattleRound } from "../src/game/world/rooms";
 import {
@@ -274,10 +275,13 @@ assert(partyWipeState.combat.playerRespawnTimer > 0, "damage helper should trigg
 
 const debugOptions = debugEncounterOptions();
 assert(debugOptions.length >= 5, "debug menu should expose authored encounters");
+assert(debugOptions.length === encounterPlan.length, "debug menu should mirror the authored encounter plan");
+assert(debugOptions[3].detail.includes("ELITE"), "debug encounter details should include authored tier metadata");
 const debugTeleportState = createInitialGameState("warrior");
 teleportToDebugEncounter(debugTeleportState, debugOptions[2].encounterIndex);
 assert(debugTeleportState.combat.roomIndex === debugOptions[2].roomIndex, "debug teleport should set the target room");
 assert(debugTeleportState.enemy.visible && debugTeleportState.combat.targetLocked, "debug teleport should spawn and lock the encounter");
+assert(debugTeleportState.extraEnemies.length === 1, "authored multi-enemy encounters should spawn companions");
 assert(debugTeleportState.round.phase === "battle", "debug teleport should enter the autobattler battle phase");
 
 const autobattleRoundState = createInitialGameState("warrior");
@@ -289,6 +293,10 @@ dealEnemyDamage(autobattleRoundState, 1, "Smoke victory", []);
 updateSimulation(autobattleRoundState, createInputState(), 0.016);
 assert(autobattleRoundState.round.phase === "victory", "defeating the encounter should enter victory phase");
 assert(autobattleRoundState.round.gold > startingGold, "victory should award gold");
+assert(
+  autobattleRoundState.round.gold === startingGold + encounterGoldReward(autobattleRoundState.combat.roomIndex),
+  "victory gold should come from authored encounter rewards",
+);
 const awardedGold = autobattleRoundState.round.gold;
 updateSimulation(autobattleRoundState, createInputState(), 0.016);
 assert(autobattleRoundState.round.gold === awardedGold, "victory gold should only be awarded once");
@@ -317,6 +325,19 @@ const roomBeforeShopStart = autobattleRoundState.combat.roomIndex;
 startNextAutobattleRound(autobattleRoundState);
 assert(autobattleRoundState.round.phase === "battle", "shop start should enter battle phase");
 assert(autobattleRoundState.combat.roomIndex === roomBeforeShopStart + 1, "shop start should advance to the next encounter");
+
+const upgradedShopState = createInitialGameState("warrior");
+upgradedShopState.round.phase = "shop";
+upgradedShopState.combat.roomIndex = 5;
+rollShopInventory(upgradedShopState);
+assert(
+  upgradedShopState.round.shop.inventory.length === encounterShopOfferCount(5),
+  "encounter shop metadata should control offer count",
+);
+assert(
+  upgradedShopState.round.shop.rerollCost === encounterRerollCost(5),
+  "encounter shop metadata should control reroll cost",
+);
 
 debugOptions.forEach((option) => {
   const debugDeathState = createInitialGameState("warrior");
@@ -459,9 +480,9 @@ assert(nightbloomState.combat.nightbloomThorns.length === 0, "player death shoul
 assert(nightbloomState.combat.nightbloomPetals.length === 0, "player death should clear Nightbloom petals");
 
 const obsidianState = createInitialGameState("warrior");
-obsidianState.combat.roomIndex = 5;
+obsidianState.combat.roomIndex = 6;
 spawnRoomEnemy(obsidianState);
-assert(obsidianState.enemy.monsterId === "obsidian_reliquary", "room 5 should spawn Obsidian Reliquary");
+assert(obsidianState.enemy.monsterId === "obsidian_reliquary", "room 6 should spawn Obsidian Reliquary");
 assert(obsidianState.extraEnemies.length === 0, "Obsidian Reliquary room should be a solo boss encounter");
 assert(JSON.stringify(obsidianState).includes("obsidianLances"), "obsidian state should remain JSON serializable");
 
@@ -514,10 +535,10 @@ assert(obsidianState.combat.obsidianLances.length === 0, "player death should cl
 assert(obsidianState.combat.obsidianShards.length === 0, "player death should clear Obsidian shards");
 
 const abyssalState = createInitialGameState("warrior");
-abyssalState.combat.roomIndex = 6;
+abyssalState.combat.roomIndex = 7;
 spawnRoomEnemy(abyssalState);
-assert(abyssalState.enemy.monsterId === "abyssal_bellwraith", "room 6 should spawn Abyssal Bellwraith");
-assert(abyssalState.extraEnemies.length === 0, "Abyssal Bellwraith room should be a solo boss encounter");
+assert(abyssalState.enemy.monsterId === "abyssal_bellwraith", "room 7 should spawn Abyssal Bellwraith");
+assert(abyssalState.extraEnemies.length === 1, "Abyssal Bellwraith room should include its authored support enemy");
 assert(JSON.stringify(abyssalState).includes("abyssalBellShards"), "abyssal state should remain JSON serializable");
 
 abyssalState.player.x = abyssalState.enemy.x + 250;
@@ -569,9 +590,9 @@ assert(abyssalState.combat.abyssalBellShards.length === 0, "player death should 
 assert(abyssalState.combat.abyssalFanShards.length === 0, "player death should clear Abyssal fan shards");
 
 const briarheartState = createInitialGameState("warrior");
-briarheartState.combat.roomIndex = 7;
+briarheartState.combat.roomIndex = 8;
 spawnRoomEnemy(briarheartState);
-assert(briarheartState.enemy.monsterId === "briarheart_sovereign", "room 7 should spawn Briarheart Sovereign");
+assert(briarheartState.enemy.monsterId === "briarheart_sovereign", "room 8 should spawn Briarheart Sovereign");
 assert(briarheartState.extraEnemies.length === 0, "Briarheart Sovereign room should be a solo boss encounter");
 assert(JSON.stringify(briarheartState).includes("briarheartSkewers"), "briarheart state should remain JSON serializable");
 

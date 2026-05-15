@@ -1,4 +1,5 @@
-import { enemiesForRoom, type EnemyDefinition } from "../content/enemies";
+import { encounterEnemiesForRoom, encounterLabel } from "../content/encounters";
+import type { EnemyDefinition } from "../content/enemies";
 import {
   beginBattleRound,
   createEnemyAttackCooldowns,
@@ -45,13 +46,12 @@ export function startNextAutobattleRound(state: GameState, label = "Next fight")
   spawnRoomEnemy(state);
   beginBattleRound(state);
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
-  return [logEvent(label, `${encounterNames} step into the circle`)];
+  return [logEvent(label, `${encounterLabel(state.combat.roomIndex)}: ${encounterNames} step into the circle`)];
 }
 
 export function spawnRoomEnemy(state: GameState) {
   ensureCombatRuntimeState(state);
-  const encounterRoomIndex = Math.max(0, state.combat.roomIndex - 1);
-  const encounter = enemiesForRoom(encounterRoomIndex);
+  const encounter = encounterEnemiesForRoom(state.combat.roomIndex);
   state.combat.lootCorpseId = null;
   state.combat.hoveredLootCorpseId = null;
   const spacing = encounter.length > 1 ? 180 : 0;

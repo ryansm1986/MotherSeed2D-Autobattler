@@ -1,4 +1,5 @@
 import { characterClasses, characterOrder } from "./content/classes";
+import { encounterGoldReward } from "./content/encounters";
 import { world } from "./world/arena";
 import type {
   AnimationName,
@@ -947,8 +948,7 @@ export function enterShopPhase(state: GameState) {
 
 function goldRewardForRoom(state: GameState) {
   const roomIndex = Math.max(1, state.combat.roomIndex);
-  const enemyCount = allEnemies(state).filter((enemy) => enemy.visible).length;
-  return 8 + roomIndex * 3 + Math.max(0, enemyCount - 1) * 4;
+  return encounterGoldReward(roomIndex);
 }
 
 function recoverPartyForShop(state: GameState) {
