@@ -1,0 +1,67 @@
+{
+  "id": "motherload.moonwell",
+  "name": "Moonwell",
+  "purpose": "Purple mage Mother Load special effect: the floor opens and a lunar beam erupts.",
+  "frameSize": [
+    768,
+    768
+  ],
+  "frameCount": 8,
+  "anchor": "center",
+  "animations": {
+    "beam": {
+      "description": "Floor splits into a crescent moonwell and a lunar beam erupts upward.",
+      "phases": [
+        "faint crescent crack",
+        "moon rune opens",
+        "deep moonwell aperture",
+        "narrow beam rises",
+        "full lunar beam eruption",
+        "peak beam and crescent shards",
+        "beam collapses into mist",
+        "fading moon rune"
+      ],
+      "processedSource": "beam\\processed",
+      "runtimeFrames": [
+        "beam\\frames\\moonwell_beam_01.png",
+        "beam\\frames\\moonwell_beam_02.png",
+        "beam\\frames\\moonwell_beam_03.png",
+        "beam\\frames\\moonwell_beam_04.png",
+        "beam\\frames\\moonwell_beam_05.png",
+        "beam\\frames\\moonwell_beam_06.png",
+        "beam\\frames\\moonwell_beam_07.png",
+        "beam\\frames\\moonwell_beam_08.png"
+      ],
+      "contactSheet": "beam\\preview\\moonwell_beam_contact_sheet.png",
+      "checkerPreview": "beam\\preview\\moonwell_beam_checker_preview.png",
+      "gif": "beam\\preview\\moonwell_beam_anim.gif"
+    },
+    "aftershock": {
+      "description": "Opened moonwell pulses with crescent shockwaves, moonwater mist, and star motes.",
+      "phases": [
+        "open moonwell glow",
+        "first crescent shockwave",
+        "moonwater rises",
+        "lunar sigil flash",
+        "violet-cyan mist curl",
+        "star motes rain inward",
+        "rune ring dims",
+        "final crescent glimmer"
+      ],
+      "processedSource": "aftershock\\processed",
+      "runtimeFrames": [
+        "aftershock\\frames\\moonwell_aftershock_01.png",
+        "aftershock\\frames\\moonwell_aftershock_02.png",
+        "aftershock\\frames\\moonwell_aftershock_03.png",
+        "aftershock\\frames\\moonwell_aftershock_04.png",
+        "aftershock\\frames\\moonwell_aftershock_05.png",
+        "aftershock\\frames\\moonwell_aftershock_06.png",
+        "aftershock\\frames\\moonwell_aftershock_07.png",
+        "aftershock\\frames\\moonwell_aftershock_08.png"
+      ],
+      "contactSheet": "aftershock\\preview\\moonwell_aftershock_contact_sheet.png",
+      "checkerPreview": "aftershock\\preview\\moonwell_aftershock_checker_preview.png",
+      "gif": "aftershock\\preview\\moonwell_aftershock_anim.gif"
+    }
+  }
+}

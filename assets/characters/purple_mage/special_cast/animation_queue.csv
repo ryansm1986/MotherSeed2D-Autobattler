@@ -1,0 +1,9 @@
+character,animation,direction,frames,frame_width,frame_height,sheet
+purple_mage,special_cast,south,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,southeast,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,east,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,northeast,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,north,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,northwest,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,west,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png
+purple_mage,special_cast,southwest,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\special_cast\assembled\purple_mage_special_cast_8dir_8f_320.png

@@ -1,0 +1,78 @@
+[
+  {
+    "iconId": "verdant-greatsword",
+    "file": "verdant-greatsword.png",
+    "slot": "weapon",
+    "weaponTags": ["sword", "strength"],
+    "inventorySize": { "width": 3, "height": 1 }
+  },
+  {
+    "iconId": "crescent-staff",
+    "file": "crescent-staff.png",
+    "slot": "weapon",
+    "weaponTags": ["staff", "intelligence"],
+    "inventorySize": { "width": 1, "height": 3 }
+  },
+  {
+    "iconId": "ranger-bow",
+    "file": "ranger-bow.png",
+    "slot": "weapon",
+    "weaponTags": ["bow", "dexterity"],
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "twin-daggers",
+    "file": "twin-daggers.png",
+    "slot": "weapon",
+    "weaponTags": ["daggers", "dexterity"],
+    "inventorySize": { "width": 2, "height": 1 }
+  },
+  {
+    "iconId": "leaf-etched-helmet",
+    "file": "leaf-etched-helmet.png",
+    "slot": "helmet",
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "rootguard-body-armour",
+    "file": "rootguard-body-armour.png",
+    "slot": "bodyArmour",
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "thornlit-gloves",
+    "file": "thornlit-gloves.png",
+    "slot": "gloves",
+    "inventorySize": { "width": 2, "height": 1 }
+  },
+  {
+    "iconId": "ambervein-ring",
+    "file": "ambervein-ring.png",
+    "slot": "ring",
+    "inventorySize": { "width": 1, "height": 1 }
+  },
+  {
+    "iconId": "star-bloom-amulet",
+    "file": "star-bloom-amulet.png",
+    "slot": "amulet",
+    "inventorySize": { "width": 1, "height": 1 }
+  },
+  {
+    "iconId": "scout-pants",
+    "file": "scout-pants.png",
+    "slot": "pants",
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "quickroot-boots",
+    "file": "quickroot-boots.png",
+    "slot": "boots",
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "motherseed-charm",
+    "file": "motherseed-charm.png",
+    "slot": "amulet",
+    "inventorySize": { "width": 1, "height": 1 }
+  }
+]

@@ -1,0 +1,149 @@
+{
+  "subject": "tree_goblin",
+  "effect": "horizontal_left_to_right_spinning_head_projectile",
+  "generation_mode": "fresh full-strip image generation normalized through sprite-pipeline workflow",
+  "source_generated_image": "C:/Users/there/.codex/generated_images/019dcfec-b56b-7e50-8490-94beddef3feb/ig_0b6e6b221d7fd7310169ef9ab1353081988928982585e10bbe.png",
+  "raw_chromakey": "assets/monsters/tree_goblin/projectiles/spinning_head/raw/spinning_head_horizontal_yaw_generated_chromakey.png",
+  "raw_transparent": "assets/monsters/tree_goblin/projectiles/spinning_head/raw/spinning_head_horizontal_yaw_raw.png",
+  "frame_size": [
+    128,
+    128
+  ],
+  "frame_count": 8,
+  "origin": [
+    64,
+    64
+  ],
+  "frame_rate_fps": 14,
+  "loop": true,
+  "motion": "left-to-right horizontal yaw spin; frames reveal front, both side profiles, both rear three-quarter views, and back of the head",
+  "shared_scale": 0.34408602150537637,
+  "frames": [
+    {
+      "frame": 1,
+      "view": "front",
+      "source_bbox": [
+        50,
+        208,
+        282,
+        486
+      ],
+      "normalized_size": [
+        80,
+        96
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_01.png"
+    },
+    {
+      "frame": 2,
+      "view": "front_left_three_quarter",
+      "source_bbox": [
+        331,
+        212,
+        553,
+        486
+      ],
+      "normalized_size": [
+        76,
+        94
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_02.png"
+    },
+    {
+      "frame": 3,
+      "view": "left_profile",
+      "source_bbox": [
+        617,
+        218,
+        814,
+        491
+      ],
+      "normalized_size": [
+        68,
+        94
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_03.png"
+    },
+    {
+      "frame": 4,
+      "view": "back_left_three_quarter",
+      "source_bbox": [
+        873,
+        216,
+        1087,
+        482
+      ],
+      "normalized_size": [
+        74,
+        92
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_04.png"
+    },
+    {
+      "frame": 5,
+      "view": "back",
+      "source_bbox": [
+        1156,
+        216,
+        1381,
+        495
+      ],
+      "normalized_size": [
+        77,
+        96
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_05.png"
+    },
+    {
+      "frame": 6,
+      "view": "back_right_three_quarter",
+      "source_bbox": [
+        1437,
+        213,
+        1638,
+        483
+      ],
+      "normalized_size": [
+        69,
+        93
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_06.png"
+    },
+    {
+      "frame": 7,
+      "view": "right_profile",
+      "source_bbox": [
+        1686,
+        218,
+        1873,
+        491
+      ],
+      "normalized_size": [
+        64,
+        94
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_07.png"
+    },
+    {
+      "frame": 8,
+      "view": "front_right_three_quarter",
+      "source_bbox": [
+        1914,
+        216,
+        2120,
+        491
+      ],
+      "normalized_size": [
+        71,
+        95
+      ],
+      "path": "assets/monsters/tree_goblin/projectiles/spinning_head/frames/spinning_head_08.png"
+    }
+  ],
+  "files": {
+    "strip": "assets/monsters/tree_goblin/projectiles/spinning_head/spinning_head_8x128.png",
+    "preview": "assets/monsters/tree_goblin/projectiles/spinning_head/preview/spinning_head_preview_2x.png",
+    "gif": "assets/monsters/tree_goblin/projectiles/spinning_head/spinning_head.gif"
+  },
+  "prompt": "Fresh 8-frame pixel-art tree goblin head projectile strip, left-to-right horizontal spin showing front, front-left 3/4, left profile, back-left 3/4, back, back-right 3/4, right profile, front-right 3/4 on flat #ff00ff chroma background."
+}

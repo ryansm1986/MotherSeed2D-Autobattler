@@ -1,0 +1,5 @@
+character,animation,direction,frames,frame_width,frame_height,sheet
+purple_mage,spin_cast,south,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\spin_cast\assembled\purple_mage_spin_cast_4dir_8f_320.png
+purple_mage,spin_cast,east,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\spin_cast\assembled\purple_mage_spin_cast_4dir_8f_320.png
+purple_mage,spin_cast,north,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\spin_cast\assembled\purple_mage_spin_cast_4dir_8f_320.png
+purple_mage,spin_cast,west,8,320,320,D:\projects\MotherSeed2D\assets\characters\purple_mage\spin_cast\assembled\purple_mage_spin_cast_4dir_8f_320.png

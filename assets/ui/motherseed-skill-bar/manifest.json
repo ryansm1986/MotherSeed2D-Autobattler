@@ -1,0 +1,1111 @@
+{
+  "source": "source/motherseed-skill-bar-magenta-source.png",
+  "transparent_sheet": "sheet/motherseed-skill-bar-transparent.png",
+  "sheet_size": [
+    1254,
+    1254
+  ],
+  "generated_count": 52,
+  "categories": {
+    "slots": 16,
+    "cooldown-rings": 10,
+    "trim-bars": 4,
+    "corner-tabs": 6,
+    "keybind-plaques": 8,
+    "dividers": 8
+  },
+  "assets": [
+    {
+      "file": "slots/slot-01.png",
+      "category": "slots",
+      "source_bbox": [
+        41,
+        52,
+        198,
+        225
+      ],
+      "crop_box": [
+        35,
+        46,
+        205,
+        232
+      ],
+      "size": [
+        170,
+        186
+      ],
+      "visible_pixels": 23916
+    },
+    {
+      "file": "slots/slot-02.png",
+      "category": "slots",
+      "source_bbox": [
+        208,
+        52,
+        366,
+        225
+      ],
+      "crop_box": [
+        202,
+        46,
+        373,
+        232
+      ],
+      "size": [
+        171,
+        186
+      ],
+      "visible_pixels": 23996
+    },
+    {
+      "file": "slots/slot-03.png",
+      "category": "slots",
+      "source_bbox": [
+        376,
+        52,
+        533,
+        225
+      ],
+      "crop_box": [
+        370,
+        46,
+        540,
+        232
+      ],
+      "size": [
+        170,
+        186
+      ],
+      "visible_pixels": 23967
+    },
+    {
+      "file": "slots/slot-04.png",
+      "category": "slots",
+      "source_bbox": [
+        543,
+        52,
+        701,
+        225
+      ],
+      "crop_box": [
+        537,
+        46,
+        708,
+        232
+      ],
+      "size": [
+        171,
+        186
+      ],
+      "visible_pixels": 24073
+    },
+    {
+      "file": "slots/slot-05.png",
+      "category": "slots",
+      "source_bbox": [
+        711,
+        52,
+        868,
+        225
+      ],
+      "crop_box": [
+        705,
+        46,
+        875,
+        232
+      ],
+      "size": [
+        170,
+        186
+      ],
+      "visible_pixels": 24022
+    },
+    {
+      "file": "slots/slot-06.png",
+      "category": "slots",
+      "source_bbox": [
+        879,
+        53,
+        1036,
+        225
+      ],
+      "crop_box": [
+        873,
+        47,
+        1043,
+        232
+      ],
+      "size": [
+        170,
+        185
+      ],
+      "visible_pixels": 24100
+    },
+    {
+      "file": "slots/slot-07.png",
+      "category": "slots",
+      "source_bbox": [
+        1047,
+        53,
+        1204,
+        225
+      ],
+      "crop_box": [
+        1041,
+        47,
+        1211,
+        232
+      ],
+      "size": [
+        170,
+        185
+      ],
+      "visible_pixels": 23969
+    },
+    {
+      "file": "slots/slot-08.png",
+      "category": "slots",
+      "source_bbox": [
+        41,
+        253,
+        198,
+        433
+      ],
+      "crop_box": [
+        35,
+        247,
+        205,
+        440
+      ],
+      "size": [
+        170,
+        193
+      ],
+      "visible_pixels": 23693
+    },
+    {
+      "file": "slots/slot-09.png",
+      "category": "slots",
+      "source_bbox": [
+        208,
+        255,
+        366,
+        433
+      ],
+      "crop_box": [
+        202,
+        249,
+        373,
+        440
+      ],
+      "size": [
+        171,
+        191
+      ],
+      "visible_pixels": 23774
+    },
+    {
+      "file": "slots/slot-10.png",
+      "category": "slots",
+      "source_bbox": [
+        375,
+        253,
+        533,
+        433
+      ],
+      "crop_box": [
+        369,
+        247,
+        540,
+        440
+      ],
+      "size": [
+        171,
+        193
+      ],
+      "visible_pixels": 23600
+    },
+    {
+      "file": "slots/slot-11.png",
+      "category": "slots",
+      "source_bbox": [
+        542,
+        253,
+        701,
+        433
+      ],
+      "crop_box": [
+        536,
+        247,
+        708,
+        440
+      ],
+      "size": [
+        172,
+        193
+      ],
+      "visible_pixels": 23920
+    },
+    {
+      "file": "slots/slot-12.png",
+      "category": "slots",
+      "source_bbox": [
+        710,
+        253,
+        868,
+        433
+      ],
+      "crop_box": [
+        704,
+        247,
+        875,
+        440
+      ],
+      "size": [
+        171,
+        193
+      ],
+      "visible_pixels": 23833
+    },
+    {
+      "file": "slots/slot-13.png",
+      "category": "slots",
+      "source_bbox": [
+        878,
+        253,
+        1037,
+        433
+      ],
+      "crop_box": [
+        872,
+        247,
+        1044,
+        440
+      ],
+      "size": [
+        172,
+        193
+      ],
+      "visible_pixels": 23983
+    },
+    {
+      "file": "slots/slot-14.png",
+      "category": "slots",
+      "source_bbox": [
+        1047,
+        253,
+        1207,
+        433
+      ],
+      "crop_box": [
+        1041,
+        247,
+        1214,
+        440
+      ],
+      "size": [
+        173,
+        193
+      ],
+      "visible_pixels": 23942
+    },
+    {
+      "file": "slots/slot-15.png",
+      "category": "slots",
+      "source_bbox": [
+        42,
+        466,
+        270,
+        721
+      ],
+      "crop_box": [
+        36,
+        460,
+        277,
+        728
+      ],
+      "size": [
+        241,
+        268
+      ],
+      "visible_pixels": 49731
+    },
+    {
+      "file": "slots/slot-16.png",
+      "category": "slots",
+      "source_bbox": [
+        293,
+        469,
+        493,
+        715
+      ],
+      "crop_box": [
+        287,
+        463,
+        500,
+        722
+      ],
+      "size": [
+        213,
+        259
+      ],
+      "visible_pixels": 41844
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-01.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        527,
+        470,
+        633,
+        577
+      ],
+      "crop_box": [
+        521,
+        464,
+        640,
+        584
+      ],
+      "size": [
+        119,
+        120
+      ],
+      "visible_pixels": 3498
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-02.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        671,
+        470,
+        776,
+        577
+      ],
+      "crop_box": [
+        665,
+        464,
+        783,
+        584
+      ],
+      "size": [
+        118,
+        120
+      ],
+      "visible_pixels": 3457
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-03.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        813,
+        470,
+        917,
+        580
+      ],
+      "crop_box": [
+        807,
+        464,
+        924,
+        587
+      ],
+      "size": [
+        117,
+        123
+      ],
+      "visible_pixels": 3559
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-04.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        955,
+        470,
+        1059,
+        581
+      ],
+      "crop_box": [
+        949,
+        464,
+        1066,
+        588
+      ],
+      "size": [
+        117,
+        124
+      ],
+      "visible_pixels": 3563
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-05.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        1095,
+        470,
+        1199,
+        580
+      ],
+      "crop_box": [
+        1089,
+        464,
+        1206,
+        587
+      ],
+      "size": [
+        117,
+        123
+      ],
+      "visible_pixels": 3572
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-06.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        527,
+        600,
+        633,
+        708
+      ],
+      "crop_box": [
+        521,
+        594,
+        640,
+        715
+      ],
+      "size": [
+        119,
+        121
+      ],
+      "visible_pixels": 3182
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-07.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        671,
+        600,
+        776,
+        707
+      ],
+      "crop_box": [
+        665,
+        594,
+        783,
+        714
+      ],
+      "size": [
+        118,
+        120
+      ],
+      "visible_pixels": 2923
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-08.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        813,
+        600,
+        917,
+        711
+      ],
+      "crop_box": [
+        807,
+        594,
+        924,
+        718
+      ],
+      "size": [
+        117,
+        124
+      ],
+      "visible_pixels": 2208
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-09.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        955,
+        600,
+        1059,
+        711
+      ],
+      "crop_box": [
+        949,
+        594,
+        1066,
+        718
+      ],
+      "size": [
+        117,
+        124
+      ],
+      "visible_pixels": 1906
+    },
+    {
+      "file": "cooldown-rings/cooldown-ring-10.png",
+      "category": "cooldown-rings",
+      "source_bbox": [
+        1095,
+        600,
+        1199,
+        711
+      ],
+      "crop_box": [
+        1089,
+        594,
+        1206,
+        718
+      ],
+      "size": [
+        117,
+        124
+      ],
+      "visible_pixels": 1700
+    },
+    {
+      "file": "trim-bars/trim-bar-01.png",
+      "category": "trim-bars",
+      "source_bbox": [
+        37,
+        756,
+        320,
+        808
+      ],
+      "crop_box": [
+        31,
+        750,
+        327,
+        815
+      ],
+      "size": [
+        296,
+        65
+      ],
+      "visible_pixels": 8510
+    },
+    {
+      "file": "trim-bars/trim-bar-02.png",
+      "category": "trim-bars",
+      "source_bbox": [
+        344,
+        756,
+        619,
+        808
+      ],
+      "crop_box": [
+        338,
+        750,
+        626,
+        815
+      ],
+      "size": [
+        288,
+        65
+      ],
+      "visible_pixels": 8359
+    },
+    {
+      "file": "trim-bars/trim-bar-03.png",
+      "category": "trim-bars",
+      "source_bbox": [
+        639,
+        756,
+        918,
+        808
+      ],
+      "crop_box": [
+        633,
+        750,
+        925,
+        815
+      ],
+      "size": [
+        292,
+        65
+      ],
+      "visible_pixels": 8274
+    },
+    {
+      "file": "trim-bars/trim-bar-04.png",
+      "category": "trim-bars",
+      "source_bbox": [
+        935,
+        756,
+        1219,
+        807
+      ],
+      "crop_box": [
+        929,
+        750,
+        1226,
+        814
+      ],
+      "size": [
+        297,
+        64
+      ],
+      "visible_pixels": 8416
+    },
+    {
+      "file": "corner-tabs/corner-tab-01.png",
+      "category": "corner-tabs",
+      "source_bbox": [
+        63,
+        854,
+        182,
+        966
+      ],
+      "crop_box": [
+        57,
+        848,
+        189,
+        973
+      ],
+      "size": [
+        132,
+        125
+      ],
+      "visible_pixels": 6203
+    },
+    {
+      "file": "corner-tabs/corner-tab-02.png",
+      "category": "corner-tabs",
+      "source_bbox": [
+        264,
+        854,
+        383,
+        967
+      ],
+      "crop_box": [
+        258,
+        848,
+        390,
+        974
+      ],
+      "size": [
+        132,
+        126
+      ],
+      "visible_pixels": 6291
+    },
+    {
+      "file": "corner-tabs/corner-tab-03.png",
+      "category": "corner-tabs",
+      "source_bbox": [
+        460,
+        854,
+        580,
+        966
+      ],
+      "crop_box": [
+        454,
+        848,
+        587,
+        973
+      ],
+      "size": [
+        133,
+        125
+      ],
+      "visible_pixels": 5954
+    },
+    {
+      "file": "corner-tabs/corner-tab-04.png",
+      "category": "corner-tabs",
+      "source_bbox": [
+        660,
+        854,
+        779,
+        967
+      ],
+      "crop_box": [
+        654,
+        848,
+        786,
+        974
+      ],
+      "size": [
+        132,
+        126
+      ],
+      "visible_pixels": 6011
+    },
+    {
+      "file": "corner-tabs/corner-tab-05.png",
+      "category": "corner-tabs",
+      "source_bbox": [
+        859,
+        854,
+        978,
+        967
+      ],
+      "crop_box": [
+        853,
+        848,
+        985,
+        974
+      ],
+      "size": [
+        132,
+        126
+      ],
+      "visible_pixels": 5927
+    },
+    {
+      "file": "corner-tabs/corner-tab-06.png",
+      "category": "corner-tabs",
+      "source_bbox": [
+        1058,
+        854,
+        1176,
+        966
+      ],
+      "crop_box": [
+        1052,
+        848,
+        1183,
+        973
+      ],
+      "size": [
+        131,
+        125
+      ],
+      "visible_pixels": 6007
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-01.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        48,
+        1001,
+        176,
+        1075
+      ],
+      "crop_box": [
+        42,
+        995,
+        183,
+        1082
+      ],
+      "size": [
+        141,
+        87
+      ],
+      "visible_pixels": 8240
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-02.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        193,
+        1001,
+        320,
+        1075
+      ],
+      "crop_box": [
+        187,
+        995,
+        327,
+        1082
+      ],
+      "size": [
+        140,
+        87
+      ],
+      "visible_pixels": 8236
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-03.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        339,
+        1001,
+        466,
+        1075
+      ],
+      "crop_box": [
+        333,
+        995,
+        473,
+        1082
+      ],
+      "size": [
+        140,
+        87
+      ],
+      "visible_pixels": 8215
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-04.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        487,
+        1001,
+        614,
+        1075
+      ],
+      "crop_box": [
+        481,
+        995,
+        621,
+        1082
+      ],
+      "size": [
+        140,
+        87
+      ],
+      "visible_pixels": 8222
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-05.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        634,
+        1001,
+        761,
+        1075
+      ],
+      "crop_box": [
+        628,
+        995,
+        768,
+        1082
+      ],
+      "size": [
+        140,
+        87
+      ],
+      "visible_pixels": 8184
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-06.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        781,
+        1001,
+        909,
+        1075
+      ],
+      "crop_box": [
+        775,
+        995,
+        916,
+        1082
+      ],
+      "size": [
+        141,
+        87
+      ],
+      "visible_pixels": 8281
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-07.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        929,
+        1001,
+        1057,
+        1075
+      ],
+      "crop_box": [
+        923,
+        995,
+        1064,
+        1082
+      ],
+      "size": [
+        141,
+        87
+      ],
+      "visible_pixels": 8246
+    },
+    {
+      "file": "keybind-plaques/keybind-plaque-08.png",
+      "category": "keybind-plaques",
+      "source_bbox": [
+        1075,
+        1001,
+        1203,
+        1075
+      ],
+      "crop_box": [
+        1069,
+        995,
+        1210,
+        1082
+      ],
+      "size": [
+        141,
+        87
+      ],
+      "visible_pixels": 8247
+    },
+    {
+      "file": "dividers/divider-01.png",
+      "category": "dividers",
+      "source_bbox": [
+        34,
+        1131,
+        320,
+        1176
+      ],
+      "crop_box": [
+        28,
+        1125,
+        327,
+        1183
+      ],
+      "size": [
+        299,
+        58
+      ],
+      "visible_pixels": 3112
+    },
+    {
+      "file": "dividers/divider-02.png",
+      "category": "dividers",
+      "source_bbox": [
+        342,
+        1122,
+        623,
+        1188
+      ],
+      "crop_box": [
+        336,
+        1116,
+        630,
+        1195
+      ],
+      "size": [
+        294,
+        79
+      ],
+      "visible_pixels": 4518
+    },
+    {
+      "file": "dividers/divider-03.png",
+      "category": "dividers",
+      "source_bbox": [
+        650,
+        1130,
+        690,
+        1193
+      ],
+      "crop_box": [
+        644,
+        1124,
+        697,
+        1200
+      ],
+      "size": [
+        53,
+        76
+      ],
+      "visible_pixels": 1341
+    },
+    {
+      "file": "dividers/divider-04.png",
+      "category": "dividers",
+      "source_bbox": [
+        719,
+        1123,
+        764,
+        1204
+      ],
+      "crop_box": [
+        713,
+        1117,
+        771,
+        1211
+      ],
+      "size": [
+        58,
+        94
+      ],
+      "visible_pixels": 1901
+    },
+    {
+      "file": "dividers/divider-05.png",
+      "category": "dividers",
+      "source_bbox": [
+        792,
+        1122,
+        828,
+        1206
+      ],
+      "crop_box": [
+        786,
+        1116,
+        835,
+        1213
+      ],
+      "size": [
+        49,
+        97
+      ],
+      "visible_pixels": 1436
+    },
+    {
+      "file": "dividers/divider-06.png",
+      "category": "dividers",
+      "source_bbox": [
+        871,
+        1131,
+        1220,
+        1176
+      ],
+      "crop_box": [
+        865,
+        1125,
+        1227,
+        1183
+      ],
+      "size": [
+        362,
+        58
+      ],
+      "visible_pixels": 3173
+    },
+    {
+      "file": "dividers/divider-07.png",
+      "category": "dividers",
+      "source_bbox": [
+        35,
+        1184,
+        319,
+        1217
+      ],
+      "crop_box": [
+        29,
+        1178,
+        326,
+        1224
+      ],
+      "size": [
+        297,
+        46
+      ],
+      "visible_pixels": 1907
+    },
+    {
+      "file": "dividers/divider-08.png",
+      "category": "dividers",
+      "source_bbox": [
+        863,
+        1184,
+        1227,
+        1228
+      ],
+      "crop_box": [
+        857,
+        1178,
+        1234,
+        1235
+      ],
+      "size": [
+        377,
+        57
+      ],
+      "visible_pixels": 4918
+    }
+  ]
+}

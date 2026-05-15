@@ -1,0 +1,148 @@
+{
+  "input": "assets\\characters\\purple_mage\\staff_point_cast\\raw\\staff_point_cast_east_imagegen_8f_chromakey.png",
+  "extraction_mode": "box",
+  "segmentation_mode_requested": "color",
+  "min_width": 16,
+  "min_height": 16,
+  "min_area": 120,
+  "padding": 8,
+  "sources": [
+    {
+      "index": 1,
+      "name": "staff-point-cast-east-imagegen-8f-chromakey",
+      "sprite_count": 11,
+      "mask": {
+        "segmentation_mode": "color",
+        "background_color": "#ff00ff",
+        "color_tolerance": 30,
+        "image_has_transparency": false
+      },
+      "components": [
+        {
+          "index": 1,
+          "bbox": [
+            52,
+            197,
+            205,
+            471
+          ],
+          "area": 25527
+        },
+        {
+          "index": 2,
+          "bbox": [
+            1955,
+            202,
+            2107,
+            474
+          ],
+          "area": 25291
+        },
+        {
+          "index": 3,
+          "bbox": [
+            292,
+            209,
+            488,
+            469
+          ],
+          "area": 28553
+        },
+        {
+          "index": 4,
+          "bbox": [
+            583,
+            211,
+            770,
+            466
+          ],
+          "area": 26440
+        },
+        {
+          "index": 5,
+          "bbox": [
+            1639,
+            218,
+            1665,
+            250
+          ],
+          "area": 394
+        },
+        {
+          "index": 6,
+          "bbox": [
+            1711,
+            225,
+            1924,
+            469
+          ],
+          "area": 25846
+        },
+        {
+          "index": 7,
+          "bbox": [
+            842,
+            233,
+            1112,
+            467
+          ],
+          "area": 25990
+        },
+        {
+          "index": 8,
+          "bbox": [
+            1137,
+            233,
+            1407,
+            467
+          ],
+          "area": 26588
+        },
+        {
+          "index": 9,
+          "bbox": [
+            1419,
+            233,
+            1688,
+            467
+          ],
+          "area": 25396
+        },
+        {
+          "index": 10,
+          "bbox": [
+            1680,
+            299,
+            1701,
+            323
+          ],
+          "area": 227
+        },
+        {
+          "index": 11,
+          "bbox": [
+            1647,
+            337,
+            1674,
+            359
+          ],
+          "area": 272
+        }
+      ],
+      "files": [
+        "sprite-001.png",
+        "sprite-002.png",
+        "sprite-003.png",
+        "sprite-004.png",
+        "sprite-005.png",
+        "sprite-006.png",
+        "sprite-007.png",
+        "sprite-008.png",
+        "sprite-009.png",
+        "sprite-010.png",
+        "sprite-011.png"
+      ]
+    }
+  ],
+  "sprite_count": 11
+}

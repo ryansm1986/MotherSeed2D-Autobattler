@@ -1,0 +1,306 @@
+{
+  "name": "classic_grass_terrain",
+  "type": "terrain_tileset",
+  "style": "classic 16-bit JRPG-inspired pixel terrain",
+  "image": "classic_grass_terrain_48.png",
+  "tileSize": {
+    "w": 48,
+    "h": 48
+  },
+  "columns": 6,
+  "tiles": {
+    "grass_plain_a": {
+      "x": 0,
+      "y": 0,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "base"
+      ]
+    },
+    "grass_plain_b": {
+      "x": 48,
+      "y": 0,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "base"
+      ]
+    },
+    "grass_plain_c": {
+      "x": 96,
+      "y": 0,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "base"
+      ]
+    },
+    "grass_plain_d": {
+      "x": 144,
+      "y": 0,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "base"
+      ]
+    },
+    "grass_flowers": {
+      "x": 192,
+      "y": 0,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "flowers"
+      ]
+    },
+    "grass_moss": {
+      "x": 240,
+      "y": 0,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "moss"
+      ]
+    },
+    "edge_north": {
+      "x": 0,
+      "y": 48,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "edge",
+        "north"
+      ]
+    },
+    "edge_east": {
+      "x": 48,
+      "y": 48,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "edge",
+        "east"
+      ]
+    },
+    "edge_south": {
+      "x": 96,
+      "y": 48,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "edge",
+        "south"
+      ]
+    },
+    "edge_west": {
+      "x": 144,
+      "y": 48,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "edge",
+        "west"
+      ]
+    },
+    "corner_outer_ne": {
+      "x": 192,
+      "y": 48,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "outer",
+        "ne"
+      ]
+    },
+    "corner_outer_nw": {
+      "x": 240,
+      "y": 48,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "outer",
+        "nw"
+      ]
+    },
+    "corner_outer_se": {
+      "x": 0,
+      "y": 96,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "outer",
+        "se"
+      ]
+    },
+    "corner_outer_sw": {
+      "x": 48,
+      "y": 96,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "outer",
+        "sw"
+      ]
+    },
+    "corner_inner_ne": {
+      "x": 96,
+      "y": 96,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "inner",
+        "ne"
+      ]
+    },
+    "corner_inner_nw": {
+      "x": 144,
+      "y": 96,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "inner",
+        "nw"
+      ]
+    },
+    "corner_inner_se": {
+      "x": 192,
+      "y": 96,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "inner",
+        "se"
+      ]
+    },
+    "corner_inner_sw": {
+      "x": 240,
+      "y": 96,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "corner",
+        "inner",
+        "sw"
+      ]
+    },
+    "moss_blend_a": {
+      "x": 0,
+      "y": 144,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "moss"
+      ]
+    },
+    "moss_blend_b": {
+      "x": 48,
+      "y": 144,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "moss"
+      ]
+    },
+    "shadow_dapple_a": {
+      "x": 96,
+      "y": 144,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "shadow"
+      ]
+    },
+    "shadow_dapple_b": {
+      "x": 144,
+      "y": 144,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "shadow"
+      ]
+    },
+    "worn_path_blend": {
+      "x": 192,
+      "y": 144,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass",
+        "path"
+      ]
+    },
+    "sprout_detail": {
+      "x": 240,
+      "y": 144,
+      "w": 48,
+      "h": 48,
+      "tags": [
+        "grass"
+      ]
+    }
+  },
+  "usage": {
+    "baseTiles": [
+      "grass_plain_a",
+      "grass_plain_b",
+      "grass_plain_c",
+      "grass_plain_d"
+    ],
+    "decorativeVariants": [
+      "grass_flowers",
+      "grass_moss",
+      "moss_blend_a",
+      "moss_blend_b",
+      "shadow_dapple_a",
+      "shadow_dapple_b",
+      "sprout_detail"
+    ],
+    "edges": [
+      "edge_north",
+      "edge_east",
+      "edge_south",
+      "edge_west"
+    ],
+    "corners": [
+      "corner_outer_ne",
+      "corner_outer_nw",
+      "corner_outer_se",
+      "corner_outer_sw",
+      "corner_inner_ne",
+      "corner_inner_nw",
+      "corner_inner_se",
+      "corner_inner_sw"
+    ],
+    "collision": "none"
+  }
+}

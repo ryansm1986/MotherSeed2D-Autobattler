@@ -1,0 +1,16 @@
+{
+  "animation": "magic_missile_left",
+  "assetType": "projectile",
+  "source": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\projectiles\\magic_missile\\raw\\magic_missile_left_strip_green.png",
+  "transparentSource": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\projectiles\\magic_missile\\raw\\magic_missile_left_strip_transparent.png",
+  "pipelineSource": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\projectiles\\magic_missile\\raw\\magic_missile_left_strip_even.png",
+  "frameCount": 8,
+  "frameSize": 256,
+  "facing": "left",
+  "runtimeFramesPattern": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\projectiles\\magic_missile\\frames\\magic_missile_left_XX.png",
+  "strip": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\projectiles\\magic_missile\\magic_missile_left_strip.png",
+  "notes": "Generated as one strip, chroma-keyed to transparency, normalized with the Game Studio sprite pipeline, then rotated -40 degrees, center-anchored, and padded for projectile runtime use.",
+  "contentMaxSize": 224,
+  "rotationDegrees": -40,
+  "orientation": "left-facing horizontal projectile; crescent core on left, flame trail to right"
+}

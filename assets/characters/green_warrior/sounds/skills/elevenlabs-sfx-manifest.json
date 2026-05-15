@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-05-05T22:08:28.993Z",
+  "model": "eleven_text_to_sound_v2",
+  "sounds": [
+    {
+      "file": "rootbreaker_cleave_slam.mp3",
+      "bytes": 14672,
+      "text": "Short game sound effect: earthy two-handed sword slam cracks open roots and soil, hard dry transient, wooden root snap, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "rootbreaker_shockwave_travel.mp3",
+      "bytes": 15090,
+      "text": "Short game sound effect: fast wooden root shockwave scraping through soil, dirt rushing forward, green sap energy fizz, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "rootbreaker_impact.mp3",
+      "bytes": 12582,
+      "text": "Short game sound effect: bark splinter impact and compact dirt burst, woody crack with short debris tail, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "thornwall_guard.mp3",
+      "bytes": 11328,
+      "text": "Short game sound effect: greatsword plants into earth and forms a hard guard shimmer, thorny wood creak, dry and tight, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "thornwall_bloom.mp3",
+      "bytes": 15926,
+      "text": "Short game sound effect: thorn wall rapidly unfurls from the ground, twisting vines and woody snaps, green magic pulse, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "thornwall_retaliate.mp3",
+      "bytes": 12164,
+      "text": "Short game sound effect: sharp briar lash retaliation, thorny whip strike and crisp impact, short tail, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "motherload_breaker_charge.mp3",
+      "bytes": 15926,
+      "text": "Short game sound effect: green-gold energy gathers inside a massive greatsword, low magical swell with root-light crackle, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "motherload_breaker_hit.mp3",
+      "bytes": 14672,
+      "text": "Short game sound effect: heavy magical blade rupture hits the ground, dense sword impact, roots cracking under green-gold force, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "motherload_breaker_detonation.mp3",
+      "bytes": 20942,
+      "text": "Short game sound effect: empowered root-light explosion erupts outward, bark debris, golden green shock burst, short clean tail, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "verdant_guillotine_leap.mp3",
+      "bytes": 12164,
+      "text": "Short game sound effect: armored warrior leap whoosh with rushing leaves and fast cloth movement, dry upward motion, no voice, no music, clean fantasy ARPG SFX."
+    },
+    {
+      "file": "verdant_guillotine_drop.mp3",
+      "bytes": 15926,
+      "text": "Short game sound effect: vertical execution slash drops into earth, emerald blade impact, ground split and leaf sparks, no voice, no music, clean fantasy ARPG SFX."
+    }
+  ]
+}

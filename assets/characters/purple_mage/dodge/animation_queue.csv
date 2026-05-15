@@ -1,0 +1,9 @@
+character,animation,direction,frames,frame_width,frame_height,sheet
+purple_mage,dodge,south,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,southeast,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,east,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,northeast,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,north,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,northwest,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,west,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png
+purple_mage,dodge,southwest,6,256,256,D:\projects\MotherSeed2D\assets\characters\purple_mage\dodge\assembled\purple_mage_dodge_8dir_6f_256.png

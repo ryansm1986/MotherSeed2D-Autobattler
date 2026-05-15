@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-03T00:21:25.670Z",
+  "model": "eleven_text_to_sound_v2",
+  "sounds": [
+    {
+      "file": "magic_missile_cast.mp3",
+      "bytes": 13418,
+      "text": "Short game sound effect: purple mage casts a small homing magic missile, bright arcane spark, soft lunar shimmer, quick spell launch, clean fantasy SFX, no voice, no music."
+    },
+    {
+      "file": "magic_missile_impact.mp3",
+      "bytes": 12164,
+      "text": "Short game sound effect: small magic missile hits an enemy, crystalline arcane pop, purple energy crackle, light impact burst, clean fantasy SFX, no voice, no music."
+    }
+  ]
+}

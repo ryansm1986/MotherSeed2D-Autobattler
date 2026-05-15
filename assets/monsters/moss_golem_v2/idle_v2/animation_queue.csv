@@ -1,0 +1,9 @@
+subject,animation,runtime_animation,direction,frames,frame_width,frame_height,sheet
+moss_golem_v2,idle_v2,idle,south,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,southeast,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,east,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,northeast,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,north,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,northwest,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,west,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png
+moss_golem_v2,idle_v2,idle,southwest,4,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\idle_v2\assembled\moss_golem_v2_idle_v2_8dir_4f_1152x1152.png

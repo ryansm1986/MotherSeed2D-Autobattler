@@ -1,0 +1,9 @@
+character,animation,direction,frames,frame_width,frame_height,sheet
+purple_mage,walk_v2,south,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,southeast,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,east,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,northeast,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,north,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,northwest,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,west,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png
+purple_mage,walk_v2,southwest,4,576,832,D:\projects\MotherSeed2D\assets\characters\purple_mage\walk_v2\assembled\purple_mage_walk_v2_8dir_4f_576x832.png

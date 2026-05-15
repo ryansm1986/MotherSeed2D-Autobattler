@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-05-03T00:21:18.455Z",
+  "model": "eleven_text_to_sound_v2",
+  "sounds": [
+    {
+      "file": "radiant_brand.mp3",
+      "bytes": 15926,
+      "text": "Short game sound effect: cleric marks an enemy with a radiant brand, warm golden flare, sacred chime, soft ember sizzle, clean fantasy SFX, no voice, no music."
+    },
+    {
+      "file": "ward_pulse.mp3",
+      "bytes": 17598,
+      "text": "Short game sound effect: protective cleric ward pulse expands outward, gentle holy shield bloom, warm whoosh, healing shimmer, clean fantasy SFX, no voice, no music."
+    },
+    {
+      "file": "judgment.mp3",
+      "bytes": 18434,
+      "text": "Short game sound effect: cleric judgment strike detonates radiant magic, decisive holy impact, bright bell-like flash, low magical thump, clean fantasy SFX, no voice, no music."
+    }
+  ]
+}

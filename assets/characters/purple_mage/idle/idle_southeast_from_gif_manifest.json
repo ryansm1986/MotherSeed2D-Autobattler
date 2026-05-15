@@ -1,0 +1,34 @@
+{
+  "tool": "tools/extract_gif_frames.py",
+  "jobs": [
+    {
+      "source": "assets/characters/purple_mage/idle/down-right-idle.gif",
+      "animation": "idle",
+      "direction": "southeast",
+      "frames": [
+        "assets/characters/purple_mage/idle/frames/idle_southeast_01.png",
+        "assets/characters/purple_mage/idle/frames/idle_southeast_02.png",
+        "assets/characters/purple_mage/idle/frames/idle_southeast_03.png",
+        "assets/characters/purple_mage/idle/frames/idle_southeast_04.png",
+        "assets/characters/purple_mage/idle/frames/idle_southeast_05.png",
+        "assets/characters/purple_mage/idle/frames/idle_southeast_06.png"
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160,
+        160,
+        160
+      ],
+      "normalization": {
+        "scale": 0.5636363636363636,
+        "source_anchor_x": 128.0,
+        "source_baseline_y": 239,
+        "source_visible_height": 220,
+        "output_anchor_x": 64.0,
+        "output_baseline_y": 126.0
+      }
+    }
+  ]
+}

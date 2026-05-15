@@ -1,0 +1,63 @@
+{
+  "id": "purple_mage.staff_point_cast",
+  "name": "Staff Point Cast",
+  "character": "purple_mage",
+  "animation": "staff_point_cast",
+  "frameSize": [
+    192,
+    160
+  ],
+  "directions": [
+    "south",
+    "east",
+    "north",
+    "west"
+  ],
+  "frameCountPerDirection": 8,
+  "runtimeFrames": {
+    "south": [
+      "frames\\staff_point_cast_south_01.png",
+      "frames\\staff_point_cast_south_02.png",
+      "frames\\staff_point_cast_south_03.png",
+      "frames\\staff_point_cast_south_04.png",
+      "frames\\staff_point_cast_south_05.png",
+      "frames\\staff_point_cast_south_06.png",
+      "frames\\staff_point_cast_south_07.png",
+      "frames\\staff_point_cast_south_08.png"
+    ],
+    "east": [
+      "frames\\staff_point_cast_east_01.png",
+      "frames\\staff_point_cast_east_02.png",
+      "frames\\staff_point_cast_east_03.png",
+      "frames\\staff_point_cast_east_04.png",
+      "frames\\staff_point_cast_east_05.png",
+      "frames\\staff_point_cast_east_06.png",
+      "frames\\staff_point_cast_east_07.png",
+      "frames\\staff_point_cast_east_08.png"
+    ],
+    "north": [
+      "frames\\staff_point_cast_north_01.png",
+      "frames\\staff_point_cast_north_02.png",
+      "frames\\staff_point_cast_north_03.png",
+      "frames\\staff_point_cast_north_04.png",
+      "frames\\staff_point_cast_north_05.png",
+      "frames\\staff_point_cast_north_06.png",
+      "frames\\staff_point_cast_north_07.png",
+      "frames\\staff_point_cast_north_08.png"
+    ],
+    "west": [
+      "frames\\staff_point_cast_west_01.png",
+      "frames\\staff_point_cast_west_02.png",
+      "frames\\staff_point_cast_west_03.png",
+      "frames\\staff_point_cast_west_04.png",
+      "frames\\staff_point_cast_west_05.png",
+      "frames\\staff_point_cast_west_06.png",
+      "frames\\staff_point_cast_west_07.png",
+      "frames\\staff_point_cast_west_08.png"
+    ]
+  },
+  "assembledSheet": "assembled\\purple_mage_staff_point_cast_4dir_8f_192x160.png",
+  "checkerPreview": "preview\\staff_point_cast_4dir_checker_preview.png",
+  "notes": "Generated 4-cardinal wide-stance staff point cast. Frames rebuilt from generate2dsprite extract component metadata, normalized to the purple mage basic attack 192x160 runtime frame size, and cleaned to remove magenta chroma-key edge spill.",
+  "extractionMeta": "extracted/rebuilt_components/rebuild-meta.json"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "motherseed-2d",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc && vite build",
+    "test:simulation": "node tools/simulation_smoke.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "pipeline:warrior": "python3 tools/krita/animate_warrior_sprites.py",
+    "pipeline:green-warrior-v2:resume": "python3 tools/resume_green_warrior_v2_pipeline.py --write-qa-stub"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10"
+  }
+}

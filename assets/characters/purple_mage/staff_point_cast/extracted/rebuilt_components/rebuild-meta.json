@@ -1,0 +1,950 @@
+{
+  "source": "generate2dsprite extract components grouped by foreground bounds",
+  "frameSize": [
+    192,
+    160
+  ],
+  "normalizationTarget": "purple_mage attack runtime frame size",
+  "componentExtraction": {
+    "segmentationMode": "color",
+    "backgroundColor": "#FF00FF",
+    "colorTolerance": 30,
+    "minWidth": 16,
+    "minHeight": 16,
+    "minArea": 120,
+    "mainAreaThreshold": 10000,
+    "componentPadding": 10,
+    "align": "bottom-center",
+    "targetContentHeight": 124,
+    "maxContentWidth": 170,
+    "baselineY": 147,
+    "scale": "shared per direction from grouped component bounds"
+  },
+  "directions": {
+    "south": {
+      "raw": "assets/characters/purple_mage/staff_point_cast/raw/staff_point_cast_south_imagegen_8f_chromakey.png",
+      "rawSize": [
+        2172,
+        724
+      ],
+      "componentCount": 12,
+      "mainComponentCount": 8,
+      "sharedScale": 0.35127478753541075,
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            57,
+            168,
+            264,
+            521
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            39168
+          ],
+          "pixelCount": 39168,
+          "cropSize": [
+            207,
+            353
+          ],
+          "normalizedSize": [
+            73,
+            124
+          ],
+          "offset": [
+            59,
+            23
+          ]
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            306,
+            164,
+            550,
+            512
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            41956
+          ],
+          "pixelCount": 41956,
+          "cropSize": [
+            244,
+            348
+          ],
+          "normalizedSize": [
+            86,
+            122
+          ],
+          "offset": [
+            53,
+            25
+          ]
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            575,
+            222,
+            836,
+            512
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            36188
+          ],
+          "pixelCount": 36188,
+          "cropSize": [
+            261,
+            290
+          ],
+          "normalizedSize": [
+            92,
+            102
+          ],
+          "offset": [
+            50,
+            45
+          ]
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            872,
+            218,
+            1060,
+            516
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            30967
+          ],
+          "pixelCount": 30967,
+          "cropSize": [
+            188,
+            298
+          ],
+          "normalizedSize": [
+            66,
+            105
+          ],
+          "offset": [
+            63,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            1120,
+            221,
+            1361,
+            518
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            34991
+          ],
+          "pixelCount": 34991,
+          "cropSize": [
+            241,
+            297
+          ],
+          "normalizedSize": [
+            85,
+            104
+          ],
+          "offset": [
+            53,
+            43
+          ]
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            1379,
+            185,
+            1633,
+            520
+          ],
+          "componentCount": 5,
+          "componentAreas": [
+            33830,
+            171,
+            335,
+            327,
+            307
+          ],
+          "pixelCount": 34970,
+          "cropSize": [
+            254,
+            335
+          ],
+          "normalizedSize": [
+            89,
+            118
+          ],
+          "offset": [
+            51,
+            29
+          ]
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            1654,
+            219,
+            1855,
+            518
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            31804
+          ],
+          "pixelCount": 31804,
+          "cropSize": [
+            201,
+            299
+          ],
+          "normalizedSize": [
+            71,
+            105
+          ],
+          "offset": [
+            60,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            1941,
+            179,
+            2144,
+            521
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            37591
+          ],
+          "pixelCount": 37591,
+          "cropSize": [
+            203,
+            342
+          ],
+          "normalizedSize": [
+            71,
+            120
+          ],
+          "offset": [
+            60,
+            27
+          ]
+        }
+      ],
+      "mask": {
+        "segmentation_mode": "color",
+        "background_color": "#ff00ff",
+        "color_tolerance": 30,
+        "image_has_transparency": false
+      }
+    },
+    "east": {
+      "raw": "assets/characters/purple_mage/staff_point_cast/raw/staff_point_cast_east_imagegen_8f_chromakey.png",
+      "rawSize": [
+        2172,
+        724
+      ],
+      "componentCount": 11,
+      "mainComponentCount": 8,
+      "sharedScale": 0.4217687074829932,
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            42,
+            187,
+            215,
+            481
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            25527
+          ],
+          "pixelCount": 25527,
+          "cropSize": [
+            173,
+            294
+          ],
+          "normalizedSize": [
+            73,
+            124
+          ],
+          "offset": [
+            59,
+            23
+          ]
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            282,
+            199,
+            498,
+            479
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            28553
+          ],
+          "pixelCount": 28553,
+          "cropSize": [
+            216,
+            280
+          ],
+          "normalizedSize": [
+            91,
+            118
+          ],
+          "offset": [
+            50,
+            29
+          ]
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            573,
+            201,
+            780,
+            476
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            26440
+          ],
+          "pixelCount": 26440,
+          "cropSize": [
+            207,
+            275
+          ],
+          "normalizedSize": [
+            87,
+            116
+          ],
+          "offset": [
+            52,
+            31
+          ]
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            832,
+            223,
+            1122,
+            477
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            25990
+          ],
+          "pixelCount": 25990,
+          "cropSize": [
+            290,
+            254
+          ],
+          "normalizedSize": [
+            122,
+            107
+          ],
+          "offset": [
+            35,
+            40
+          ]
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            1127,
+            223,
+            1417,
+            477
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            26588
+          ],
+          "pixelCount": 26588,
+          "cropSize": [
+            290,
+            254
+          ],
+          "normalizedSize": [
+            122,
+            107
+          ],
+          "offset": [
+            35,
+            40
+          ]
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            1409,
+            208,
+            1698,
+            477
+          ],
+          "componentCount": 3,
+          "componentAreas": [
+            25396,
+            394,
+            272
+          ],
+          "pixelCount": 26062,
+          "cropSize": [
+            289,
+            269
+          ],
+          "normalizedSize": [
+            122,
+            113
+          ],
+          "offset": [
+            35,
+            34
+          ]
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            1670,
+            215,
+            1934,
+            479
+          ],
+          "componentCount": 2,
+          "componentAreas": [
+            25846,
+            227
+          ],
+          "pixelCount": 26073,
+          "cropSize": [
+            264,
+            264
+          ],
+          "normalizedSize": [
+            111,
+            111
+          ],
+          "offset": [
+            40,
+            36
+          ]
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            1945,
+            192,
+            2117,
+            484
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            25291
+          ],
+          "pixelCount": 25291,
+          "cropSize": [
+            172,
+            292
+          ],
+          "normalizedSize": [
+            73,
+            123
+          ],
+          "offset": [
+            59,
+            24
+          ]
+        }
+      ],
+      "mask": {
+        "segmentation_mode": "color",
+        "background_color": "#ff00ff",
+        "color_tolerance": 30,
+        "image_has_transparency": false
+      }
+    },
+    "north": {
+      "raw": "assets/characters/purple_mage/staff_point_cast/raw/staff_point_cast_north_imagegen_8f_chromakey.png",
+      "rawSize": [
+        1969,
+        799
+      ],
+      "componentCount": 9,
+      "mainComponentCount": 8,
+      "sharedScale": 0.27740492170022374,
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            36,
+            247,
+            219,
+            581
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            33439
+          ],
+          "pixelCount": 33439,
+          "cropSize": [
+            183,
+            334
+          ],
+          "normalizedSize": [
+            51,
+            93
+          ],
+          "offset": [
+            70,
+            54
+          ]
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            272,
+            247,
+            499,
+            581
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            36465
+          ],
+          "pixelCount": 36465,
+          "cropSize": [
+            227,
+            334
+          ],
+          "normalizedSize": [
+            63,
+            93
+          ],
+          "offset": [
+            64,
+            54
+          ]
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            531,
+            236,
+            764,
+            585
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            34075
+          ],
+          "pixelCount": 34075,
+          "cropSize": [
+            233,
+            349
+          ],
+          "normalizedSize": [
+            65,
+            97
+          ],
+          "offset": [
+            63,
+            50
+          ]
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            777,
+            139,
+            945,
+            586
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            31105
+          ],
+          "pixelCount": 31105,
+          "cropSize": [
+            168,
+            447
+          ],
+          "normalizedSize": [
+            47,
+            124
+          ],
+          "offset": [
+            72,
+            23
+          ]
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            1010,
+            233,
+            1285,
+            584
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            34136
+          ],
+          "pixelCount": 34136,
+          "cropSize": [
+            275,
+            351
+          ],
+          "normalizedSize": [
+            76,
+            97
+          ],
+          "offset": [
+            58,
+            50
+          ]
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            1265,
+            196,
+            1488,
+            590
+          ],
+          "componentCount": 2,
+          "componentAreas": [
+            32509,
+            386
+          ],
+          "pixelCount": 32895,
+          "cropSize": [
+            223,
+            394
+          ],
+          "normalizedSize": [
+            62,
+            109
+          ],
+          "offset": [
+            65,
+            38
+          ]
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            1509,
+            236,
+            1722,
+            590
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            32303
+          ],
+          "pixelCount": 32303,
+          "cropSize": [
+            213,
+            354
+          ],
+          "normalizedSize": [
+            59,
+            98
+          ],
+          "offset": [
+            66,
+            49
+          ]
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            1757,
+            247,
+            1939,
+            581
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            33525
+          ],
+          "pixelCount": 33525,
+          "cropSize": [
+            182,
+            334
+          ],
+          "normalizedSize": [
+            50,
+            93
+          ],
+          "offset": [
+            71,
+            54
+          ]
+        }
+      ],
+      "mask": {
+        "segmentation_mode": "color",
+        "background_color": "#ff00ff",
+        "color_tolerance": 30,
+        "image_has_transparency": false
+      }
+    },
+    "west": {
+      "raw": "assets/characters/purple_mage/staff_point_cast/raw/staff_point_cast_west_imagegen_8f_chromakey.png",
+      "rawSize": [
+        2172,
+        724
+      ],
+      "componentCount": 12,
+      "mainComponentCount": 8,
+      "sharedScale": 0.43205574912891986,
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            58,
+            222,
+            218,
+            509
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            22383
+          ],
+          "pixelCount": 22383,
+          "cropSize": [
+            160,
+            287
+          ],
+          "normalizedSize": [
+            69,
+            124
+          ],
+          "offset": [
+            61,
+            23
+          ]
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            315,
+            223,
+            507,
+            506
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            25050
+          ],
+          "pixelCount": 25050,
+          "cropSize": [
+            192,
+            283
+          ],
+          "normalizedSize": [
+            83,
+            122
+          ],
+          "offset": [
+            54,
+            25
+          ]
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            559,
+            263,
+            787,
+            506
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            24232
+          ],
+          "pixelCount": 24232,
+          "cropSize": [
+            228,
+            243
+          ],
+          "normalizedSize": [
+            99,
+            105
+          ],
+          "offset": [
+            46,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            800,
+            267,
+            1083,
+            506
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            23677
+          ],
+          "pixelCount": 23677,
+          "cropSize": [
+            283,
+            239
+          ],
+          "normalizedSize": [
+            122,
+            103
+          ],
+          "offset": [
+            35,
+            44
+          ]
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            1068,
+            267,
+            1376,
+            506
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            24538
+          ],
+          "pixelCount": 24538,
+          "cropSize": [
+            308,
+            239
+          ],
+          "normalizedSize": [
+            133,
+            103
+          ],
+          "offset": [
+            29,
+            44
+          ]
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            1390,
+            267,
+            1653,
+            506
+          ],
+          "componentCount": 5,
+          "componentAreas": [
+            22325,
+            194,
+            358,
+            341,
+            128
+          ],
+          "pixelCount": 23346,
+          "cropSize": [
+            263,
+            239
+          ],
+          "normalizedSize": [
+            114,
+            103
+          ],
+          "offset": [
+            39,
+            44
+          ]
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            1657,
+            267,
+            1919,
+            506
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            22450
+          ],
+          "pixelCount": 22450,
+          "cropSize": [
+            262,
+            239
+          ],
+          "normalizedSize": [
+            113,
+            103
+          ],
+          "offset": [
+            39,
+            44
+          ]
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            1969,
+            222,
+            2131,
+            509
+          ],
+          "componentCount": 1,
+          "componentAreas": [
+            22320
+          ],
+          "pixelCount": 22320,
+          "cropSize": [
+            162,
+            287
+          ],
+          "normalizedSize": [
+            70,
+            124
+          ],
+          "offset": [
+            61,
+            23
+          ]
+        }
+      ],
+      "mask": {
+        "segmentation_mode": "color",
+        "background_color": "#ff00ff",
+        "color_tolerance": 30,
+        "image_has_transparency": false
+      }
+    }
+  },
+  "magentaEdgeCleanup": {
+    "removedPixels": 13243,
+    "policy": "Transparent pixels near #FF00FF were stripped from normalized staff-point frames; assembled sheet, strips, and GIF previews regenerated.",
+    "thresholds": {
+      "alwaysTransparentDistanceToFF00FF": 52,
+      "lowAlphaDistanceToFF00FF": 125,
+      "lowAlphaMax": 96
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "wavy_grass",
+  "type": "animated_map_decoration",
+  "style": "RPGAssets grass source matched",
+  "styleSource": "../terrain/rpg_grass_source/props/flat_grass_patch.png",
+  "image": "wavy_grass_8x64.png",
+  "frameSize": {
+    "w": 64,
+    "h": 64
+  },
+  "frames": 8,
+  "frameDurationMs": 120,
+  "loop": true,
+  "anchor": {
+    "x": 32,
+    "y": 57,
+    "mode": "bottom-center"
+  },
+  "usage": {
+    "recommendedDrawScale": 1.0,
+    "collision": "none",
+    "ySortOffset": 0,
+    "placement": "paint as an animated decorative overlay on RPGAssets grass tiles"
+  },
+  "framesDirectory": "frames"
+}

@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-05-03T00:21:18.258Z",
+  "model": "eleven_text_to_sound_v2",
+  "sounds": [
+    {
+      "file": "moss_golem_rock_throw.mp3",
+      "bytes": 15926,
+      "text": "Short game sound effect: moss golem tears loose and hurls a heavy rock, stone scrape, mossy earth crumble, forceful throw whoosh, clean fantasy SFX, no voice, no music."
+    },
+    {
+      "file": "moss_golem_rock_impact.mp3",
+      "bytes": 15090,
+      "text": "Short game sound effect: thrown boulder impacts hard, blunt stone crack, dirt burst, mossy debris scatter, heavy but short game impact, no voice, no music."
+    },
+    {
+      "file": "moss_golem_rock_spray.mp3",
+      "bytes": 17598,
+      "text": "Short game sound effect: moss golem sprays jagged stones from the ground, grinding rock burst, pebbles rattling outward, earthy magical force, clean SFX, no voice, no music."
+    }
+  ]
+}
