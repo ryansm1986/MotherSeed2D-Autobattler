@@ -18,18 +18,41 @@ Keep the Vite + TypeScript + Canvas 2D foundation, but pivot the game loop from 
 
 Reuse the current renderer, content files, gear systems, inventory UI, event pipeline, monster-fight content, and existing `party-ai.ts` direction where possible. Replace the control model, encounter flow, and progression loop over time.
 
+## Progress Tracker
+
+Status labels:
+
+- `[x]` Implemented and covered by smoke/build checks.
+- `[~]` In progress or partially implemented.
+- `[ ]` Not started.
+
+Current slice:
+
+- `[x]` Phase 1: round phase state, AI-controlled battles, victory/defeat resolution, one-time gold rewards, and shop placeholder.
+- `[x]` Phase 3 slice: first functional shop loop: roll gear, buy to backpack, reroll, and start the next fight.
+- `[ ]` Phase 2: shared combatant model.
+- `[ ]` Phase 4: authored encounter progression data.
+- `[ ]` Phase 5: serializable AI intents and roles.
+- `[ ]` Phase 6: dedicated party/formation preparation screen.
+- `[ ]` Phase 7: PvP / CPU player groups.
+
+Progress log:
+
+- 2026-05-15: Added `GamePhase` / round state, drove active player through party AI during battle, awarded gold once on victory, returned victory/defeat to a shop placeholder, and surfaced gold/phase/result in HUD.
+- 2026-05-15: Completed the first functional Phase 3 shop loop with rolled gear offers, gold costs, buying into the backpack, rerolls, persisted shop state, and a start-next-fight action.
+
 ## Phase 1: Auto Battler MVP
 
 Goal: one party vs one monster group, fully AI-controlled.
 
 Core changes:
 
-- Replace direct player movement/combat input with party AI.
-- Treat the player side as multiple combatants, not one `player`.
-- Add round states: `preparing`, `battle`, `victory`, `defeat`, `shop`.
-- Make combat run without player input once battle starts.
-- Award gold on victory.
-- Return to shop after victory or defeat.
+- `[x]` Replace direct player movement/combat input with party AI.
+- `[~]` Treat the player side as multiple combatants, not one `player`.
+- `[x]` Add round states: `preparing`, `battle`, `victory`, `defeat`, `shop`.
+- `[x]` Make combat run without player input once battle starts.
+- `[x]` Award gold on victory.
+- `[x]` Return to shop after victory or defeat.
 
 Likely files:
 
@@ -77,12 +100,12 @@ Goal: create the between-fights decision layer.
 
 Add shop state:
 
-- Current gold.
-- Shop inventory.
-- Reroll cost.
-- Buy/sell/equip actions.
-- Optional lock/freeze shop later.
-- Gear rarity and pricing.
+- `[x]` Current gold.
+- `[x]` Shop inventory.
+- `[x]` Reroll cost.
+- `[~]` Buy/sell/equip actions.
+- `[ ]` Optional lock/freeze shop later.
+- `[x]` Gear rarity and pricing.
 
 Likely files:
 
@@ -94,11 +117,11 @@ Likely files:
 
 Initial shop loop:
 
-1. Victory gives gold.
-2. Shop rolls 3-5 items.
-3. Player buys gear.
-4. Player equips gear to party members.
-5. Start next fight.
+1. `[x]` Victory gives gold.
+2. `[x]` Shop rolls 3-5 items.
+3. `[x]` Player buys gear.
+4. `[~]` Player equips gear to party members.
+5. `[x]` Start next fight.
 
 ## Phase 4: Encounter Progression
 

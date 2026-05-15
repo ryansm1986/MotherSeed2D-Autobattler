@@ -359,6 +359,24 @@ function createInventoryItem(state: GameState, gear: GearDrop, slot: number): In
   };
 }
 
+export function addGearToInventory(
+  state: GameState,
+  gear: GearDrop,
+  classId: ClassId = state.selectedClassId,
+  targetSlot: number | null = null,
+): InventoryBagItem | null {
+  const size = gearInventorySize(gear);
+  const slot = targetSlot !== null && canPlaceInventoryItem(state, size.width, size.height, targetSlot)
+    ? targetSlot
+    : firstOpenInventorySlot(state, size.width, size.height);
+  if (slot === null) return null;
+
+  const item = createInventoryItem(state, gear, slot);
+  item.classId = classId;
+  state.combat.inventoryItems.push(item);
+  return item;
+}
+
 function clearLootDrop(state: GameState) {
   state.combat.droppedGear = null;
   state.combat.droppedGearSourceLabel = null;
@@ -376,8 +394,8 @@ export function takeDropToInventory(state: GameState, targetSlot: number | null 
     : firstOpenInventorySlot(state, size.width, size.height);
   if (slot === null) return [logEvent("Inventory full", "Make room before taking this item")];
 
-  const item = createInventoryItem(state, state.combat.droppedGear, slot);
-  state.combat.inventoryItems.push(item);
+  const item = addGearToInventory(state, state.combat.droppedGear, state.selectedClassId, slot);
+  if (!item) return [logEvent("Inventory full", "Make room before taking this item")];
   clearLootDrop(state);
   return [logEvent(`Stowed ${item.gear.name}`, "Added to inventory")];
 }

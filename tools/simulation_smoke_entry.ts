@@ -18,8 +18,9 @@ import { clampToArena } from "../src/game/world/collision";
 import { world } from "../src/game/world/arena";
 import { distance } from "../src/game/math";
 import { createInputState } from "../src/game/input-actions";
+import { buyShopItem, rerollShop } from "../src/game/shop";
 import { updateSimulation } from "../src/game/simulation";
-import { clearRoomProjectiles, spawnRoomEnemy } from "../src/game/world/rooms";
+import { clearRoomProjectiles, spawnRoomEnemy, startNextAutobattleRound } from "../src/game/world/rooms";
 import {
   advanceCodgerLatticeTutorial,
   canUseIntroStairs,
@@ -294,7 +295,28 @@ assert(autobattleRoundState.round.gold === awardedGold, "victory gold should onl
 for (let tick = 0; tick < 90; tick += 1) {
   updateSimulation(autobattleRoundState, createInputState(), 0.016);
 }
-assert(autobattleRoundState.round.phase === "shop", "victory should settle into the shop placeholder phase");
+assert(autobattleRoundState.round.phase === "shop", "victory should settle into the shop phase");
+assert(autobattleRoundState.round.shop.inventory.length >= 3, "shop phase should roll gear offers");
+const firstShopItem = autobattleRoundState.round.shop.inventory[0];
+autobattleRoundState.round.gold = firstShopItem.price;
+const inventoryCountBeforeShopBuy = autobattleRoundState.combat.inventoryItems.length;
+const shopBuyEvents = buyShopItem(autobattleRoundState, firstShopItem.id);
+assert(autobattleRoundState.round.gold === 0, "shop purchases should subtract gold");
+assert(autobattleRoundState.combat.inventoryItems.length === inventoryCountBeforeShopBuy + 1, "shop purchases should add gear to inventory");
+assert(
+  shopBuyEvents.some((event) => event.kind === "log" && event.message.includes("Bought")),
+  "shop purchases should emit a buy log",
+);
+autobattleRoundState.round.gold = autobattleRoundState.round.shop.rerollCost;
+const previousShopIds = autobattleRoundState.round.shop.inventory.map((item) => item.id).join(",");
+rerollShop(autobattleRoundState);
+assert(autobattleRoundState.round.gold === 0, "shop reroll should subtract its cost");
+assert(autobattleRoundState.round.shop.inventory.length >= 3, "shop reroll should create new offers");
+assert(autobattleRoundState.round.shop.inventory.map((item) => item.id).join(",") !== previousShopIds, "shop reroll should replace offers");
+const roomBeforeShopStart = autobattleRoundState.combat.roomIndex;
+startNextAutobattleRound(autobattleRoundState);
+assert(autobattleRoundState.round.phase === "battle", "shop start should enter battle phase");
+assert(autobattleRoundState.combat.roomIndex === roomBeforeShopStart + 1, "shop start should advance to the next encounter");
 
 debugOptions.forEach((option) => {
   const debugDeathState = createInitialGameState("warrior");

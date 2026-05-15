@@ -21,6 +21,7 @@ import { updatePartyCompanions } from "./combat/party-ai";
 import { updatePlayer } from "./combat/player";
 import { updateRoomTransition } from "./world/rooms";
 import { updateIntroRoom } from "./world/intro-room";
+import { rollShopInventory } from "./shop";
 import {
   updateMagicMissiles,
   updateEnemyRockThrows,
@@ -87,7 +88,10 @@ function updateRoundPhase(state: GameState, delta: number, events: GameEvent[]) 
 
   if (state.round.phase !== "victory" && state.round.phase !== "defeat") return;
   state.round.phaseTimer = Math.max(0, state.round.phaseTimer - delta);
-  if (state.round.phaseTimer <= 0) enterShopPhase(state);
+  if (state.round.phaseTimer <= 0) {
+    enterShopPhase(state);
+    events.push(...rollShopInventory(state));
+  }
 }
 
 function updateCombat(state: GameState, delta: number, events: GameEvent[], frameLookup?: AnimationFrameLookup) {

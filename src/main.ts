@@ -17,6 +17,7 @@ import { characterClasses, characterOrder } from "./game/content/classes";
 import { debugEncounterOptions, teleportToDebugEncounter } from "./game/debug";
 import { clearInputState, createInputState, gameplayActionForCode } from "./game/input-actions";
 import { hasSavedGame, loadSavedGame, saveGame } from "./game/save";
+import { buyShopItem, rerollShop } from "./game/shop";
 import { updateSimulation } from "./game/simulation";
 import {
   advanceCodgerLatticeTutorial,
@@ -29,6 +30,7 @@ import {
   maybeAdvanceCodgerAmuletEquipped,
   skipCodgerTutorial,
 } from "./game/world/intro-room";
+import { startNextAutobattleRound } from "./game/world/rooms";
 import {
   applySelectedClass,
   allEnemies,
@@ -72,6 +74,7 @@ import { applyLootScreen, renderLootScreen } from "./ui/loot";
 import { createMobileControls } from "./ui/mobile-controls";
 import { initializePauseTabs, selectPauseTab, setPauseMenuCopy } from "./ui/pause-menu";
 import { createSaveToastController } from "./ui/save-toast";
+import { applyShop, renderShop } from "./ui/shop";
 import { createTitleIntroController } from "./ui/title-screen";
 
 const shell = createAppShell();
@@ -265,6 +268,15 @@ function updateLootScreen() {
   });
 }
 
+function updateShop() {
+  if (state.round.phase !== "shop") {
+    shell.shopMenu.classList.add("is-hidden");
+    return;
+  }
+  applyShop(shell.shopFrame, renderShop(state));
+  shell.shopMenu.classList.remove("is-hidden");
+}
+
 function updateBranchLattice() {
   applyBranchLattice({
     abilities: shell.branchLatticeAbilities,
@@ -393,6 +405,38 @@ function handleHudContextMenu(event: MouseEvent) {
   updateHud();
 }
 
+function handleShopClick(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+  const buyButton = target.closest<HTMLElement>("[data-shop-buy-id]");
+  if (buyButton?.dataset.shopBuyId) {
+    handleEvents(buyShopItem(state, buyButton.dataset.shopBuyId));
+    updateShop();
+    updateHud();
+    if (state.ui.isInventoryOpen) updateInventory();
+    return;
+  }
+
+  if (target.closest<HTMLElement>("[data-shop-reroll]")) {
+    handleEvents(rerollShop(state));
+    updateShop();
+    updateHud();
+    return;
+  }
+
+  if (target.closest<HTMLElement>("[data-shop-start-fight]")) {
+    state.ui.isInventoryOpen = false;
+    state.ui.isLootOpen = false;
+    state.ui.isBranchLatticeOpen = false;
+    shell.inventoryMenu.classList.add("is-hidden");
+    shell.lootMenu.classList.add("is-hidden");
+    shell.branchLatticeMenu.classList.add("is-hidden");
+    handleEvents(startNextAutobattleRound(state, "Shop complete"));
+    updateShop();
+    updateHud();
+    syncMobileControls();
+  }
+}
+
 function castSkillBarSlot(slotIndex: number) {
   if (!isGameplayActive(state)) return false;
   if (state.round.phase === "battle") return false;
@@ -423,6 +467,7 @@ function showGameplayShell() {
   audio.playGameplayMusic();
   shell.inventoryMenu.classList.add("is-hidden");
   shell.lootMenu.classList.add("is-hidden");
+  shell.shopMenu.classList.add("is-hidden");
   shell.branchLatticeMenu.classList.add("is-hidden");
   shell.characterSelect.classList.add("is-hidden");
   shell.loadingScreen.classList.add("is-hidden");
@@ -447,6 +492,7 @@ function showCharacterSelect() {
   audio.playTitleMusic();
   shell.inventoryMenu.classList.add("is-hidden");
   shell.lootMenu.classList.add("is-hidden");
+  shell.shopMenu.classList.add("is-hidden");
   shell.branchLatticeMenu.classList.add("is-hidden");
   shell.pauseMenu.classList.add("is-hidden");
   shell.loadingScreen.classList.add("is-hidden");
@@ -469,6 +515,7 @@ function showTitleScreen() {
   audio.playTitleMusic();
   shell.inventoryMenu.classList.add("is-hidden");
   shell.lootMenu.classList.add("is-hidden");
+  shell.shopMenu.classList.add("is-hidden");
   shell.branchLatticeMenu.classList.add("is-hidden");
   shell.pauseMenu.classList.add("is-hidden");
   shell.loadingScreen.classList.add("is-hidden");
@@ -502,6 +549,7 @@ function openPauseMenu(tabName = "controls", source: "gameplay" | "title" = "gam
   selectPauseTab(shell, tabName);
   shell.inventoryMenu.classList.add("is-hidden");
   shell.lootMenu.classList.add("is-hidden");
+  shell.shopMenu.classList.add("is-hidden");
   shell.branchLatticeMenu.classList.add("is-hidden");
   shell.pauseMenu.classList.remove("is-hidden");
   updateCodgerTutorial();
@@ -573,6 +621,7 @@ function closeInventory() {
   clearAllInput();
   shell.inventoryMenu.classList.add("is-hidden");
   shell.lootMenu.classList.add("is-hidden");
+  shell.shopMenu.classList.add("is-hidden");
   finishCodgerGiftIfMenusClosed();
   updateCodgerTutorial();
 }
@@ -901,6 +950,7 @@ function animate(now: number) {
     handleEvents(updateSimulation(state, inputState, delta, frameLookup));
     updateHud();
   }
+  updateShop();
   syncMobileControls();
 
   renderer?.draw(state, delta);
@@ -1312,6 +1362,7 @@ shell.inventoryMenu.addEventListener("click", handleInventoryClick);
 shell.inventoryMenu.addEventListener("change", handleInventoryChange);
 shell.lootCloseButton.addEventListener("click", closeLootMenu);
 shell.lootTakeAllButton.addEventListener("click", takeAllLoot);
+shell.shopMenu.addEventListener("click", handleShopClick);
 shell.branchLatticeCloseButton.addEventListener("click", () => closeBranchLattice());
 shell.codgerTutorialPrimaryButton.addEventListener("click", advanceCodgerTutorialPrimary);
 shell.codgerTutorialSecondaryButton.addEventListener("click", skipCurrentCodgerTutorial);

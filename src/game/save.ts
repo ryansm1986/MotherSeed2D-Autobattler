@@ -14,6 +14,7 @@ import {
   type InventoryBagItem,
   type PartyMemberState,
   type RoundState,
+  type ShopItemState,
 } from "./state";
 import type { BranchLatticeState, ClassId, CoreStat, GearDrop, GearEquipSlot, GearStatBlock } from "./types";
 import { world } from "./world/arena";
@@ -61,7 +62,7 @@ type SavedGameData = {
   branchLattice: BranchLatticeState;
 };
 
-type SavedRoundState = Pick<RoundState, "phase" | "roundIndex" | "gold" | "lastRewardGold" | "lastResult" | "rewardedRoomIndex">;
+type SavedRoundState = Pick<RoundState, "phase" | "roundIndex" | "gold" | "lastRewardGold" | "lastResult" | "rewardedRoomIndex" | "shop">;
 
 type SavedLegacyGameData = Omit<SavedGameData, "version" | "party" | "activeMemberId" | "selectedInventoryMemberId" | "selectedLatticeMemberId" | "round"> & {
   version: 1 | 2;
@@ -125,6 +126,7 @@ export function saveGame(state: GameState): SaveGameResult {
       lastRewardGold: state.round.lastRewardGold,
       lastResult: state.round.lastResult,
       rewardedRoomIndex: state.round.rewardedRoomIndex,
+      shop: cloneJson(state.round.shop),
     },
     roomIndex: state.combat.roomIndex,
     intro: cloneJson(state.intro),
@@ -187,6 +189,7 @@ function restoreSavedGame(saved: SavedGameData): GameState {
   state.round.lastRewardGold = saved.round.lastRewardGold;
   state.round.lastResult = saved.round.lastResult;
   state.round.rewardedRoomIndex = saved.round.rewardedRoomIndex;
+  state.round.shop = cloneJson(saved.round.shop);
   bindActiveMemberAliases(state);
 
   state.intro = cloneJson(saved.intro);
@@ -301,6 +304,13 @@ function parseSavedGameData(value: unknown): SavedGameData | null {
       lastRewardGold: 0,
       lastResult: null,
       rewardedRoomIndex: null,
+      shop: {
+        inventory: [],
+        inventorySize: 3,
+        rerollCost: 2,
+        nextItemId: 1,
+        message: "Spend gold on gear, tune the party, then start the next fight.",
+      },
     },
     roomIndex,
     intro,
@@ -342,6 +352,7 @@ function parseSavedRound(value: unknown): SavedRoundState | null {
   const gold = asFiniteNumber(value.gold);
   const lastRewardGold = asFiniteNumber(value.lastRewardGold);
   const rewardedRoomIndex = value.rewardedRoomIndex === null ? null : asFiniteNumber(value.rewardedRoomIndex);
+  const shop = parseSavedShop(value.shop);
   if (roundIndex === null || gold === null || lastRewardGold === null || (value.rewardedRoomIndex !== null && rewardedRoomIndex === null)) return null;
   const lastResult = value.lastResult === "victory" || value.lastResult === "defeat" ? value.lastResult : null;
   return {
@@ -351,6 +362,41 @@ function parseSavedRound(value: unknown): SavedRoundState | null {
     lastRewardGold: Math.max(0, Math.floor(lastRewardGold)),
     lastResult,
     rewardedRoomIndex,
+    shop: shop ?? {
+      inventory: [],
+      inventorySize: 3,
+      rerollCost: 2,
+      nextItemId: 1,
+      message: "Spend gold on gear, tune the party, then start the next fight.",
+    },
+  };
+}
+
+function parseSavedShop(value: unknown): SavedRoundState["shop"] | null {
+  if (!isRecord(value)) return null;
+  const inventorySize = asFiniteNumber(value.inventorySize);
+  const rerollCost = asFiniteNumber(value.rerollCost);
+  const nextItemId = asFiniteNumber(value.nextItemId);
+  if (inventorySize === null || rerollCost === null || nextItemId === null || !Array.isArray(value.inventory)) return null;
+  const inventory: ShopItemState[] = [];
+  for (const item of value.inventory) {
+    if (!isRecord(item) || typeof item.id !== "string" || !isClassId(item.classId)) return null;
+    const price = asFiniteNumber(item.price);
+    const gear = parseGearDrop(item.gear);
+    if (price === null || !gear) return null;
+    inventory.push({
+      id: item.id,
+      gear,
+      classId: item.classId,
+      price: Math.max(0, Math.floor(price)),
+    });
+  }
+  return {
+    inventory,
+    inventorySize: Math.max(3, Math.min(5, Math.floor(inventorySize))),
+    rerollCost: Math.max(0, Math.floor(rerollCost)),
+    nextItemId: Math.max(1, Math.floor(nextItemId)),
+    message: typeof value.message === "string" ? value.message : "Spend gold on gear, tune the party, then start the next fight.",
   };
 }
 

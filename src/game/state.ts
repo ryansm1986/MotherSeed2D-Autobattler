@@ -577,9 +577,18 @@ export type PartySkillBarOption = {
 
 export type GamePhase = "preparing" | "battle" | "victory" | "defeat" | "shop";
 
-export type ShopPlaceholderState = {
+export type ShopItemState = {
+  id: string;
+  gear: GearDrop;
+  classId: ClassId;
+  price: number;
+};
+
+export type ShopState = {
+  inventory: ShopItemState[];
   inventorySize: number;
   rerollCost: number;
+  nextItemId: number;
   message: string;
 };
 
@@ -591,7 +600,7 @@ export type RoundState = {
   lastResult: "victory" | "defeat" | null;
   phaseTimer: number;
   rewardedRoomIndex: number | null;
-  shop: ShopPlaceholderState;
+  shop: ShopState;
 };
 
 export type UiFlowState = {
@@ -848,10 +857,12 @@ export function ensureRoundState(state: GameState) {
   if (round.lastResult !== "victory" && round.lastResult !== "defeat") round.lastResult = null;
   if (!Number.isFinite(round.phaseTimer)) round.phaseTimer = 0;
   if (round.rewardedRoomIndex !== null && !Number.isFinite(round.rewardedRoomIndex)) round.rewardedRoomIndex = null;
-  if (!round.shop || typeof round.shop !== "object") round.shop = createShopPlaceholderState();
+  if (!round.shop || typeof round.shop !== "object") round.shop = createShopState();
+  if (!Array.isArray(round.shop.inventory)) round.shop.inventory = [];
   if (!Number.isFinite(round.shop.inventorySize)) round.shop.inventorySize = 3;
   if (!Number.isFinite(round.shop.rerollCost)) round.shop.rerollCost = 2;
-  if (typeof round.shop.message !== "string") round.shop.message = createShopPlaceholderState().message;
+  if (!Number.isFinite(round.shop.nextItemId)) round.shop.nextItemId = round.shop.inventory.length + 1;
+  if (typeof round.shop.message !== "string") round.shop.message = createShopState().message;
 }
 
 function isGamePhase(value: unknown): value is GamePhase {
@@ -867,15 +878,17 @@ export function createRoundState(): RoundState {
     lastResult: null,
     phaseTimer: 0,
     rewardedRoomIndex: null,
-    shop: createShopPlaceholderState(),
+    shop: createShopState(),
   };
 }
 
-function createShopPlaceholderState(): ShopPlaceholderState {
+export function createShopState(): ShopState {
   return {
+    inventory: [],
     inventorySize: 3,
     rerollCost: 2,
-    message: "Shop placeholder: spendable gear offers arrive next.",
+    nextItemId: 1,
+    message: "Spend gold on gear, tune the party, then start the next fight.",
   };
 }
 
@@ -1487,7 +1500,8 @@ export function isGameplayActive(state: GameState) {
     !state.ui.isPaused &&
     !state.ui.isInventoryOpen &&
     !state.ui.isLootOpen &&
-    !state.ui.isBranchLatticeOpen
+    !state.ui.isBranchLatticeOpen &&
+    state.round.phase !== "shop"
   );
 }
 

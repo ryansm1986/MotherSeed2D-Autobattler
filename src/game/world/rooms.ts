@@ -19,6 +19,11 @@ export function updateRoomTransition(state: GameState, delta: number, events: Ga
   if (state.combat.roomTransitionCooldown > 0 || !isInStairZone(state.player)) return;
   if (!canUseIntroStairs(state)) return;
 
+  events.push(...startNextAutobattleRound(state, "Tree chamber shifted"));
+}
+
+export function startNextAutobattleRound(state: GameState, label = "Next fight"): GameEvent[] {
+  ensureCombatRuntimeState(state);
   state.combat.roomIndex += 1;
   state.combat.roomTransitionCooldown = 1.2;
   state.combat.droppedGear = null;
@@ -40,7 +45,7 @@ export function updateRoomTransition(state: GameState, delta: number, events: Ga
   spawnRoomEnemy(state);
   beginBattleRound(state);
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
-  events.push(logEvent("Tree chamber shifted", `${encounterNames} step into the circle`));
+  return [logEvent(label, `${encounterNames} step into the circle`)];
 }
 
 export function spawnRoomEnemy(state: GameState) {

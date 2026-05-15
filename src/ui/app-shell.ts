@@ -51,6 +51,8 @@ export type AppShell = {
   lootSource: HTMLElement;
   lootGrid: HTMLElement;
   lootTakeAllButton: HTMLButtonElement;
+  shopMenu: HTMLElement;
+  shopFrame: HTMLElement;
   branchLatticeMenu: HTMLElement;
   branchLatticeFrame: HTMLDivElement;
   branchLatticeCloseButton: HTMLButtonElement;
@@ -206,6 +208,9 @@ export function createAppShell(): AppShell {
           <button class="loot-take-all-button" type="button">Take All</button>
         </footer>
       </div>
+    </section>
+    <section class="shop-menu is-hidden" role="dialog" aria-modal="false" aria-labelledby="shop-title" style="--inventory-art: url('${inventoryPanelUrl}'); --inventory-border-art: url('${inventoryBorderUrl}'); --inventory-header-art: url('${inventoryHeaderUrl}'); --inventory-divider-art: url('${inventoryDividerUrl}'); --inventory-glow-art: url('${inventoryGlowUrl}')">
+      <div class="shop-frame" id="shop-frame" tabindex="-1"></div>
     </section>
     <section class="branch-lattice-menu is-hidden" role="dialog" aria-modal="false" aria-labelledby="branch-lattice-title" style="--branch-lattice-art: url('${branchLatticeBackgroundUrl}')">
       <div class="branch-lattice-frame" tabindex="-1">
@@ -412,6 +417,8 @@ export function createAppShell(): AppShell {
     lootSource: document.querySelector<HTMLElement>("#loot-source")!,
     lootGrid: document.querySelector<HTMLElement>("#loot-grid-panel")!,
     lootTakeAllButton: document.querySelector<HTMLButtonElement>(".loot-take-all-button")!,
+    shopMenu: document.querySelector<HTMLElement>(".shop-menu")!,
+    shopFrame: document.querySelector<HTMLElement>("#shop-frame")!,
     branchLatticeMenu: document.querySelector<HTMLElement>(".branch-lattice-menu")!,
     branchLatticeFrame: document.querySelector<HTMLDivElement>(".branch-lattice-frame")!,
     branchLatticeCloseButton: document.querySelector<HTMLButtonElement>(".branch-lattice-close-button")!,
