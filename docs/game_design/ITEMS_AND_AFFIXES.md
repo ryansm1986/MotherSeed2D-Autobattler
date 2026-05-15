@@ -306,6 +306,16 @@ Guidelines:
 - Avoid making every item equally flexible. Some narrow items are healthy if the player has enough sell, bench, or reroll options.
 - Do not require a perfect item recipe before the party can function. The core loop should survive bad rolls.
 
+## Item Catalogue Tracker
+
+The first authored item pass lives in:
+
+- `docs/game_design/item_catalog.csv`
+- `docs/game_design/encounter_item_drops.csv`
+- `docs/game_design/MotherSeed_Item_Catalog.xlsx`
+
+The CSV files are the diff-friendly source tables. The workbook is the design-facing tracker with summary, item catalogue, encounter drops, and balance-band sheets.
+
 ## Slot Identity
 
 Each slot should have a preferred affix personality. This keeps loot readable and makes it easier to author tables.
