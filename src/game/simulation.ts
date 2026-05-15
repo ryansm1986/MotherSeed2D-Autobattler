@@ -1,7 +1,19 @@
 import type { InputState } from "./input-actions";
 import { type AnimationFrameLookup } from "../render/canvas2d/types";
 import { enemyAttackTimings } from "./content/enemies";
-import { allEnemies, ensureCombatRuntimeState, livingEnemies, soundEvent, type EnemyState, type GameEvent, type GameState } from "./state";
+import {
+  allEnemies,
+  completeBattleDefeat,
+  completeBattleVictory,
+  ensureCombatRuntimeState,
+  enterShopPhase,
+  livingEnemies,
+  livingPartyMembers,
+  soundEvent,
+  type EnemyState,
+  type GameEvent,
+  type GameState,
+} from "./state";
 import { respawnPlayer, updateBleed, updateFloatingCombatTexts } from "./combat/damage";
 import { updateEnemy } from "./combat/enemy-ai";
 import { updateAutoAttack, updateCooldowns } from "./combat/abilities";
@@ -49,13 +61,33 @@ export function updateSimulation(
   updateCooldowns(state, delta);
   updateFloatingCombatTexts(state, delta);
   updateIntroRoom(state, delta, frameLookup?.codgerFrameCount() ?? 1);
-  updatePlayer(state, inputState, delta, events);
-  updatePartyCompanions(state, delta, events);
+  if (state.round.phase === "battle") {
+    updatePartyCompanions(state, delta, events, true);
+  } else {
+    updatePlayer(state, inputState, delta, events);
+    updatePartyCompanions(state, delta, events);
+  }
   updateRoomTransition(state, delta, events);
   updateCombat(state, delta, events, frameLookup);
+  updateRoundPhase(state, delta, events);
   updateAnimations(state, delta, frameLookup, events);
 
   return events;
+}
+
+function updateRoundPhase(state: GameState, delta: number, events: GameEvent[]) {
+  if (state.round.phase === "battle") {
+    if (livingEnemies(state).length === 0) {
+      completeBattleVictory(state, events);
+    } else if (livingPartyMembers(state).length === 0 || state.combat.playerRespawnTimer > 0) {
+      completeBattleDefeat(state, events);
+    }
+    return;
+  }
+
+  if (state.round.phase !== "victory" && state.round.phase !== "defeat") return;
+  state.round.phaseTimer = Math.max(0, state.round.phaseTimer - delta);
+  if (state.round.phaseTimer <= 0) enterShopPhase(state);
 }
 
 function updateCombat(state: GameState, delta: number, events: GameEvent[], frameLookup?: AnimationFrameLookup) {
@@ -117,7 +149,7 @@ function updateCombat(state: GameState, delta: number, events: GameEvent[], fram
   });
 
   updateBleed(state, delta, events);
-  updateAutoAttack(state, delta, events);
+  if (state.round.phase !== "battle") updateAutoAttack(state, delta, events);
   updateEnemy(state, delta, events);
 }
 

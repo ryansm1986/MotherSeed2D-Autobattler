@@ -20,11 +20,11 @@ const formationOffsets = [
   { x: 0, y: 132 },
 ];
 
-export function updatePartyCompanions(state: GameState, delta: number, events: GameEvent[]) {
+export function updatePartyCompanions(state: GameState, delta: number, events: GameEvent[], includeLeader = false) {
   const leader = state.player;
   const inCombat = livingEnemies(state).length > 0 && state.combat.targetLocked;
   state.party.members.forEach((member) => {
-    if (member.id === leader.id) return;
+    if (member.id === leader.id && !includeLeader) return;
     updatePartyMemberTimers(member, delta);
     if (member.lifeState !== "alive") {
       member.aiMode = "downed";
@@ -36,6 +36,9 @@ export function updatePartyCompanions(state: GameState, delta: number, events: G
       const movementAnim = updateCompanionCombatPosition(state, member, delta);
       withPartyMemberAliases(state, member.id, () => updateAutoAttack(state, delta, events));
       updateCompanionAnimation(member, movementAnim);
+    } else if (member.id === leader.id) {
+      member.aiMode = "follow";
+      updateCompanionAnimation(member, "idle");
     } else {
       const movementAnim = updateCompanionFollow(state, leader, member, delta);
       updateCompanionAnimation(member, movementAnim);

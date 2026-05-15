@@ -1,11 +1,21 @@
 import { enemiesForRoom, type EnemyDefinition } from "../content/enemies";
-import { createEnemyAttackCooldowns, createMotherLoadWindowState, ensureCombatRuntimeState, logEvent, type EnemyState, type GameEvent, type GameState } from "../state";
+import {
+  beginBattleRound,
+  createEnemyAttackCooldowns,
+  createMotherLoadWindowState,
+  ensureCombatRuntimeState,
+  logEvent,
+  type EnemyState,
+  type GameEvent,
+  type GameState,
+} from "../state";
 import { world } from "./arena";
 import { isInStairZone } from "./collision";
 import { canUseIntroStairs } from "./intro-room";
 
 export function updateRoomTransition(state: GameState, delta: number, events: GameEvent[]) {
   state.combat.roomTransitionCooldown = Math.max(0, state.combat.roomTransitionCooldown - delta);
+  if (state.round.phase === "battle" || state.round.phase === "victory" || state.round.phase === "defeat") return;
   if (state.combat.roomTransitionCooldown > 0 || !isInStairZone(state.player)) return;
   if (!canUseIntroStairs(state)) return;
 
@@ -28,6 +38,7 @@ export function updateRoomTransition(state: GameState, delta: number, events: Ga
     member.aiMode = "follow";
   });
   spawnRoomEnemy(state);
+  beginBattleRound(state);
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
   events.push(logEvent("Tree chamber shifted", `${encounterNames} step into the circle`));
 }

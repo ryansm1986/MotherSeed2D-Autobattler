@@ -1,6 +1,6 @@
 import type { GameState, InventoryBagItem } from "../game/state";
 import { inventoryColumnCount, inventoryRowCount, partyMemberClass, selectedInventoryPartyMember } from "../game/state";
-import { gearDisplaySlot, gearInventorySize } from "../game/combat/gear";
+import { coreStatLabels, gearDisplaySlot, gearInventorySize } from "../game/combat/gear";
 import {
   clearInventoryDragPayload,
   currentInventoryDragPayload,
@@ -79,6 +79,10 @@ function slotPositionVars(slot: number) {
 }
 
 function renderGearPreview(gear: GearDrop, iconLabel: string, title: string) {
+  const statRows = Object.entries(gear.stats ?? {})
+    .filter(([, value]) => Number.isFinite(value) && value > 0)
+    .map(([stat, value]) => `<div><dt>${coreStatLabels[stat as keyof typeof coreStatLabels]}</dt><dd>+${value}</dd></div>`)
+    .join("");
   const specials = gear.frame.weaponSpecials.length > 0
     ? gear.frame.weaponSpecials.map((special) => `<li><strong>${escapeHtml(special.name)}</strong><span>${special.cost} Bloom Meter, ${special.cooldown}s cooldown</span></li>`).join("")
     : `<li><strong>Class defaults</strong><span>Uses the character's base weapon specials.</span></li>`;
@@ -103,6 +107,7 @@ function renderGearPreview(gear: GearDrop, iconLabel: string, title: string) {
       <p>${escapeHtml(gear.ability)}</p>
       <dl>
         <div><dt>Power</dt><dd>+${gear.power}</dd></div>
+        ${statRows}
       </dl>
       <section>
         <h3>Abilities</h3>

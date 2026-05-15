@@ -16,6 +16,7 @@ import {
 import { directionFromVector, distance, lengthSq } from "../math";
 import type { SpecialAbility } from "../types";
 import { applyChain, dealEnemyDamage } from "./damage";
+import { scaleGearDamage } from "./gear";
 import {
   magicMissileCastTiming,
   moonfallCastTiming,
@@ -99,7 +100,7 @@ function castSpecialForActiveMember(state: GameState, index: number, targetMembe
       ownerMemberId: player.id,
       x: enemy.x,
       y: enemy.y,
-      damage: 48 + Math.ceil(combat.equippedGear.power * 0.75) + (motherLoad?.damageBonus ?? 0),
+      damage: scaleGearDamage(player, 48 + Math.ceil(combat.equippedGear.power * 0.75)) + (motherLoad?.damageBonus ?? 0),
       radius: 132,
       timer: moonfallCastTiming.releaseDelay,
     };
@@ -113,7 +114,7 @@ function castSpecialForActiveMember(state: GameState, index: number, targetMembe
     player.invulnerableTime = Math.max(player.invulnerableTime, 0.28, motherLoad?.invulnerableTime ?? 0);
     spawnMotherslashWaves(
       state,
-      50 + Math.ceil(combat.equippedGear.power * 1.2) + (motherLoad?.damageBonus ?? 0),
+      scaleGearDamage(player, 50 + Math.ceil(combat.equippedGear.power * 1.2)) + (motherLoad?.damageBonus ?? 0),
       ability.range,
       motherLoad?.chainTag ?? "Cyclone",
     );
@@ -133,7 +134,7 @@ function castSpecialForActiveMember(state: GameState, index: number, targetMembe
     const empowered = !!motherLoad;
     spawnMotherloadBreaker(
       state,
-      38 + Math.ceil(combat.equippedGear.power * 1.05) + (motherLoad?.damageBonus ?? 0) + (empowered ? 16 : 0),
+      scaleGearDamage(player, 38 + Math.ceil(combat.equippedGear.power * 1.05)) + (motherLoad?.damageBonus ?? 0) + (empowered ? 16 : 0),
       empowered,
     );
     events.push(
@@ -144,7 +145,7 @@ function castSpecialForActiveMember(state: GameState, index: number, targetMembe
 
   if (ability.id === "radiant-brand") {
     events.push(soundEvent("radiantBrand"));
-    dealEnemyDamage(state, 17 + combat.equippedGear.power + (motherLoad?.damageBonus ?? 0), "Radiant Brand", events);
+    dealEnemyDamage(state, scaleGearDamage(player, 17 + combat.equippedGear.power) + (motherLoad?.damageBonus ?? 0), "Radiant Brand", events);
     applyChain(state, "Radiant", 8);
     events.push(logEvent("Radiant primer applied", "Judgment can detonate it"));
   }
@@ -154,13 +155,13 @@ function castSpecialForActiveMember(state: GameState, index: number, targetMembe
     player.health = Math.min(player.maxHealth, player.health + 18);
     events.push(soundEvent("wardPulse"), logEvent("Ward Pulse", "Recovered health and steadied your guard"));
     if (distanceToEnemy <= ability.range) {
-      dealEnemyDamage(state, 10 + combat.equippedGear.power, "Ward Pulse", events);
+      dealEnemyDamage(state, scaleGearDamage(player, 10 + combat.equippedGear.power), "Ward Pulse", events);
     }
   }
 
   if (ability.id === "judgment") {
     events.push(soundEvent("judgment"));
-    let damage = 25 + combat.equippedGear.power + (motherLoad?.damageBonus ?? 0);
+    let damage = scaleGearDamage(player, 25 + combat.equippedGear.power) + (motherLoad?.damageBonus ?? 0);
     if (enemy.chainTag === "Radiant") {
       damage += 24;
       player.health = Math.min(player.maxHealth, player.health + 12);
@@ -343,7 +344,7 @@ function executeLatticeAbility(state: GameState, slotIndex: number, events: Game
     player.attackFlash = 0;
     player.specialAnim = "rootbreaker_cleave";
     player.specialFlash = 0.84;
-    spawnRootbreakerCleave(state, 22 + Math.ceil(combat.equippedGear.power * 0.75));
+    spawnRootbreakerCleave(state, scaleGearDamage(player, 22 + Math.ceil(combat.equippedGear.power * 0.75)));
     events.push(
       soundEvent("rootbreakerCleaveSlam"),
       soundEvent("rootbreakerShockwaveTravel"),
@@ -361,7 +362,7 @@ function executeLatticeAbility(state: GameState, slotIndex: number, events: Game
     player.specialAnim = "thornwall_counter";
     player.specialFlash = 0.84;
     player.invulnerableTime = Math.max(player.invulnerableTime, 0.36);
-    spawnThornwallCounter(state, 18 + Math.ceil(combat.equippedGear.power * 0.65));
+    spawnThornwallCounter(state, scaleGearDamage(player, 18 + Math.ceil(combat.equippedGear.power * 0.65)));
     events.push(soundEvent("thornwallGuard"), logEvent("Thornwall Counter", "The lattice plants a thorn guard"));
     state.combat.autoLoop.lastResolvedKind = ability.kind;
     return true;
@@ -371,7 +372,7 @@ function executeLatticeAbility(state: GameState, slotIndex: number, events: Game
     const { player, enemy } = state;
     const toEnemy = { x: enemy.x - player.x, y: enemy.y - player.y };
     if (lengthSq(toEnemy) > 0.001) player.direction = directionFromVector(toEnemy);
-    const damage = Math.max(1, Math.round(basicWeaponDamage(state) * 1.55) + 6);
+    const damage = scaleGearDamage(player, Math.max(1, Math.round(basicWeaponDamage(state) * 1.55) + 6));
     player.specialFlash = moonveilFlourishTiming.specialFlash;
     player.invulnerableTime = Math.max(player.invulnerableTime, 0.18);
     spawnMoonBurstEffect(state, enemy, damage);
@@ -386,7 +387,7 @@ function executeLatticeAbility(state: GameState, slotIndex: number, events: Game
     if (lengthSq(toEnemy) > 0.001) {
       player.direction = directionFromVector(toEnemy);
     }
-    const damage = Math.max(1, Math.round(basicWeaponDamage(state) * 1.65) + 8);
+    const damage = scaleGearDamage(player, Math.max(1, Math.round(basicWeaponDamage(state) * 1.65) + 8));
     player.specialAnim = "verdant_guillotine";
     player.specialFlash = 0.94;
     player.invulnerableTime = Math.max(player.invulnerableTime, 0.22);
@@ -406,7 +407,7 @@ function executeLatticeAbility(state: GameState, slotIndex: number, events: Game
     : ability.kind === "front_flip_slash"
       ? ability.name
       : "Basic Attack 1";
-  dealBasicWeaponAttack(state, damage, source, slotIndex, events);
+  dealBasicWeaponAttack(state, scaleGearDamage(state.player, damage), source, slotIndex, events);
   if (ability.kind === "front_flip_slash") {
     state.player.attackFlash = 0;
     state.player.specialFlash = 0;

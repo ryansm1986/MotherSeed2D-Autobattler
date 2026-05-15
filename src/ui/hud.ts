@@ -154,6 +154,14 @@ function renderSkillBar(state: GameState) {
 
 export function renderHud(state: GameState): HudViewModel {
   const currentClass = selectedClass(state);
+  const phaseLabel = state.round.phase[0].toUpperCase() + state.round.phase.slice(1);
+  const resultLabel = state.round.lastResult === "victory"
+    ? `+${state.round.lastRewardGold} gold`
+    : state.round.lastResult === "defeat"
+      ? "Regrouping"
+      : state.round.phase === "shop"
+        ? state.round.shop.message
+        : `Round ${state.round.roundIndex || 1}`;
   const healthValue = state.player.health / state.player.maxHealth;
   const staminaValue = state.player.stamina / state.player.maxStamina;
   const meterValue = state.player.meter / state.player.maxMeter;
@@ -173,6 +181,9 @@ export function renderHud(state: GameState): HudViewModel {
     </div>
     <div class="label-row"><strong>${currentClass.name}</strong><span>${Math.ceil(state.player.health)} / ${state.player.maxHealth}</span></div>
     <div class="bar"><div class="fill health" style="--value:${healthValue}"></div></div>
+    <div class="label-row"><span>Gold</span><span>${state.round.gold}</span></div>
+    <div class="label-row"><span>Phase</span><span>${escapeHtml(phaseLabel)}</span></div>
+    <div class="label-row"><span>Round</span><span>${escapeHtml(resultLabel)}</span></div>
     <div class="label-row"><span>Stamina</span><span>${Math.floor(state.player.stamina)}</span></div>
     <div class="bar"><div class="fill stamina" style="--value:${staminaValue}"></div></div>
     <div class="label-row"><span>Bloom Meter</span><span>${Math.floor(state.player.meter)}</span></div>

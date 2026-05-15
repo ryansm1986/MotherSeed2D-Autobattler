@@ -105,12 +105,15 @@ export type WorldAssetName =
 
 export type GearSlot = "weapon" | "helmet" | "bodyArmour" | "gloves" | "ring" | "amulet" | "pants" | "boots";
 export type GearEquipSlot = "weapon" | "helmet" | "bodyArmour" | "gloves" | "ringOne" | "ringTwo" | "amulet" | "pants" | "boots";
+export type CoreStat = "strength" | "intelligence" | "dexterity" | "vitality";
+export type GearStatBlock = Partial<Record<CoreStat, number>>;
 
 export type GearDrop = {
   name: string;
   slot: GearSlot;
   rarity: "Common" | "Uncommon" | "Rare";
   power: number;
+  stats: GearStatBlock;
   ability: string;
   frame: FrameGear;
 };

@@ -6,6 +6,7 @@ import {
   equipDrop,
   equipDropToSlot,
   equipInventoryItem,
+  gearDamageMultiplier,
   gearInventorySize,
   generateGear,
   grantFullStarterGear,
@@ -67,6 +68,8 @@ assert(state.combat.equippedItems.helmet, "debug starter gear should equip a hel
 assert(state.combat.equippedItems.ringOne && state.combat.equippedItems.ringTwo, "debug starter gear should equip both rings");
 assert(state.combat.equippedItems.amulet?.frame.weaponSpecials.some((special) => special.id === "motherspin"), "debug starter gear amulet should grant Motherspin as a special");
 assert(activeWeaponSpecials(state).some((special) => special.id === "motherspin"), "active specials should include specials granted by non-weapon gear");
+assert(state.player.maxHealth > 140, "equipped starter gear vitality should raise derived max health");
+assert(gearDamageMultiplier(state.player) > 1, "equipped associated stats should raise derived damage multiplier");
 
 const partyState = createInitialGameState("warrior");
 assert(togglePartyClassSelection(partyState, "mage"), "implemented mage should be addable to the party");
@@ -270,9 +273,29 @@ assert(partyWipeState.combat.playerRespawnTimer > 0, "damage helper should trigg
 
 const debugOptions = debugEncounterOptions();
 assert(debugOptions.length >= 5, "debug menu should expose authored encounters");
-teleportToDebugEncounter(state, debugOptions[2].encounterIndex);
-assert(state.combat.roomIndex === debugOptions[2].roomIndex, "debug teleport should set the target room");
-assert(state.enemy.visible && state.combat.targetLocked, "debug teleport should spawn and lock the encounter");
+const debugTeleportState = createInitialGameState("warrior");
+teleportToDebugEncounter(debugTeleportState, debugOptions[2].encounterIndex);
+assert(debugTeleportState.combat.roomIndex === debugOptions[2].roomIndex, "debug teleport should set the target room");
+assert(debugTeleportState.enemy.visible && debugTeleportState.combat.targetLocked, "debug teleport should spawn and lock the encounter");
+assert(debugTeleportState.round.phase === "battle", "debug teleport should enter the autobattler battle phase");
+
+const autobattleRoundState = createInitialGameState("warrior");
+teleportToDebugEncounter(autobattleRoundState, debugOptions[0].encounterIndex);
+autobattleRoundState.extraEnemies.length = 0;
+autobattleRoundState.enemy.health = 1;
+const startingGold = autobattleRoundState.round.gold;
+dealEnemyDamage(autobattleRoundState, 1, "Smoke victory", []);
+updateSimulation(autobattleRoundState, createInputState(), 0.016);
+assert(autobattleRoundState.round.phase === "victory", "defeating the encounter should enter victory phase");
+assert(autobattleRoundState.round.gold > startingGold, "victory should award gold");
+const awardedGold = autobattleRoundState.round.gold;
+updateSimulation(autobattleRoundState, createInputState(), 0.016);
+assert(autobattleRoundState.round.gold === awardedGold, "victory gold should only be awarded once");
+for (let tick = 0; tick < 90; tick += 1) {
+  updateSimulation(autobattleRoundState, createInputState(), 0.016);
+}
+assert(autobattleRoundState.round.phase === "shop", "victory should settle into the shop placeholder phase");
+
 debugOptions.forEach((option) => {
   const debugDeathState = createInitialGameState("warrior");
   grantFullStarterGear(debugDeathState);
@@ -686,6 +709,7 @@ for (let index = 0; index < 25; index += 1) {
     "gear slot should be known",
   );
   assert(gear.power >= 2 && gear.power <= 8, "gear power should stay in expected bounds");
+  assert(Object.values(gear.stats).some((value) => value > 0), "generated gear should include at least one core stat roll");
   assert(
     gear.slot === "weapon" ? gear.frame.weaponSpecials.length > 0 : gear.frame.weaponSpecials.length === 0,
     "only generated weapons should include weapon specials",
@@ -792,6 +816,7 @@ warriorBranchState.combat.equippedItems.bodyArmour = {
   slot: "bodyArmour",
   rarity: "Common",
   power: 1,
+  stats: { strength: 1 },
   ability: "Grants Warrior gear auto branches.",
   frame: warriorBranchGearFrame,
 };
@@ -941,7 +966,7 @@ latticeState.combat.branchLattice.abilitySlotIds[1] = "lattice:not-on-frame";
 latticeState.combat.branchLattice.abilitySlotIds[2] = haste.id;
 latticeState.combat.branchLattice.modifierSlotIds[0] = "mod:not-on-frame";
 latticeState.combat.branchLattice.modifierSlotIds[2] = fire.id;
-for (let index = 0; index < 50; index += 1) {
+for (let index = 0; index < 200; index += 1) {
   const gear = generateGear("warrior");
   if (gear.slot === "weapon") {
     latticeState.combat.droppedGear = gear;

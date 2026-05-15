@@ -123,8 +123,12 @@ const mobileControls = createMobileControls({
   },
   inputState,
   canUseGameplayInput: () => isGameplayActive(state),
-  onTarget: () => handleEvents(lockTarget(state)),
-  onSpecial: (index) => handleEvents(castSpecial(state, index)),
+  onTarget: () => {
+    if (state.round.phase !== "battle") handleEvents(lockTarget(state));
+  },
+  onSpecial: (index) => {
+    if (state.round.phase !== "battle") handleEvents(castSpecial(state, index));
+  },
   onEquip: () => openLootOrEquip(),
   onInventory: () => toggleInventory(),
   onBranchLattice: () => toggleBranchLattice(),
@@ -351,6 +355,7 @@ function handleHudClick(event: MouseEvent) {
   const memberId = partySpecial?.dataset.partySpecialMember;
   const specialIndex = Number(partySpecial?.dataset.partySpecialIndex);
   if (!memberId || !Number.isFinite(specialIndex)) return;
+  if (state.round.phase === "battle") return;
   handleEvents(castPartySpecial(state, memberId, specialIndex));
   updateHud();
 }
@@ -390,6 +395,7 @@ function handleHudContextMenu(event: MouseEvent) {
 
 function castSkillBarSlot(slotIndex: number) {
   if (!isGameplayActive(state)) return false;
+  if (state.round.phase === "battle") return false;
   normalizeSkillBarBindings(state);
   const binding = state.ui.skillBarBindings[slotIndex];
   const option = partySkillBarOptions(state).find((candidate) => candidate.id === binding);
@@ -1035,6 +1041,7 @@ function handleKeyDown(event: KeyboardEvent) {
 
   if (/^F[1-4]$/.test(event.code) && isGameplayVisible(state)) {
     event.preventDefault();
+    if (state.round.phase === "battle") return;
     const index = Number(event.code.slice(1)) - 1;
     const member = state.party.members[index];
     if (member) {
@@ -1063,7 +1070,7 @@ function handleKeyDown(event: KeyboardEvent) {
 
   if (action === "target-next") {
     event.preventDefault();
-    handleEvents(lockTarget(state));
+    if (state.round.phase !== "battle") handleEvents(lockTarget(state));
   }
   if (action === "equip") {
     event.preventDefault();
@@ -1274,7 +1281,7 @@ function updateLootCorpseHover(clientX: number, clientY: number) {
 
   const worldPoint = screenToWorld(shell.canvas, renderer.camera, clientX, clientY);
   const hoveredCorpse = lootCorpseAtWorldPoint(worldPoint);
-  const hoveredEnemy = isEnemyAtWorldPoint(state, worldPoint);
+  const hoveredEnemy = state.round.phase === "battle" ? false : isEnemyAtWorldPoint(state, worldPoint);
   state.combat.hoveredLootCorpseId = hoveredCorpse?.instanceId ?? null;
   gameCursor.setCanvasState(hoveredCorpse || hoveredEnemy ? "clickable" : null);
 }
@@ -1387,7 +1394,9 @@ function ensureRenderAssetsReady(sourceState: typeof state) {
           return;
         }
       }
-      handleEvents(isEnemyAtWorldPoint(state, worldPoint) ? lockTarget(state) : clearTarget(state));
+      if (state.round.phase !== "battle") {
+        handleEvents(isEnemyAtWorldPoint(state, worldPoint) ? lockTarget(state) : clearTarget(state));
+      }
     });
     shell.canvas.addEventListener("pointermove", (event) => {
       updateLootCorpseHover(event.clientX, event.clientY);

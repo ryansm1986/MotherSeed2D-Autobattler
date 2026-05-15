@@ -1,4 +1,5 @@
-import type { GameEvent, GameState, InventoryBagItem } from "../state";
+import { characterClasses } from "../content/classes";
+import type { GameEvent, GameState, InventoryBagItem, PartyMemberState } from "../state";
 import {
   branchLatticeAbilitySlotCount,
   branchLatticeModifierSlotCount,
@@ -13,9 +14,15 @@ import {
   logEvent,
   syncActiveMemberFromCombat,
 } from "../state";
-import type { ClassId, GearDrop, GearEquipSlot, GearSlot, SpecialAbility } from "../types";
+import type { ClassId, CoreStat, GearDrop, GearEquipSlot, GearSlot, GearStatBlock, SpecialAbility } from "../types";
 
 const gearSlots: GearSlot[] = ["weapon", "helmet", "bodyArmour", "gloves", "ring", "amulet", "pants", "boots"];
+export const coreStatLabels: Record<CoreStat, string> = {
+  strength: "Strength",
+  intelligence: "Intelligence",
+  dexterity: "Dexterity",
+  vitality: "Vitality",
+};
 
 const gearSlotLabels: Record<GearSlot, string> = {
   weapon: "Weapon",
@@ -110,9 +117,78 @@ function createEmptyWeapon(classId: ClassId): GearDrop {
     slot: "weapon",
     rarity: "Common",
     power: 0,
+    stats: {},
     ability: "No weapon equipped.",
     frame,
   };
+}
+
+function associatedDamageStat(classId: ClassId): CoreStat {
+  if (classId === "mage" || classId === "cleric") return "intelligence";
+  if (classId === "ranger" || classId === "thief") return "dexterity";
+  return "strength";
+}
+
+function primaryStatForSlot(classId: ClassId, slot: GearSlot): CoreStat {
+  if (slot === "bodyArmour" || slot === "pants") return "vitality";
+  if (slot === "helmet" && (classId === "mage" || classId === "cleric")) return "intelligence";
+  if (slot === "gloves" && (classId === "ranger" || classId === "thief")) return "dexterity";
+  if (slot === "boots") return classId === "warrior" ? "strength" : "dexterity";
+  return associatedDamageStat(classId);
+}
+
+function statBlockForGear(classId: ClassId, slot: GearSlot, rarity: GearDrop["rarity"], power: number): GearStatBlock {
+  const stats: GearStatBlock = {};
+  const primary = primaryStatForSlot(classId, slot);
+  stats[primary] = (stats[primary] ?? 0) + power;
+
+  if (rarity !== "Common") {
+    const secondary: CoreStat = primary === "vitality" ? associatedDamageStat(classId) : "vitality";
+    stats[secondary] = (stats[secondary] ?? 0) + Math.max(1, Math.floor(power / 2));
+  }
+  if (rarity === "Rare") {
+    const flex: CoreStat = classId === "warrior" ? "dexterity" : "strength";
+    stats[flex] = (stats[flex] ?? 0) + 1;
+  }
+
+  return stats;
+}
+
+export function aggregateEquippedStats(member: PartyMemberState): Record<CoreStat, number> {
+  const totals: Record<CoreStat, number> = {
+    strength: 0,
+    intelligence: 0,
+    dexterity: 0,
+    vitality: 0,
+  };
+  Object.values(member.equippedItems).forEach((gear) => {
+    Object.entries(gear?.stats ?? {}).forEach(([stat, value]) => {
+      if (stat in totals && Number.isFinite(value)) {
+        totals[stat as CoreStat] += value;
+      }
+    });
+  });
+  return totals;
+}
+
+export function gearDamageMultiplier(member: PartyMemberState) {
+  const stats = aggregateEquippedStats(member);
+  return 1 + stats[associatedDamageStat(member.classId)] * 0.01;
+}
+
+export function scaleGearDamage(member: PartyMemberState, amount: number) {
+  return Math.max(1, Math.round(amount * gearDamageMultiplier(member)));
+}
+
+export function refreshDerivedGearStats(member: PartyMemberState) {
+  const previousMaxHealth = member.maxHealth;
+  const nextMaxHealth = characterClasses[member.classId].stats.health + aggregateEquippedStats(member).vitality * 5;
+  member.maxHealth = Math.max(1, nextMaxHealth);
+  if (member.lifeState === "dead") {
+    member.health = 0;
+  } else if (previousMaxHealth !== member.maxHealth) {
+    member.health = Math.min(member.maxHealth, Math.max(1, member.health + (member.maxHealth - previousMaxHealth)));
+  }
 }
 
 export function generateGear(classId: ClassId = "warrior"): GearDrop {
@@ -137,6 +213,7 @@ export function generateGear(classId: ClassId = "warrior"): GearDrop {
     slot,
     rarity,
     power,
+    stats: statBlockForGear(classId, slot, rarity, power),
     ability: gearSlotAbilities[slot][rarity],
     frame,
   };
@@ -155,6 +232,7 @@ function createStarterDebugGear(classId: ClassId, slot: GearSlot, label = gearDi
     slot,
     rarity: "Common",
     power: 1,
+    stats: statBlockForGear(classId, slot, "Common", 1),
     ability: gearSlotAbilities[slot].Common,
     frame,
   };
@@ -178,6 +256,7 @@ function createDebugStarterAmulet(classId: ClassId): GearDrop {
     slot: "amulet",
     rarity: "Common",
     power: 1,
+    stats: statBlockForGear(classId, "amulet", "Common", 1),
     ability: "Grants Mother Spin, the original Bloom Special spin from the green warrior.",
     frame: {
       weaponSpecials: [motherspin],
@@ -490,4 +569,5 @@ export function normalizeBranchLattice(state: GameState) {
     state.combat.branchLattice.selectedModifierSlot = 0;
   }
   syncActiveMemberFromCombat(state);
+  refreshDerivedGearStats(state.player);
 }

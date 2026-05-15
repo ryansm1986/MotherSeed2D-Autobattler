@@ -575,6 +575,25 @@ export type PartySkillBarOption = {
   ability: SpecialAbility;
 };
 
+export type GamePhase = "preparing" | "battle" | "victory" | "defeat" | "shop";
+
+export type ShopPlaceholderState = {
+  inventorySize: number;
+  rerollCost: number;
+  message: string;
+};
+
+export type RoundState = {
+  phase: GamePhase;
+  roundIndex: number;
+  gold: number;
+  lastRewardGold: number;
+  lastResult: "victory" | "defeat" | null;
+  phaseTimer: number;
+  rewardedRoomIndex: number | null;
+  shop: ShopPlaceholderState;
+};
+
 export type UiFlowState = {
   isTitleActive: boolean;
   isCharacterSelectActive: boolean;
@@ -669,6 +688,7 @@ export type GameState = {
   obstacles: Obstacle[];
   combat: CombatRuntimeState;
   party: PartyState;
+  round: RoundState;
   intro: IntroRoomState;
   ui: UiFlowState;
 };
@@ -736,6 +756,7 @@ export function ensureCombatRuntimeState(state: GameState) {
   if (!Number.isFinite(combat.playerRespawnTimer)) combat.playerRespawnTimer = 0;
   if (!Number.isFinite(combat.respawnTimer)) combat.respawnTimer = 0;
   if (!Number.isFinite(combat.roomTransitionCooldown)) combat.roomTransitionCooldown = 0;
+  ensureRoundState(state);
   if (!Array.isArray(state.extraEnemies)) state.extraEnemies = [];
   if (!state.party || !Array.isArray(state.party.members) || state.party.members.length === 0) {
     const member = createPartyMember(state.selectedClassId, 0, state.player.x, state.player.y);
@@ -814,6 +835,130 @@ export type CodgerTutorialState = {
   step: CodgerTutorialStep;
   completionReason: CodgerTutorialCompletionReason | null;
 };
+
+export function ensureRoundState(state: GameState) {
+  if (!state.round || typeof state.round !== "object") {
+    state.round = createRoundState();
+  }
+  const round = state.round;
+  if (!isGamePhase(round.phase)) round.phase = state.combat?.targetLocked ? "battle" : "preparing";
+  if (!Number.isFinite(round.roundIndex)) round.roundIndex = Math.max(0, state.combat?.roomIndex ?? 0);
+  if (!Number.isFinite(round.gold)) round.gold = 0;
+  if (!Number.isFinite(round.lastRewardGold)) round.lastRewardGold = 0;
+  if (round.lastResult !== "victory" && round.lastResult !== "defeat") round.lastResult = null;
+  if (!Number.isFinite(round.phaseTimer)) round.phaseTimer = 0;
+  if (round.rewardedRoomIndex !== null && !Number.isFinite(round.rewardedRoomIndex)) round.rewardedRoomIndex = null;
+  if (!round.shop || typeof round.shop !== "object") round.shop = createShopPlaceholderState();
+  if (!Number.isFinite(round.shop.inventorySize)) round.shop.inventorySize = 3;
+  if (!Number.isFinite(round.shop.rerollCost)) round.shop.rerollCost = 2;
+  if (typeof round.shop.message !== "string") round.shop.message = createShopPlaceholderState().message;
+}
+
+function isGamePhase(value: unknown): value is GamePhase {
+  return value === "preparing" || value === "battle" || value === "victory" || value === "defeat" || value === "shop";
+}
+
+export function createRoundState(): RoundState {
+  return {
+    phase: "preparing",
+    roundIndex: 0,
+    gold: 0,
+    lastRewardGold: 0,
+    lastResult: null,
+    phaseTimer: 0,
+    rewardedRoomIndex: null,
+    shop: createShopPlaceholderState(),
+  };
+}
+
+function createShopPlaceholderState(): ShopPlaceholderState {
+  return {
+    inventorySize: 3,
+    rerollCost: 2,
+    message: "Shop placeholder: spendable gear offers arrive next.",
+  };
+}
+
+export function beginBattleRound(state: GameState) {
+  ensureRoundState(state);
+  state.round.phase = "battle";
+  state.round.roundIndex = Math.max(1, state.combat.roomIndex);
+  state.round.lastRewardGold = 0;
+  state.round.lastResult = null;
+  state.round.phaseTimer = 0;
+  state.combat.targetLocked = true;
+  state.party.pendingTargetedSpecial = null;
+  state.party.members.forEach((member) => {
+    if (member.lifeState === "alive") member.aiMode = "engage";
+  });
+}
+
+export function completeBattleVictory(state: GameState, events: GameEvent[]) {
+  ensureRoundState(state);
+  if (state.round.phase !== "battle") return;
+  const roomIndex = Math.max(1, state.combat.roomIndex);
+  const rewardGold = state.round.rewardedRoomIndex === roomIndex ? 0 : goldRewardForRoom(state);
+  state.round.phase = "victory";
+  state.round.lastResult = "victory";
+  state.round.lastRewardGold = rewardGold;
+  state.round.phaseTimer = 1.25;
+  state.round.rewardedRoomIndex = roomIndex;
+  state.round.gold += rewardGold;
+  state.combat.targetLocked = false;
+  state.party.pendingTargetedSpecial = null;
+  events.push(logEvent("Victory", rewardGold > 0 ? `Earned ${rewardGold} gold` : "Rewards already claimed"));
+}
+
+export function completeBattleDefeat(state: GameState, events: GameEvent[]) {
+  ensureRoundState(state);
+  if (state.round.phase !== "battle") return;
+  state.round.phase = "defeat";
+  state.round.lastResult = "defeat";
+  state.round.lastRewardGold = 0;
+  state.round.phaseTimer = 1.25;
+  state.combat.targetLocked = false;
+  state.party.pendingTargetedSpecial = null;
+  events.push(logEvent("Defeat", "Returning to the shop with the party regrown"));
+}
+
+export function enterShopPhase(state: GameState) {
+  ensureRoundState(state);
+  state.round.phase = "shop";
+  state.round.phaseTimer = 0;
+  state.combat.targetLocked = false;
+  state.combat.pendingMagicMissileCast = null;
+  state.combat.pendingMoonfallCast = null;
+  state.party.pendingTargetedSpecial = null;
+  recoverPartyForShop(state);
+}
+
+function goldRewardForRoom(state: GameState) {
+  const roomIndex = Math.max(1, state.combat.roomIndex);
+  const enemyCount = allEnemies(state).filter((enemy) => enemy.visible).length;
+  return 8 + roomIndex * 3 + Math.max(0, enemyCount - 1) * 4;
+}
+
+function recoverPartyForShop(state: GameState) {
+  state.party.members.forEach((member, index) => {
+    member.lifeState = "alive";
+    member.health = Math.max(1, Math.ceil(member.maxHealth * 0.65));
+    member.stamina = member.maxStamina;
+    member.meter = Math.min(member.meter, Math.floor(member.maxMeter * 0.5));
+    member.dodgeTime = 0;
+    member.dodgeAnimTime = 0;
+    member.invulnerableTime = 0.8;
+    member.aiMode = "follow";
+    member.anim = "idle";
+    if (!Number.isFinite(member.x) || !Number.isFinite(member.y)) {
+      member.x = world.playerSpawn.x + index * 42;
+      member.y = world.playerSpawn.y + index * 36;
+    }
+  });
+  const activeMember = getPartyMember(state, state.party.activeMemberId) ?? state.party.members[0];
+  state.party.activeMemberId = activeMember.id;
+  bindActiveMemberAliases(state);
+  state.combat.playerRespawnTimer = 0;
+}
 
 export function createInitialGameState(selectedClassId: ClassId = "warrior"): GameState {
   const initialMember = createPartyMember(selectedClassId, 0, world.playerSpawn.x, world.playerSpawn.y);
@@ -924,6 +1069,7 @@ export function createInitialGameState(selectedClassId: ClassId = "warrior"): Ga
       motherLoadWindow: initialMember.motherLoadWindow,
       pendingTargetedSpecial: null,
     },
+    round: createRoundState(),
     intro: createIntroRoomState(),
     ui: {
       isTitleActive: true,
@@ -1449,6 +1595,7 @@ export function createStartingWeapon(classId: ClassId): GearDrop {
     slot: "weapon",
     rarity: "Common",
     power: 0,
+    stats: {},
     ability: "Every third auto-attack deals +5 damage.",
     frame,
   };
@@ -1461,6 +1608,7 @@ export function createStartingAmulet(classId: ClassId): GearDrop {
     slot: "amulet",
     rarity: "Common",
     power: 0,
+    stats: {},
     ability: `Grants ${finisher.name}, a Branch Lattice Finisher.`,
     frame: {
       weaponSpecials: [],

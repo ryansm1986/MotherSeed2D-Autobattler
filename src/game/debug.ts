@@ -1,5 +1,6 @@
 import { enemyRoster, enemiesForRoom } from "./content/enemies";
 import {
+  beginBattleRound,
   createAutoAttackLoopState,
   ensureCombatRuntimeState,
   logEvent,
@@ -59,6 +60,7 @@ export function teleportToDebugEncounter(state: GameState, encounterIndex: numbe
   state.player.dodgeTime = 0;
   state.player.invulnerableTime = 0;
   spawnRoomEnemy(state);
+  beginBattleRound(state);
 
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
   return [logEvent("Debug teleport", `Room ${roomIndex}: ${encounterNames}`)];

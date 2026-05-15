@@ -1,6 +1,6 @@
 import type { GameState } from "../game/state";
 import { lootCorpse } from "../game/state";
-import { gearDisplaySlot, gearInventorySize } from "../game/combat/gear";
+import { coreStatLabels, gearDisplaySlot, gearInventorySize } from "../game/combat/gear";
 import type { GearDrop } from "../game/types";
 import { clearInventoryDragPayload, inventoryDragMime, setInventoryDragPayload } from "./inventory-drag";
 import { itemIconForGear } from "./item-icons";
@@ -75,6 +75,10 @@ function renderLootItem(state: GameState, gear: GearDrop) {
 }
 
 function renderGearPreview(gear: GearDrop, iconLabel: string) {
+  const statRows = Object.entries(gear.stats ?? {})
+    .filter(([, value]) => Number.isFinite(value) && value > 0)
+    .map(([stat, value]) => `<div><dt>${coreStatLabels[stat as keyof typeof coreStatLabels]}</dt><dd>+${value}</dd></div>`)
+    .join("");
   const specials = gear.frame.weaponSpecials.length > 0
     ? gear.frame.weaponSpecials.map((special) => `
       <li>
@@ -108,6 +112,7 @@ function renderGearPreview(gear: GearDrop, iconLabel: string) {
       <p>${escapeHtml(gear.ability)}</p>
       <dl>
         <div><dt>Power</dt><dd>+${gear.power}</dd></div>
+        ${statRows}
       </dl>
       <section>
         <h3>Abilities</h3>

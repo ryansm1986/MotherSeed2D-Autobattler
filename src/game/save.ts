@@ -1,4 +1,4 @@
-import { normalizeBranchLattice } from "./combat/gear";
+import { normalizeBranchLattice, refreshDerivedGearStats } from "./combat/gear";
 import { characterClasses } from "./content/classes";
 import {
   createAutoAttackLoopState,
@@ -7,18 +7,20 @@ import {
   createPartyMember,
   createStartingAmulet,
   bindActiveMemberAliases,
+  beginBattleRound,
   skillBarSlotCount,
   type GameState,
   type IntroRoomState,
   type InventoryBagItem,
   type PartyMemberState,
+  type RoundState,
 } from "./state";
-import type { BranchLatticeState, ClassId, GearDrop, GearEquipSlot } from "./types";
+import type { BranchLatticeState, ClassId, CoreStat, GearDrop, GearEquipSlot, GearStatBlock } from "./types";
 import { world } from "./world/arena";
 import { spawnRoomEnemy } from "./world/rooms";
 
 const saveStorageKey = "motherseed-save-v1";
-const saveVersion = 2;
+const saveVersion = 3;
 const equipSlots: GearEquipSlot[] = [
   "weapon",
   "helmet",
@@ -49,6 +51,7 @@ type SavedGameData = {
   activeMemberId: string;
   selectedInventoryMemberId: string;
   selectedLatticeMemberId: string;
+  round: SavedRoundState;
   roomIndex: number;
   intro: IntroRoomState;
   inventoryItems: InventoryBagItem[];
@@ -58,8 +61,10 @@ type SavedGameData = {
   branchLattice: BranchLatticeState;
 };
 
-type SavedLegacyGameData = Omit<SavedGameData, "version" | "party" | "activeMemberId" | "selectedInventoryMemberId" | "selectedLatticeMemberId"> & {
-  version: 1;
+type SavedRoundState = Pick<RoundState, "phase" | "roundIndex" | "gold" | "lastRewardGold" | "lastResult" | "rewardedRoomIndex">;
+
+type SavedLegacyGameData = Omit<SavedGameData, "version" | "party" | "activeMemberId" | "selectedInventoryMemberId" | "selectedLatticeMemberId" | "round"> & {
+  version: 1 | 2;
 };
 
 type SavedPartyMemberState = SavedPlayerState & {
@@ -113,6 +118,14 @@ export function saveGame(state: GameState): SaveGameResult {
     activeMemberId: state.party.activeMemberId,
     selectedInventoryMemberId: state.party.selectedInventoryMemberId,
     selectedLatticeMemberId: state.party.selectedLatticeMemberId,
+    round: {
+      phase: state.round.phase,
+      roundIndex: state.round.roundIndex,
+      gold: state.round.gold,
+      lastRewardGold: state.round.lastRewardGold,
+      lastResult: state.round.lastResult,
+      rewardedRoomIndex: state.round.rewardedRoomIndex,
+    },
     roomIndex: state.combat.roomIndex,
     intro: cloneJson(state.intro),
     inventoryItems: cloneJson(state.combat.inventoryItems),
@@ -168,6 +181,12 @@ function restoreSavedGame(saved: SavedGameData): GameState {
   state.party.selectedLatticeMemberId = state.party.members.some((member) => member.id === saved.selectedLatticeMemberId)
     ? saved.selectedLatticeMemberId
     : state.party.activeMemberId;
+  state.round.phase = saved.round.phase;
+  state.round.roundIndex = saved.round.roundIndex;
+  state.round.gold = saved.round.gold;
+  state.round.lastRewardGold = saved.round.lastRewardGold;
+  state.round.lastResult = saved.round.lastResult;
+  state.round.rewardedRoomIndex = saved.round.rewardedRoomIndex;
   bindActiveMemberAliases(state);
 
   state.intro = cloneJson(saved.intro);
@@ -190,8 +209,11 @@ function restoreSavedGame(saved: SavedGameData): GameState {
   state.combat.hoveredLootCorpseId = null;
   state.combat.roomTransitionCooldown = 0;
 
-  if (state.combat.roomIndex > 0) {
+  if (state.combat.roomIndex > 0 && state.round.phase === "battle") {
     spawnRoomEnemy(state);
+    beginBattleRound(state);
+  } else if (state.combat.roomIndex > 0) {
+    state.combat.targetLocked = false;
   } else if (state.intro.tutorial.step === "equipAmulet" && state.combat.equippedItems.amulet?.frame.latticeAbilityOptions.some((option) => option.tags?.includes("Finisher"))) {
     state.intro.tutorial.step = "amuletEquippedChoice";
   } else if (state.intro.codger.phase === "giftOffered" && state.intro.tutorial.step === "equipAmulet") {
@@ -211,6 +233,7 @@ function restoreSavedGame(saved: SavedGameData): GameState {
     skillBarBindings: Array.from({ length: skillBarSlotCount }, () => null),
     openSkillBarSlot: null,
   };
+  state.party.members.forEach(refreshDerivedGearStats);
   normalizeBranchLattice(state);
   return state;
 }
@@ -234,16 +257,17 @@ function restorePartyMember(savedMember: SavedPartyMemberState, index: number): 
 }
 
 function parseSavedGameData(value: unknown): SavedGameData | null {
-  if (!isRecord(value) || (value.version !== saveVersion && value.version !== 1) || !isClassId(value.selectedClassId)) return null;
+  if (!isRecord(value) || (value.version !== saveVersion && value.version !== 2 && value.version !== 1) || !isClassId(value.selectedClassId)) return null;
   const player = parseSavedPlayerState(value.player);
   const intro = parseIntroRoomState(value.intro);
   const inventoryItems = parseInventoryItems(value.inventoryItems, value.selectedClassId);
   const equippedItems = parseEquippedItems(value.equippedItems);
   const equippedGear = parseGearDrop(value.equippedGear) ?? equippedItems.weapon;
   const branchLattice = parseBranchLatticeState(value.branchLattice);
-  const party = value.version === saveVersion
+  const party = value.version === saveVersion || value.version === 2
     ? parseSavedParty(value.party)
     : null;
+  const round = parseSavedRound(value.round);
   const roomIndex = asFiniteNumber(value.roomIndex);
   const nextInventoryItemId = asFiniteNumber(value.nextInventoryItemId);
   if (!player || !intro || !inventoryItems || !equippedGear || !branchLattice || roomIndex === null || nextInventoryItemId === null) {
@@ -270,6 +294,14 @@ function parseSavedGameData(value: unknown): SavedGameData | null {
     activeMemberId,
     selectedInventoryMemberId: typeof value.selectedInventoryMemberId === "string" ? value.selectedInventoryMemberId : activeMemberId,
     selectedLatticeMemberId: typeof value.selectedLatticeMemberId === "string" ? value.selectedLatticeMemberId : activeMemberId,
+    round: round ?? {
+      phase: roomIndex > 0 ? "battle" : "preparing",
+      roundIndex: Math.max(0, Math.floor(roomIndex)),
+      gold: 0,
+      lastRewardGold: 0,
+      lastResult: null,
+      rewardedRoomIndex: null,
+    },
     roomIndex,
     intro,
     inventoryItems,
@@ -302,6 +334,24 @@ function parseSavedParty(value: unknown): SavedPartyMemberState[] | null {
     });
   }
   return members;
+}
+
+function parseSavedRound(value: unknown): SavedRoundState | null {
+  if (!isRecord(value) || !isSavedPhase(value.phase)) return null;
+  const roundIndex = asFiniteNumber(value.roundIndex);
+  const gold = asFiniteNumber(value.gold);
+  const lastRewardGold = asFiniteNumber(value.lastRewardGold);
+  const rewardedRoomIndex = value.rewardedRoomIndex === null ? null : asFiniteNumber(value.rewardedRoomIndex);
+  if (roundIndex === null || gold === null || lastRewardGold === null || (value.rewardedRoomIndex !== null && rewardedRoomIndex === null)) return null;
+  const lastResult = value.lastResult === "victory" || value.lastResult === "defeat" ? value.lastResult : null;
+  return {
+    phase: value.phase,
+    roundIndex: Math.max(0, Math.floor(roundIndex)),
+    gold: Math.max(0, Math.floor(gold)),
+    lastRewardGold: Math.max(0, Math.floor(lastRewardGold)),
+    lastResult,
+    rewardedRoomIndex,
+  };
 }
 
 function parseSavedPlayerState(value: unknown): SavedPlayerState | null {
@@ -411,6 +461,7 @@ function parseEquippedItems(value: unknown): Partial<Record<GearEquipSlot, GearD
 function parseGearDrop(value: unknown): GearDrop | null {
   if (!isRecord(value) || !isRecord(value.frame)) return null;
   const power = asFiniteNumber(value.power);
+  const stats = parseGearStats(value.stats);
   if (
     typeof value.name !== "string" ||
     !isGearSlot(value.slot) ||
@@ -423,7 +474,17 @@ function parseGearDrop(value: unknown): GearDrop | null {
   ) {
     return null;
   }
-  return cloneJson(value) as GearDrop;
+  return { ...cloneJson(value), stats } as GearDrop;
+}
+
+function parseGearStats(value: unknown): GearStatBlock {
+  if (!isRecord(value)) return {};
+  const stats: GearStatBlock = {};
+  (["strength", "intelligence", "dexterity", "vitality"] as CoreStat[]).forEach((stat) => {
+    const amount = asFiniteNumber(value[stat]);
+    if (amount !== null && amount > 0) stats[stat] = Math.floor(amount);
+  });
+  return stats;
 }
 
 function parseBranchLatticeState(value: unknown): BranchLatticeState | null {
@@ -468,6 +529,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isClassId(value: unknown): value is ClassId {
   return typeof value === "string" && value in characterClasses;
+}
+
+function isSavedPhase(value: unknown): value is SavedRoundState["phase"] {
+  return value === "preparing" || value === "battle" || value === "victory" || value === "defeat" || value === "shop";
 }
 
 function isCodgerPhase(value: unknown): value is IntroRoomState["codger"]["phase"] {
