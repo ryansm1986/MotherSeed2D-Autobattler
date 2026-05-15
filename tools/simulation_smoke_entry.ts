@@ -339,6 +339,22 @@ assert(
   "encounter shop metadata should control reroll cost",
 );
 
+const encounterGearRewardState = createInitialGameState("warrior");
+assert(togglePartyClassSelection(encounterGearRewardState, "mage"), "encounter reward smoke should create a second party member");
+teleportToDebugEncounter(encounterGearRewardState, debugOptions[3].encounterIndex);
+encounterGearRewardState.extraEnemies.length = 0;
+encounterGearRewardState.enemy.health = 1;
+const inventoryCountBeforeEncounterReward = encounterGearRewardState.combat.inventoryItems.length;
+dealEnemyDamage(encounterGearRewardState, 1, "Smoke elite victory", []);
+updateSimulation(encounterGearRewardState, createInputState(), 0.016);
+const encounterRewardItem = encounterGearRewardState.combat.inventoryItems.at(-1);
+assert(
+  encounterGearRewardState.combat.inventoryItems.length === inventoryCountBeforeEncounterReward + 1,
+  "authored elite encounters should grant a gear reward into the backpack",
+);
+assert(encounterRewardItem?.gear.rarity === "Uncommon", "authored elite gear rewards should respect rarity metadata");
+assert(encounterRewardItem?.classId === "mage", "authored gear rewards should rotate across party classes");
+
 debugOptions.forEach((option) => {
   const debugDeathState = createInitialGameState("warrior");
   grantFullStarterGear(debugDeathState);

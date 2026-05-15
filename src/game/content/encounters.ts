@@ -1,5 +1,5 @@
 import { getEnemyDefinition, type EnemyDefinition } from "./enemies";
-import type { MonsterId } from "../types";
+import type { GearDrop, MonsterId } from "../types";
 
 export type EncounterTier = "pack" | "elite" | "boss";
 
@@ -9,6 +9,8 @@ export type EncounterDefinition = {
   tier: EncounterTier;
   enemyIds: MonsterId[];
   goldReward: number;
+  gearRewardChance?: number;
+  gearRewardRarity?: GearDrop["rarity"];
   shopOfferCount?: number;
   rerollCost?: number;
 };
@@ -41,6 +43,8 @@ export const encounterPlan = [
     tier: "elite",
     enemyIds: ["nightbloom_matriarch"],
     goldReward: 24,
+    gearRewardChance: 1,
+    gearRewardRarity: "Uncommon",
   },
   {
     id: "market-unlock",
@@ -48,6 +52,7 @@ export const encounterPlan = [
     tier: "pack",
     enemyIds: ["tree_goblin", "shroom_boy"],
     goldReward: 25,
+    gearRewardChance: 0.35,
     shopOfferCount: 4,
     rerollCost: 3,
   },
@@ -57,6 +62,8 @@ export const encounterPlan = [
     tier: "elite",
     enemyIds: ["obsidian_reliquary"],
     goldReward: 31,
+    gearRewardChance: 1,
+    gearRewardRarity: "Uncommon",
     shopOfferCount: 4,
     rerollCost: 3,
   },
@@ -66,6 +73,8 @@ export const encounterPlan = [
     tier: "elite",
     enemyIds: ["abyssal_bellwraith", "moss_golem"],
     goldReward: 36,
+    gearRewardChance: 1,
+    gearRewardRarity: "Uncommon",
     shopOfferCount: 4,
     rerollCost: 4,
   },
@@ -75,6 +84,8 @@ export const encounterPlan = [
     tier: "boss",
     enemyIds: ["briarheart_sovereign"],
     goldReward: 44,
+    gearRewardChance: 1,
+    gearRewardRarity: "Rare",
     shopOfferCount: 5,
     rerollCost: 4,
   },
@@ -84,6 +95,8 @@ export const encounterPlan = [
     tier: "boss",
     enemyIds: ["woundclock_arbiter"],
     goldReward: 52,
+    gearRewardChance: 1,
+    gearRewardRarity: "Rare",
     shopOfferCount: 5,
     rerollCost: 5,
   },
@@ -116,6 +129,14 @@ export function encounterShopOfferCount(roomIndex: number) {
 export function encounterRerollCost(roomIndex: number) {
   const encounter = encounterForRoom(roomIndex);
   return encounter.rerollCost ?? 2 + Math.min(3, encounterCycle(roomIndex));
+}
+
+export function encounterGearReward(roomIndex: number) {
+  const encounter = encounterForRoom(roomIndex);
+  return {
+    chance: Math.max(0, Math.min(1, encounter.gearRewardChance ?? 0)),
+    rarity: encounter.gearRewardRarity ?? null,
+  };
 }
 
 export function encounterLabel(roomIndex: number) {

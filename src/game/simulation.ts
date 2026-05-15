@@ -22,6 +22,7 @@ import { updatePlayer } from "./combat/player";
 import { updateRoomTransition } from "./world/rooms";
 import { updateIntroRoom } from "./world/intro-room";
 import { rollShopInventory } from "./shop";
+import { grantEncounterGearReward } from "./rewards";
 import {
   updateMagicMissiles,
   updateEnemyRockThrows,
@@ -80,6 +81,7 @@ function updateRoundPhase(state: GameState, delta: number, events: GameEvent[]) 
   if (state.round.phase === "battle") {
     if (livingEnemies(state).length === 0) {
       completeBattleVictory(state, events);
+      events.push(...grantEncounterGearReward(state));
     } else if (livingPartyMembers(state).length === 0 || state.combat.playerRespawnTimer > 0) {
       completeBattleDefeat(state, events);
     }

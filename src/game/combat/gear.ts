@@ -191,9 +191,9 @@ export function refreshDerivedGearStats(member: PartyMemberState) {
   }
 }
 
-export function generateGear(classId: ClassId = "warrior"): GearDrop {
+export function generateGear(classId: ClassId = "warrior", forcedRarity: GearDrop["rarity"] | null = null): GearDrop {
   const roll = Math.random();
-  const rarity: GearDrop["rarity"] = roll > 0.78 ? "Rare" : roll > 0.36 ? "Uncommon" : "Common";
+  const rarity: GearDrop["rarity"] = forcedRarity ?? (roll > 0.78 ? "Rare" : roll > 0.36 ? "Uncommon" : "Common");
   const slot = gearSlots[Math.floor(Math.random() * gearSlots.length)];
   const prefix = rarity === "Rare" ? "Oathroot" : rarity === "Uncommon" ? "Thornlit" : "Verdant";
   const baseNames = slot === "weapon" ? [weaponBaseName(classId)] : gearSlotBaseNames[slot];
