@@ -9,12 +9,14 @@ import {
   enterShopPhase,
   livingEnemies,
   livingPartyMembers,
+  logEvent,
   soundEvent,
   type EnemyState,
   type GameEvent,
   type GameState,
 } from "./state";
-import { respawnPlayer, updateBleed, updateFloatingCombatTexts } from "./combat/damage";
+import { dealPartyMemberDamage, dealSpecificEnemyDamage, respawnPlayer, updateBleed, updateFloatingCombatTexts } from "./combat/damage";
+import { overtimeDamageForElapsed } from "./run-cycle";
 import { updateEnemy } from "./combat/enemy-ai";
 import { updateAutoAttack, updateCooldowns } from "./combat/abilities";
 import { updatePartyCompanions } from "./combat/party-ai";
@@ -79,9 +81,10 @@ export function updateSimulation(
 
 function updateRoundPhase(state: GameState, delta: number, events: GameEvent[]) {
   if (state.round.phase === "battle") {
+    updateBattleClock(state, delta, events);
     if (livingEnemies(state).length === 0) {
       completeBattleVictory(state, events);
-      events.push(...grantEncounterGearReward(state));
+      if (state.round.battleType === "monster") events.push(...grantEncounterGearReward(state));
     } else if (livingPartyMembers(state).length === 0 || state.combat.playerRespawnTimer > 0) {
       completeBattleDefeat(state, events);
     }
@@ -94,6 +97,32 @@ function updateRoundPhase(state: GameState, delta: number, events: GameEvent[]) 
     enterShopPhase(state);
     events.push(...rollShopInventory(state));
   }
+}
+
+function updateBattleClock(state: GameState, delta: number, events: GameEvent[]) {
+  state.round.battleElapsed += delta;
+  if (state.round.battleElapsed < state.round.battleDuration) return;
+
+  state.round.overtimeElapsed += delta;
+  if (!state.round.overtimeAnnounced) {
+    state.round.overtimeAnnounced = true;
+    events.push(logEvent("OVERTIME", "All characters are taking ramping damage"));
+  }
+
+  state.round.overtimeTickTimer -= delta;
+  if (state.round.overtimeTickTimer > 0) return;
+  state.round.overtimeTickTimer = 1;
+
+  const damage = overtimeDamageForElapsed(state.round.overtimeElapsed);
+  livingEnemies(state).forEach((enemy) => {
+    dealSpecificEnemyDamage(state, enemy, damage, "Overtime", events);
+  });
+  livingPartyMembers(state).forEach((member) => {
+    const previousInvulnerableTime = member.invulnerableTime;
+    member.invulnerableTime = 0;
+    dealPartyMemberDamage(state, member, damage, "Overtime", events);
+    member.invulnerableTime = Math.min(member.invulnerableTime, previousInvulnerableTime);
+  });
 }
 
 function updateCombat(state: GameState, delta: number, events: GameEvent[], frameLookup?: AnimationFrameLookup) {

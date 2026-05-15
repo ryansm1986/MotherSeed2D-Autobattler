@@ -21,6 +21,7 @@ import { distance } from "../src/game/math";
 import { createInputState } from "../src/game/input-actions";
 import { buyShopItem, rerollShop, rollShopInventory } from "../src/game/shop";
 import { updateSimulation } from "../src/game/simulation";
+import { battleDurationSeconds, playerDamageForCycle } from "../src/game/run-cycle";
 import { clearRoomProjectiles, spawnRoomEnemy, startNextAutobattleRound } from "../src/game/world/rooms";
 import {
   advanceCodgerLatticeTutorial,
@@ -325,6 +326,40 @@ const roomBeforeShopStart = autobattleRoundState.combat.roomIndex;
 startNextAutobattleRound(autobattleRoundState);
 assert(autobattleRoundState.round.phase === "battle", "shop start should enter battle phase");
 assert(autobattleRoundState.combat.roomIndex === roomBeforeShopStart + 1, "shop start should advance to the next encounter");
+assert(autobattleRoundState.round.battleType === "monster", "second battle slot in a cycle should still be a monster phase");
+
+const cyclePatternState = createInitialGameState("warrior");
+startNextAutobattleRound(cyclePatternState);
+assert(cyclePatternState.round.cycleIndex === 1 && cyclePatternState.round.battleInCycle === 1, "first battle should be cycle 1 monster slot 1");
+startNextAutobattleRound(cyclePatternState);
+assert(cyclePatternState.round.cycleIndex === 1 && cyclePatternState.round.battleInCycle === 2, "second battle should be cycle 1 monster slot 2");
+startNextAutobattleRound(cyclePatternState);
+assert(cyclePatternState.round.cycleIndex === 1 && cyclePatternState.round.battleType === "pvp", "third battle should be the PvP slot");
+startNextAutobattleRound(cyclePatternState);
+assert(cyclePatternState.round.cycleIndex === 2 && cyclePatternState.round.battleType === "monster", "fourth battle should start cycle 2");
+
+const playerHealthState = createInitialGameState("warrior");
+startNextAutobattleRound(playerHealthState);
+const healthBeforeDefeat = playerHealthState.round.playerHealth;
+defeatPlayer(playerHealthState, []);
+updateSimulation(playerHealthState, createInputState(), 0.016);
+assert(
+  playerHealthState.round.playerHealth === healthBeforeDefeat - playerDamageForCycle(1),
+  "battle losses should damage run-level Player Health based on the current cycle",
+);
+
+const overtimeState = createInitialGameState("warrior");
+startNextAutobattleRound(overtimeState);
+overtimeState.round.battleElapsed = battleDurationSeconds;
+overtimeState.party.members.forEach((member) => {
+  member.invulnerableTime = 0;
+});
+const overtimeEnemyHealth = overtimeState.enemy.health;
+const overtimePlayerHealth = overtimeState.player.health;
+updateSimulation(overtimeState, createInputState(), 1.1);
+assert(overtimeState.round.overtimeAnnounced, "battle clock should announce overtime after 60 seconds");
+assert(overtimeState.enemy.health < overtimeEnemyHealth, "overtime should damage enemies");
+assert(overtimeState.player.health < overtimePlayerHealth, "overtime should damage party members");
 
 const upgradedShopState = createInitialGameState("warrior");
 upgradedShopState.round.phase = "shop";

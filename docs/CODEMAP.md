@@ -17,6 +17,7 @@
 - `src/game/state.ts` defines player, enemy, combat runtime, equipped-gear Specials, Branch Lattice auto-loop state, Mother Load window state, UI flow, and events.
 - `src/game/save.ts` owns versioned local save/load data, preserving class, vitals, room, intro progress, equipment, inventory, and Branch Lattice while restoring live combat to a safe clean state.
 - `src/game/debug.ts` owns debug-only helpers for encounter teleporting and pause-menu test actions.
+- `src/game/run-cycle.ts` owns the shop/monster/shop/monster/shop/PvP cadence, cycle damage scaling, and overtime timing constants.
 - `src/game/rewards.ts` owns authored autobattler victory rewards, including encounter gear grants.
 - `src/game/simulation.ts` coordinates the frame update and returns `GameEvent[]`.
 - `src/game/combat/player.ts` owns active-party animation upkeep, target lock, enemy hit picking, and party-member picking helpers.

@@ -1,4 +1,5 @@
 import { encounterEnemiesForRoom, encounterLabel, encounterPlan } from "./content/encounters";
+import { battleTypeLabel } from "./run-cycle";
 import {
   beginBattleRound,
   createAutoAttackLoopState,
@@ -61,5 +62,5 @@ export function teleportToDebugEncounter(state: GameState, encounterIndex: numbe
   beginBattleRound(state);
 
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
-  return [logEvent("Debug teleport", `${encounterLabel(roomIndex)}: ${encounterNames}`)];
+  return [logEvent("Debug teleport", `${battleTypeLabel(state.round.battleType)} - ${encounterLabel(roomIndex)}: ${encounterNames}`)];
 }

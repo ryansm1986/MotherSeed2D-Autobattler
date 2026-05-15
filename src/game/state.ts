@@ -1,5 +1,14 @@
 import { characterClasses, characterOrder } from "./content/classes";
 import { encounterGoldReward } from "./content/encounters";
+import {
+  battleDurationSeconds,
+  battleInCycleForBattle,
+  battleTypeForBattle,
+  cycleIndexForBattle,
+  playerDamageForCycle,
+  startingPlayerHealth,
+  type BattleType,
+} from "./run-cycle";
 import { world } from "./world/arena";
 import type {
   AnimationName,
@@ -576,7 +585,7 @@ export type PartySkillBarOption = {
   ability: SpecialAbility;
 };
 
-export type GamePhase = "preparing" | "battle" | "victory" | "defeat" | "shop";
+export type GamePhase = "preparing" | "battle" | "victory" | "defeat" | "shop" | "eliminated";
 
 export type ShopItemState = {
   id: string;
@@ -596,10 +605,21 @@ export type ShopState = {
 export type RoundState = {
   phase: GamePhase;
   roundIndex: number;
+  cycleIndex: number;
+  battleInCycle: number;
+  battleType: BattleType;
+  playerHealth: number;
+  maxPlayerHealth: number;
   gold: number;
   lastRewardGold: number;
   lastResult: "victory" | "defeat" | null;
+  lastPlayerDamage: number;
   phaseTimer: number;
+  battleElapsed: number;
+  battleDuration: number;
+  overtimeElapsed: number;
+  overtimeTickTimer: number;
+  overtimeAnnounced: boolean;
   rewardedRoomIndex: number | null;
   shop: ShopState;
 };
@@ -851,10 +871,24 @@ export function ensureRoundState(state: GameState) {
   const round = state.round;
   if (!isGamePhase(round.phase)) round.phase = state.combat?.targetLocked ? "battle" : "preparing";
   if (!Number.isFinite(round.roundIndex)) round.roundIndex = Math.max(0, state.combat?.roomIndex ?? 0);
+  const fallbackBattleIndex = Math.max(1, round.roundIndex || state.combat?.roomIndex || 1);
+  if (!Number.isFinite(round.cycleIndex)) round.cycleIndex = cycleIndexForBattle(fallbackBattleIndex);
+  if (!Number.isFinite(round.battleInCycle)) round.battleInCycle = battleInCycleForBattle(fallbackBattleIndex);
+  if (round.battleType !== "monster" && round.battleType !== "pvp") round.battleType = battleTypeForBattle(fallbackBattleIndex);
+  if (!Number.isFinite(round.maxPlayerHealth)) round.maxPlayerHealth = startingPlayerHealth;
+  if (!Number.isFinite(round.playerHealth)) round.playerHealth = round.maxPlayerHealth;
+  round.maxPlayerHealth = Math.max(1, Math.floor(round.maxPlayerHealth));
+  round.playerHealth = Math.max(0, Math.min(round.maxPlayerHealth, Math.floor(round.playerHealth)));
   if (!Number.isFinite(round.gold)) round.gold = 0;
   if (!Number.isFinite(round.lastRewardGold)) round.lastRewardGold = 0;
+  if (!Number.isFinite(round.lastPlayerDamage)) round.lastPlayerDamage = 0;
   if (round.lastResult !== "victory" && round.lastResult !== "defeat") round.lastResult = null;
   if (!Number.isFinite(round.phaseTimer)) round.phaseTimer = 0;
+  if (!Number.isFinite(round.battleElapsed)) round.battleElapsed = 0;
+  if (!Number.isFinite(round.battleDuration)) round.battleDuration = battleDurationSeconds;
+  if (!Number.isFinite(round.overtimeElapsed)) round.overtimeElapsed = 0;
+  if (!Number.isFinite(round.overtimeTickTimer)) round.overtimeTickTimer = 0;
+  round.overtimeAnnounced = round.overtimeAnnounced === true;
   if (round.rewardedRoomIndex !== null && !Number.isFinite(round.rewardedRoomIndex)) round.rewardedRoomIndex = null;
   if (!round.shop || typeof round.shop !== "object") round.shop = createShopState();
   if (!Array.isArray(round.shop.inventory)) round.shop.inventory = [];
@@ -865,17 +899,28 @@ export function ensureRoundState(state: GameState) {
 }
 
 function isGamePhase(value: unknown): value is GamePhase {
-  return value === "preparing" || value === "battle" || value === "victory" || value === "defeat" || value === "shop";
+  return value === "preparing" || value === "battle" || value === "victory" || value === "defeat" || value === "shop" || value === "eliminated";
 }
 
 export function createRoundState(): RoundState {
   return {
     phase: "preparing",
     roundIndex: 0,
+    cycleIndex: 1,
+    battleInCycle: 1,
+    battleType: "monster",
+    playerHealth: startingPlayerHealth,
+    maxPlayerHealth: startingPlayerHealth,
     gold: 0,
     lastRewardGold: 0,
     lastResult: null,
+    lastPlayerDamage: 0,
     phaseTimer: 0,
+    battleElapsed: 0,
+    battleDuration: battleDurationSeconds,
+    overtimeElapsed: 0,
+    overtimeTickTimer: 0,
+    overtimeAnnounced: false,
     rewardedRoomIndex: null,
     shop: createShopState(),
   };
@@ -893,11 +938,21 @@ export function createShopState(): ShopState {
 
 export function beginBattleRound(state: GameState) {
   ensureRoundState(state);
+  const battleIndex = Math.max(1, state.combat.roomIndex);
   state.round.phase = "battle";
-  state.round.roundIndex = Math.max(1, state.combat.roomIndex);
+  state.round.roundIndex = battleIndex;
+  state.round.cycleIndex = cycleIndexForBattle(battleIndex);
+  state.round.battleInCycle = battleInCycleForBattle(battleIndex);
+  state.round.battleType = battleTypeForBattle(battleIndex);
   state.round.lastRewardGold = 0;
+  state.round.lastPlayerDamage = 0;
   state.round.lastResult = null;
   state.round.phaseTimer = 0;
+  state.round.battleElapsed = 0;
+  state.round.battleDuration = battleDurationSeconds;
+  state.round.overtimeElapsed = 0;
+  state.round.overtimeTickTimer = 0;
+  state.round.overtimeAnnounced = false;
   state.combat.targetLocked = true;
   state.party.pendingTargetedSpecial = null;
   state.party.members.forEach((member) => {
@@ -909,12 +964,12 @@ export function completeBattleVictory(state: GameState, events: GameEvent[]) {
   ensureRoundState(state);
   if (state.round.phase !== "battle") return;
   const roomIndex = Math.max(1, state.combat.roomIndex);
-  const rewardGold = state.round.rewardedRoomIndex === roomIndex ? 0 : goldRewardForRoom(state);
+  const rewardGold = state.round.battleType === "monster" && state.round.rewardedRoomIndex !== roomIndex ? goldRewardForRoom(state) : 0;
   state.round.phase = "victory";
   state.round.lastResult = "victory";
   state.round.lastRewardGold = rewardGold;
   state.round.phaseTimer = 1.25;
-  state.round.rewardedRoomIndex = roomIndex;
+  if (state.round.battleType === "monster") state.round.rewardedRoomIndex = roomIndex;
   state.round.gold += rewardGold;
   state.combat.targetLocked = false;
   state.party.pendingTargetedSpecial = null;
@@ -924,13 +979,21 @@ export function completeBattleVictory(state: GameState, events: GameEvent[]) {
 export function completeBattleDefeat(state: GameState, events: GameEvent[]) {
   ensureRoundState(state);
   if (state.round.phase !== "battle") return;
+  const damage = playerDamageForCycle(state.round.cycleIndex);
+  state.round.lastPlayerDamage = damage;
+  state.round.playerHealth = Math.max(0, state.round.playerHealth - damage);
   state.round.phase = "defeat";
   state.round.lastResult = "defeat";
   state.round.lastRewardGold = 0;
   state.round.phaseTimer = 1.25;
   state.combat.targetLocked = false;
   state.party.pendingTargetedSpecial = null;
-  events.push(logEvent("Defeat", "Returning to the shop with the party regrown"));
+  events.push(logEvent("Defeat", `Player Health -${damage}; ${state.round.playerHealth}/${state.round.maxPlayerHealth} remains`));
+  if (state.round.playerHealth <= 0) {
+    state.round.phase = "eliminated";
+    state.round.phaseTimer = 0;
+    events.push(logEvent("Eliminated", "Player Health reached 0"));
+  }
 }
 
 export function enterShopPhase(state: GameState) {

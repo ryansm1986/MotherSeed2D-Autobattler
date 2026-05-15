@@ -44,6 +44,7 @@ Progress log:
 - 2026-05-15: Added authored post-victory gear rewards for elite/boss encounters, granted directly into the backpack with encounter-defined rarity.
 - 2026-05-15: Researched autobattler itemization patterns and updated the item design doc around party/MMO roles, Branch Lattice loops, Specials, shop offers, and reward pacing.
 - 2026-05-15: Created the first item catalogue spreadsheet and source CSVs with starter, shop, elite, boss, and finale chase items plus encounter-specific drop pools.
+- 2026-05-15: Added run-cycle metadata for Shop -> Monster -> Shop -> Monster -> Shop -> PvP cadence, 50 Player Health loss scaling by cycle, and one-minute battle overtime ramp damage.
 
 ## Phase 1: Auto Battler MVP
 
@@ -57,6 +58,9 @@ Core changes:
 - `[x]` Make combat resolve through AI once battle starts.
 - `[x]` Award gold on victory.
 - `[x]` Return to shop after victory or defeat.
+- `[x]` Track run-level Player Health and cycle-scaled loss damage.
+- `[x]` Add one-minute battle timer with overtime ramp damage.
+- `[~]` Mark every third fight as a PvP slot; still uses placeholder encounter combat until real enemy-player parties exist.
 
 Likely files:
 

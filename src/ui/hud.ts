@@ -13,6 +13,7 @@ import {
   type GameState,
   type PartySkillBarOption,
 } from "../game/state";
+import { battleTypeLabel } from "../game/run-cycle";
 import type { SpecialAbility } from "../game/types";
 import { specialIconUrl } from "./special-icons";
 
@@ -154,11 +155,20 @@ function renderSkillBar(state: GameState) {
 
 export function renderHud(state: GameState): HudViewModel {
   const currentClass = selectedClass(state);
-  const phaseLabel = state.round.phase[0].toUpperCase() + state.round.phase.slice(1);
+  const phaseLabel = state.round.phase === "battle"
+    ? battleTypeLabel(state.round.battleType)
+    : state.round.phase[0].toUpperCase() + state.round.phase.slice(1);
+  const battleTimeRemaining = Math.max(0, state.round.battleDuration - state.round.battleElapsed);
+  const battleTimerLabel = state.round.phase === "battle"
+    ? state.round.overtimeAnnounced
+      ? `OVERTIME +${Math.floor(state.round.overtimeElapsed)}s`
+      : `${Math.ceil(battleTimeRemaining)}s`
+    : "Idle";
+  const cycleLabel = `Cycle ${state.round.cycleIndex} - ${state.round.battleInCycle === 3 ? "PvP" : `Monster ${state.round.battleInCycle}/2`}`;
   const resultLabel = state.round.lastResult === "victory"
     ? `+${state.round.lastRewardGold} gold`
     : state.round.lastResult === "defeat"
-      ? "Regrouping"
+      ? `-${state.round.lastPlayerDamage} player HP`
       : state.round.phase === "shop"
         ? state.round.shop.message
         : `Round ${state.round.roundIndex || 1}`;
@@ -181,7 +191,11 @@ export function renderHud(state: GameState): HudViewModel {
     <div class="label-row"><strong>${currentClass.name}</strong><span>${Math.ceil(state.player.health)} / ${state.player.maxHealth}</span></div>
     <div class="bar"><div class="fill health" style="--value:${healthValue}"></div></div>
     <div class="label-row"><span>Gold</span><span>${state.round.gold}</span></div>
+    <div class="label-row"><span>Player Health</span><span>${state.round.playerHealth} / ${state.round.maxPlayerHealth}</span></div>
+    <div class="bar"><div class="fill health" style="--value:${state.round.playerHealth / state.round.maxPlayerHealth}"></div></div>
+    <div class="label-row"><span>Cycle</span><span>${escapeHtml(cycleLabel)}</span></div>
     <div class="label-row"><span>Phase</span><span>${escapeHtml(phaseLabel)}</span></div>
+    <div class="label-row"><span>Battle Timer</span><span>${escapeHtml(battleTimerLabel)}</span></div>
     <div class="label-row"><span>Round</span><span>${escapeHtml(resultLabel)}</span></div>
     <div class="label-row"><span>Bloom Meter</span><span>${Math.floor(state.player.meter)}</span></div>
     <div class="bar"><div class="fill meter" style="--value:${meterValue}"></div></div>

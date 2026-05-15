@@ -5,6 +5,7 @@ import {
   createInitialGameState,
   createMotherLoadWindowState,
   createPartyMember,
+  createRoundState,
   createStartingAmulet,
   bindActiveMemberAliases,
   beginBattleRound,
@@ -62,7 +63,27 @@ type SavedGameData = {
   branchLattice: BranchLatticeState;
 };
 
-type SavedRoundState = Pick<RoundState, "phase" | "roundIndex" | "gold" | "lastRewardGold" | "lastResult" | "rewardedRoomIndex" | "shop">;
+type SavedRoundState = Pick<
+  RoundState,
+  | "phase"
+  | "roundIndex"
+  | "cycleIndex"
+  | "battleInCycle"
+  | "battleType"
+  | "playerHealth"
+  | "maxPlayerHealth"
+  | "gold"
+  | "lastRewardGold"
+  | "lastResult"
+  | "lastPlayerDamage"
+  | "battleElapsed"
+  | "battleDuration"
+  | "overtimeElapsed"
+  | "overtimeTickTimer"
+  | "overtimeAnnounced"
+  | "rewardedRoomIndex"
+  | "shop"
+>;
 
 type SavedLegacyGameData = Omit<SavedGameData, "version" | "party" | "activeMemberId" | "selectedInventoryMemberId" | "selectedLatticeMemberId" | "round"> & {
   version: 1 | 2;
@@ -122,9 +143,20 @@ export function saveGame(state: GameState): SaveGameResult {
     round: {
       phase: state.round.phase,
       roundIndex: state.round.roundIndex,
+      cycleIndex: state.round.cycleIndex,
+      battleInCycle: state.round.battleInCycle,
+      battleType: state.round.battleType,
+      playerHealth: state.round.playerHealth,
+      maxPlayerHealth: state.round.maxPlayerHealth,
       gold: state.round.gold,
       lastRewardGold: state.round.lastRewardGold,
       lastResult: state.round.lastResult,
+      lastPlayerDamage: state.round.lastPlayerDamage,
+      battleElapsed: state.round.battleElapsed,
+      battleDuration: state.round.battleDuration,
+      overtimeElapsed: state.round.overtimeElapsed,
+      overtimeTickTimer: state.round.overtimeTickTimer,
+      overtimeAnnounced: state.round.overtimeAnnounced,
       rewardedRoomIndex: state.round.rewardedRoomIndex,
       shop: cloneJson(state.round.shop),
     },
@@ -185,9 +217,20 @@ function restoreSavedGame(saved: SavedGameData): GameState {
     : state.party.activeMemberId;
   state.round.phase = saved.round.phase;
   state.round.roundIndex = saved.round.roundIndex;
+  state.round.cycleIndex = saved.round.cycleIndex;
+  state.round.battleInCycle = saved.round.battleInCycle;
+  state.round.battleType = saved.round.battleType;
+  state.round.playerHealth = saved.round.playerHealth;
+  state.round.maxPlayerHealth = saved.round.maxPlayerHealth;
   state.round.gold = saved.round.gold;
   state.round.lastRewardGold = saved.round.lastRewardGold;
   state.round.lastResult = saved.round.lastResult;
+  state.round.lastPlayerDamage = saved.round.lastPlayerDamage;
+  state.round.battleElapsed = saved.round.battleElapsed;
+  state.round.battleDuration = saved.round.battleDuration;
+  state.round.overtimeElapsed = saved.round.overtimeElapsed;
+  state.round.overtimeTickTimer = saved.round.overtimeTickTimer;
+  state.round.overtimeAnnounced = saved.round.overtimeAnnounced;
   state.round.rewardedRoomIndex = saved.round.rewardedRoomIndex;
   state.round.shop = cloneJson(saved.round.shop);
   bindActiveMemberAliases(state);
@@ -298,19 +341,9 @@ function parseSavedGameData(value: unknown): SavedGameData | null {
     selectedInventoryMemberId: typeof value.selectedInventoryMemberId === "string" ? value.selectedInventoryMemberId : activeMemberId,
     selectedLatticeMemberId: typeof value.selectedLatticeMemberId === "string" ? value.selectedLatticeMemberId : activeMemberId,
     round: round ?? {
+      ...createRoundState(),
       phase: roomIndex > 0 ? "battle" : "preparing",
       roundIndex: Math.max(0, Math.floor(roomIndex)),
-      gold: 0,
-      lastRewardGold: 0,
-      lastResult: null,
-      rewardedRoomIndex: null,
-      shop: {
-        inventory: [],
-        inventorySize: 3,
-        rerollCost: 2,
-        nextItemId: 1,
-        message: "Spend gold on gear, tune the party, then start the next fight.",
-      },
     },
     roomIndex,
     intro,
@@ -348,9 +381,19 @@ function parseSavedParty(value: unknown): SavedPartyMemberState[] | null {
 
 function parseSavedRound(value: unknown): SavedRoundState | null {
   if (!isRecord(value) || !isSavedPhase(value.phase)) return null;
+  const defaults = createRoundState();
   const roundIndex = asFiniteNumber(value.roundIndex);
+  const cycleIndex = asFiniteNumber(value.cycleIndex);
+  const battleInCycle = asFiniteNumber(value.battleInCycle);
+  const playerHealth = asFiniteNumber(value.playerHealth);
+  const maxPlayerHealth = asFiniteNumber(value.maxPlayerHealth);
   const gold = asFiniteNumber(value.gold);
   const lastRewardGold = asFiniteNumber(value.lastRewardGold);
+  const lastPlayerDamage = asFiniteNumber(value.lastPlayerDamage);
+  const battleElapsed = asFiniteNumber(value.battleElapsed);
+  const battleDuration = asFiniteNumber(value.battleDuration);
+  const overtimeElapsed = asFiniteNumber(value.overtimeElapsed);
+  const overtimeTickTimer = asFiniteNumber(value.overtimeTickTimer);
   const rewardedRoomIndex = value.rewardedRoomIndex === null ? null : asFiniteNumber(value.rewardedRoomIndex);
   const shop = parseSavedShop(value.shop);
   if (roundIndex === null || gold === null || lastRewardGold === null || (value.rewardedRoomIndex !== null && rewardedRoomIndex === null)) return null;
@@ -358,9 +401,20 @@ function parseSavedRound(value: unknown): SavedRoundState | null {
   return {
     phase: value.phase,
     roundIndex: Math.max(0, Math.floor(roundIndex)),
+    cycleIndex: Math.max(1, Math.floor(cycleIndex ?? defaults.cycleIndex)),
+    battleInCycle: Math.max(1, Math.min(3, Math.floor(battleInCycle ?? defaults.battleInCycle))),
+    battleType: value.battleType === "pvp" ? "pvp" : "monster",
+    playerHealth: Math.max(0, Math.floor(playerHealth ?? defaults.playerHealth)),
+    maxPlayerHealth: Math.max(1, Math.floor(maxPlayerHealth ?? defaults.maxPlayerHealth)),
     gold: Math.max(0, Math.floor(gold)),
     lastRewardGold: Math.max(0, Math.floor(lastRewardGold)),
     lastResult,
+    lastPlayerDamage: Math.max(0, Math.floor(lastPlayerDamage ?? defaults.lastPlayerDamage)),
+    battleElapsed: Math.max(0, battleElapsed ?? defaults.battleElapsed),
+    battleDuration: Math.max(1, battleDuration ?? defaults.battleDuration),
+    overtimeElapsed: Math.max(0, overtimeElapsed ?? defaults.overtimeElapsed),
+    overtimeTickTimer: Math.max(0, overtimeTickTimer ?? defaults.overtimeTickTimer),
+    overtimeAnnounced: value.overtimeAnnounced === true,
     rewardedRoomIndex,
     shop: shop ?? {
       inventory: [],
@@ -578,7 +632,7 @@ function isClassId(value: unknown): value is ClassId {
 }
 
 function isSavedPhase(value: unknown): value is SavedRoundState["phase"] {
-  return value === "preparing" || value === "battle" || value === "victory" || value === "defeat" || value === "shop";
+  return value === "preparing" || value === "battle" || value === "victory" || value === "defeat" || value === "shop" || value === "eliminated";
 }
 
 function isCodgerPhase(value: unknown): value is IntroRoomState["codger"]["phase"] {

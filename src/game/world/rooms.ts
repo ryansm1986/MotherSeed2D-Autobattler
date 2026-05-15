@@ -1,4 +1,5 @@
 import { encounterEnemiesForRoom, encounterLabel } from "../content/encounters";
+import { battleTypeLabel } from "../run-cycle";
 import type { EnemyDefinition } from "../content/enemies";
 import {
   beginBattleRound,
@@ -16,7 +17,7 @@ import { canUseIntroStairs } from "./intro-room";
 
 export function updateRoomTransition(state: GameState, delta: number, events: GameEvent[]) {
   state.combat.roomTransitionCooldown = Math.max(0, state.combat.roomTransitionCooldown - delta);
-  if (state.round.phase === "battle" || state.round.phase === "victory" || state.round.phase === "defeat") return;
+  if (state.round.phase === "battle" || state.round.phase === "victory" || state.round.phase === "defeat" || state.round.phase === "eliminated") return;
   if (state.combat.roomTransitionCooldown > 0 || !isInStairZone(state.player)) return;
   if (!canUseIntroStairs(state)) return;
 
@@ -46,7 +47,7 @@ export function startNextAutobattleRound(state: GameState, label = "Next fight")
   spawnRoomEnemy(state);
   beginBattleRound(state);
   const encounterNames = [state.enemy, ...state.extraEnemies].map((enemy) => enemy.name).join(" and ");
-  return [logEvent(label, `${encounterLabel(state.combat.roomIndex)}: ${encounterNames} step into the circle`)];
+  return [logEvent(label, `${battleTypeLabel(state.round.battleType)} - ${encounterLabel(state.combat.roomIndex)}: ${encounterNames} step into the circle`)];
 }
 
 export function spawnRoomEnemy(state: GameState) {
