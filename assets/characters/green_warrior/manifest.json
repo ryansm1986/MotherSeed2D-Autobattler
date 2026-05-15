@@ -1,0 +1,84 @@
+{
+  "subject": "green_warrior",
+  "purpose": "Runtime-ready playable warrior assets.",
+  "frameSize": [192, 192],
+  "animations": {
+    "idle": {
+      "frames": "idle/frames/idle_*_[0-9][0-9].png",
+      "directions": ["down", "left", "right", "up", "down_left", "up_left", "up_right", "down_right"],
+      "framesPerDirection": 4
+    },
+    "walk": {
+      "frames": "walk/frames/walk_*_[0-9][0-9].png",
+      "directions": ["up"],
+      "framesPerDirection": 4,
+      "runtimeFallback": "Missing directions fall back through character-sprites.ts."
+    },
+    "sprint": {
+      "frames": "sprint/frames/sprint_*_[0-9][0-9].png",
+      "directions": ["down", "left", "right", "up", "down_left", "up_left", "up_right", "down_right"],
+      "framesPerDirection": 4
+    },
+    "dodge": {
+      "frames": "dodge/frames/dodge_*_[0-9][0-9].png",
+      "directions": ["down", "left", "right", "up"],
+      "framesPerDirection": 4,
+      "runtimeFallback": "Diagonal directions use cardinal fallbacks in character-sprites.ts."
+    },
+    "attack": {
+      "frames": "attack/down_slash/frames/attack_*_[0-9][0-9].png",
+      "directions": ["down", "left", "right", "up"],
+      "framesPerDirection": 6,
+      "runtimeFallback": "Diagonal directions use cardinal fallbacks in character-sprites.ts.",
+      "variants": {
+        "sideToSideSlash": {
+          "frames": "attack/side_to_side_slash/attack_side_slash-[1-6].png",
+          "sheet": "attack/side_to_side_slash/sheet-transparent.png",
+          "preview": "attack/side_to_side_slash/animation.gif",
+          "status": "Generated alternate, not runtime-wired."
+        },
+        "sideSlash": {
+          "frames": "attack/side_slash/{down,left,right,up}/attack_*_[0-9][0-9].png",
+          "sheet": "attack/side_slash/sheet-transparent.png",
+          "directions": ["down", "left", "right", "up"],
+          "framesPerDirection": 6,
+          "previews": {
+            "down": "attack/side_slash/down/attack_down.gif",
+            "left": "attack/side_slash/left/attack_left.gif",
+            "right": "attack/side_slash/right/attack_right.gif",
+            "up": "attack/side_slash/up/attack_up.gif"
+          },
+          "status": "Runtime-wired to alternate with down_slash for warrior auto-attacks."
+        },
+        "frontFlipSlash": {
+          "frames": "attack/front_flip_slash/front_flip_slash-[1-6].png",
+          "sheet": "attack/front_flip_slash/sheet-transparent.png",
+          "preview": "attack/front_flip_slash/animation.gif",
+          "directions": ["down"],
+          "framesPerDirection": 6,
+          "status": "Generated alternate, not runtime-wired."
+        }
+      }
+    },
+    "MotherSpin": {
+      "frames": "specials/MotherSpin/frames/special_*_[0-9][0-9].png",
+      "directions": ["down"],
+      "framesPerDirection": 8,
+      "runtimeFallback": "All non-down special directions use down special frames in character-sprites.ts."
+    }
+  },
+  "effects": {
+    "motherslashPulse": "specials/effects/motherslash_pulse/frames/circle_special_effect_hollow_outer_pulse_padded_[0-9][0-9].png",
+    "verdantExplosion": "specials/effects/verdant_explosion/frames/verdant_explosion_[0-9][0-9].png"
+  },
+  "supportingAssets": {
+    "base": "base/base.png",
+    "portrait": "portrait.png",
+    "sounds": "sounds/"
+  },
+  "archive": "assets/characters/_archive/green_warrior",
+  "notes": [
+    "This folder is intentionally runtime-focused.",
+    "Older v1, v2, v3, and v4 source/pipeline files were moved to the archive folder."
+  ]
+}

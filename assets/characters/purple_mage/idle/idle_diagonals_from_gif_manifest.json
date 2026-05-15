@@ -1,0 +1,92 @@
+{
+  "tool": "tools/extract_gif_frames.py",
+  "jobs": [
+    {
+      "source": "assets/characters/purple_mage/idle/down-left-idle.gif",
+      "animation": "idle",
+      "direction": "southwest",
+      "frames": [
+        "assets/characters/purple_mage/idle/frames/idle_southwest_01.png",
+        "assets/characters/purple_mage/idle/frames/idle_southwest_02.png",
+        "assets/characters/purple_mage/idle/frames/idle_southwest_03.png",
+        "assets/characters/purple_mage/idle/frames/idle_southwest_04.png",
+        "assets/characters/purple_mage/idle/frames/idle_southwest_05.png",
+        "assets/characters/purple_mage/idle/frames/idle_southwest_06.png"
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160,
+        160,
+        160
+      ],
+      "normalization": {
+        "scale": 0.5636363636363636,
+        "source_anchor_x": 128.0,
+        "source_baseline_y": 239,
+        "source_visible_height": 220,
+        "output_anchor_x": 64.0,
+        "output_baseline_y": 126.0
+      }
+    },
+    {
+      "source": "assets/characters/purple_mage/idle/up-left-idle.gif",
+      "animation": "idle",
+      "direction": "northwest",
+      "frames": [
+        "assets/characters/purple_mage/idle/frames/idle_northwest_01.png",
+        "assets/characters/purple_mage/idle/frames/idle_northwest_02.png",
+        "assets/characters/purple_mage/idle/frames/idle_northwest_03.png",
+        "assets/characters/purple_mage/idle/frames/idle_northwest_04.png",
+        "assets/characters/purple_mage/idle/frames/idle_northwest_05.png",
+        "assets/characters/purple_mage/idle/frames/idle_northwest_06.png"
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160,
+        160,
+        160
+      ],
+      "normalization": {
+        "scale": 0.5688073394495413,
+        "source_anchor_x": 127.5,
+        "source_baseline_y": 238,
+        "source_visible_height": 218,
+        "output_anchor_x": 64.0,
+        "output_baseline_y": 126.0
+      }
+    },
+    {
+      "source": "assets/characters/purple_mage/idle/up-right-idle.gif",
+      "animation": "idle",
+      "direction": "northeast",
+      "frames": [
+        "assets/characters/purple_mage/idle/frames/idle_northeast_01.png",
+        "assets/characters/purple_mage/idle/frames/idle_northeast_02.png",
+        "assets/characters/purple_mage/idle/frames/idle_northeast_03.png",
+        "assets/characters/purple_mage/idle/frames/idle_northeast_04.png",
+        "assets/characters/purple_mage/idle/frames/idle_northeast_05.png",
+        "assets/characters/purple_mage/idle/frames/idle_northeast_06.png"
+      ],
+      "durations_ms": [
+        160,
+        160,
+        160,
+        160,
+        160,
+        160
+      ],
+      "normalization": {
+        "scale": 0.5688073394495413,
+        "source_anchor_x": 128.5,
+        "source_baseline_y": 238,
+        "source_visible_height": 218,
+        "output_anchor_x": 64.0,
+        "output_baseline_y": 126.0
+      }
+    }
+  ]
+}

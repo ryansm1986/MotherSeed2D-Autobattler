@@ -1,0 +1,55 @@
+{
+  "id": "motherload.verdant_explosion",
+  "name": "Verdant Explosion",
+  "purpose": "First Mother Load special effect: a plant-based magical explosion.",
+  "source": {
+    "mode": "imagegen",
+    "chromaKeySource": "raw/verdant_explosion_imagegen_chromakey.png",
+    "alphaSource": "raw/verdant_explosion_imagegen_alpha.png",
+    "keyColor": "#ff00ff"
+  },
+  "frameCount": 8,
+  "frameSize": [
+    768,
+    768
+  ],
+  "anchor": "center",
+  "layout": "single row, 8 equal centered transparent frames",
+  "animation": [
+    "compact seed flash",
+    "green-gold sprout burst",
+    "leafy shock ring opens",
+    "vines and roots erupt outward",
+    "full verdant explosion",
+    "bloom fade begins",
+    "outer fragments decay",
+    "final fading embers"
+  ],
+  "runtimeFrames": "frames/verdant_explosion_[0-9][0-9].png",
+  "rawStrip": "raw/verdant_explosion_imagegen_8f_768x768.png",
+  "previews": {
+    "contactSheet": "preview/verdant_explosion_contact_sheet.png",
+    "checkerSheet": "preview/verdant_explosion_checker_preview.png",
+    "gif": "preview/verdant_explosion_anim.gif"
+  },
+  "pipeline": {
+    "skill": "game-studio:sprite-pipeline",
+    "steps": [
+      "generated one 8-frame horizontal chroma-key sheet with imagegen",
+      "removed magenta chroma key to alpha",
+      "split into 8 imagegen-aware slots",
+      "normalized every frame to a shared 768px center anchor",
+      "rendered preview sheet and GIF"
+    ]
+  },
+  "frames": [
+    "frames/verdant_explosion_01.png",
+    "frames/verdant_explosion_02.png",
+    "frames/verdant_explosion_03.png",
+    "frames/verdant_explosion_04.png",
+    "frames/verdant_explosion_05.png",
+    "frames/verdant_explosion_06.png",
+    "frames/verdant_explosion_07.png",
+    "frames/verdant_explosion_08.png"
+  ]
+}

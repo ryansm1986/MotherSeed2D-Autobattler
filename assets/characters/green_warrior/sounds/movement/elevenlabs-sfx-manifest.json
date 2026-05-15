@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-03T00:21:16.798Z",
+  "model": "eleven_text_to_sound_v2",
+  "sounds": [
+    {
+      "file": "dodge_roll.mp3",
+      "bytes": 12582,
+      "text": "Short game sound effect: agile armored fantasy warrior dodge roll through grass and dirt, quick cloth sweep, leather creak, light armor jingle, clean dry SFX, no voice, no music."
+    },
+    {
+      "file": "sprint_start.mp3",
+      "bytes": 13836,
+      "text": "Short game sound effect: fantasy warrior bursts into a sprint, fast boot scuff on grass, light armor and sword harness movement, energetic but not loud, clean SFX, no voice, no music."
+    }
+  ]
+}

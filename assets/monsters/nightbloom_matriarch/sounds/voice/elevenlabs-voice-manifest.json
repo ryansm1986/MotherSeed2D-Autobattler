@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-05-05T19:41:41.025Z",
+  "model": "eleven_multilingual_v2",
+  "voice_id": "ohu9qEfo0YDPiKqWBaus",
+  "sounds": [
+    {
+      "file": "nightbloom_thorn_lance_voice.mp3",
+      "bytes": 30973,
+      "text": "Bleed for the bloom."
+    },
+    {
+      "file": "nightbloom_petal_fan_voice.mp3",
+      "bytes": 51453,
+      "text": "Petals, cut them down."
+    },
+    {
+      "file": "nightbloom_root_snare_voice.mp3",
+      "bytes": 90323,
+      "text": "Roots, remember their bones."
+    },
+    {
+      "file": "nightbloom_nova_voice.mp3",
+      "bytes": 56886,
+      "text": "Open, night flower."
+    },
+    {
+      "file": "nightbloom_phase_voice.mp3",
+      "bytes": 38078,
+      "text": "I bloom in the dark."
+    }
+  ]
+}

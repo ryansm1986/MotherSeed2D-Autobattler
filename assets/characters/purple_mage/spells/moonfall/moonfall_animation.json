@@ -1,0 +1,14 @@
+{
+  "animation": "moonfall",
+  "source": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\raw\\moonfall_imagegen_strip_green.png",
+  "frameCount": 8,
+  "frameWidth": 1024,
+  "frameHeight": 1024,
+  "strip": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\moonfall_strip.png",
+  "greenStrip": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\moonfall_strip_green.png",
+  "framesPattern": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\frames\\moonfall_XX.png",
+  "greenFramesPattern": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\frames_green\\moonfall_XX_green.png",
+  "preview": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\preview\\moonfall_preview.png",
+  "gif": "D:\\projects\\MotherSeed2D\\assets\\characters\\purple_mage\\spells\\moonfall\\gif\\moonfall_anim.gif",
+  "notes": "Generated from the approved imagegen strip, edge-cleaned, split into fixed 1024px frames with transparent background and matching green-screen copies."
+}

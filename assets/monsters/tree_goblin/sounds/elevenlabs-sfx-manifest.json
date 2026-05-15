@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-05-03T00:21:18.199Z",
+  "model": "eleven_text_to_sound_v2",
+  "sounds": [
+    {
+      "file": "tree_goblin_arm_attack.mp3",
+      "bytes": 13836,
+      "text": "Short game sound effect: wooden goblin arm swipe attack, creaking bark windup into a sharp branch slap, dry splinter snap, hostile fantasy SFX, no voice, no music."
+    },
+    {
+      "file": "tree_goblin_head_throw.mp3",
+      "bytes": 15926,
+      "text": "Short game sound effect: tree goblin throws its wooden head, twisting vine tension release, bark whoosh, spinning hollow wood launch, clean fantasy SFX, no voice, no music."
+    },
+    {
+      "file": "tree_goblin_head_hit.mp3",
+      "bytes": 12582,
+      "text": "Short game sound effect: spinning wooden goblin head clips the player, hollow bark knock, vine snap, small crunchy wood impact, clean fantasy SFX, no voice, no music."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "iconId": "purple-mage:moonweave-armour",
+    "file": "moonweave-armour.png",
+    "slot": "bodyArmour",
+    "classTheme": "mage",
+    "statTendencies": ["intelligence", "vitality"],
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "purple-mage:crescent-star-helm",
+    "file": "crescent-star-helm.png",
+    "slot": "helmet",
+    "classTheme": "mage",
+    "statTendencies": ["intelligence", "dexterity"],
+    "inventorySize": { "width": 2, "height": 1 }
+  },
+  {
+    "iconId": "purple-mage:starthread-gloves",
+    "file": "starthread-gloves.png",
+    "slot": "gloves",
+    "classTheme": "mage",
+    "statTendencies": ["intelligence", "dexterity"],
+    "inventorySize": { "width": 2, "height": 1 }
+  },
+  {
+    "iconId": "purple-mage:moonweave-pants",
+    "file": "moonweave-pants.png",
+    "slot": "pants",
+    "classTheme": "mage",
+    "statTendencies": ["intelligence", "vitality"],
+    "inventorySize": { "width": 2, "height": 2 }
+  },
+  {
+    "iconId": "purple-mage:moonstep-boots",
+    "file": "moonstep-boots.png",
+    "slot": "boots",
+    "classTheme": "mage",
+    "statTendencies": ["intelligence", "vitality"],
+    "inventorySize": { "width": 2, "height": 2 }
+  }
+]

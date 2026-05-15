@@ -1,0 +1,5 @@
+subject,animation,runtime_animation,direction,frames,frame_width,frame_height,sheet
+moss_golem_v2,rock_throw,rock_throw,south,6,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\rock_throw\assembled\moss_golem_v2_rock_throw_4dir_6f_1152x1152.png
+moss_golem_v2,rock_throw,rock_throw,east,6,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\rock_throw\assembled\moss_golem_v2_rock_throw_4dir_6f_1152x1152.png
+moss_golem_v2,rock_throw,rock_throw,north,6,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\rock_throw\assembled\moss_golem_v2_rock_throw_4dir_6f_1152x1152.png
+moss_golem_v2,rock_throw,rock_throw,west,6,1152,1152,D:\projects\MotherSeed2D\assets\monsters\moss_golem_v2\rock_throw\assembled\moss_golem_v2_rock_throw_4dir_6f_1152x1152.png
