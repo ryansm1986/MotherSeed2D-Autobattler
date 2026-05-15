@@ -78,14 +78,14 @@ const gearSlotAbilities: Record<GearSlot, Record<GearDrop["rarity"], string>> = 
     Rare: "Adds a high-impact Branch identity hook.",
   },
   pants: {
-    Common: "Adds stamina, vitality, and mobility-adjacent rolls.",
-    Uncommon: "Adds Root Snare or Haste-flavored mobility hooks.",
-    Rare: "Adds strong mobility rolls and a Branch timing hook.",
+    Common: "Adds vitality and formation-tempo rolls.",
+    Uncommon: "Adds Root Snare or Haste-flavored formation hooks.",
+    Rare: "Adds strong tempo rolls and a Branch timing hook.",
   },
   boots: {
-    Common: "Adds movement and dodge-adjacent rolls.",
-    Uncommon: "Adds Quickroot movement timing.",
-    Rare: "Adds strong movement and Haste-flavored Branch hooks.",
+    Common: "Adds positioning and quickstep-adjacent rolls.",
+    Uncommon: "Adds Quickroot positioning timing.",
+    Rare: "Adds strong positioning and Haste-flavored Branch hooks.",
   },
 };
 

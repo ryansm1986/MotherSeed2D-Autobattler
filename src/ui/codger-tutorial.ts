@@ -93,7 +93,7 @@ export function renderCodgerTutorial(state: GameState): CodgerTutorialViewModel 
       return {
         isVisible: true,
         title: "Auto Attacks",
-        copy: "In battle, lock a target and your lattice begins working. You move, dodge, and aim; the auto-loop handles the steady strikes.",
+        copy: "In battle, lock a target and your lattice begins working. Your party positions itself while the auto-loop handles the steady strikes.",
         hint: "Watch Auto Loop in the HUD during combat.",
         primaryLabel: "Next",
         secondaryLabel: "Skip Tutorial",

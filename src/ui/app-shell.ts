@@ -80,9 +80,6 @@ export type AppShell = {
   musicVolumeValue: HTMLElement;
   sfxVolumeValue: HTMLElement;
   mobileControls: HTMLElement;
-  mobileMovePad: HTMLElement;
-  mobileMoveThumb: HTMLElement;
-  mobileDodgeButton: HTMLButtonElement;
   mobileTargetButton: HTMLButtonElement;
   mobileSpecialButtons: HTMLButtonElement[];
   mobileEquipButton: HTMLButtonElement;
@@ -268,26 +265,19 @@ export function createAppShell(): AppShell {
           <div class="pause-content">
             <section class="pause-panel" data-pause-panel="controls" aria-label="Controls">
               <div class="control-list desktop-control-list">
-                <div><kbd>WASD</kbd><span>Move</span></div>
-                <div><kbd>Shift</kbd><span>Sprint</span></div>
-                <div><kbd>Space</kbd><span>Dodge</span></div>
-                <div><kbd>Mouse</kbd><span>Target</span></div>
                 <div><kbd>Tab</kbd><span>Lock target</span></div>
-                <div><kbd>1</kbd><span>First special</span></div>
-                <div><kbd>2</kbd><span>Second special</span></div>
-                <div><kbd>3</kbd><span>Third special</span></div>
-                <div><kbd>E</kbd><span>Talk / loot</span></div>
+                <div><kbd>1</kbd><span>Party special 1</span></div>
+                <div><kbd>2</kbd><span>Party special 2</span></div>
+                <div><kbd>3</kbd><span>Party special 3</span></div>
+                <div><kbd>E</kbd><span>Collect loot</span></div>
                 <div><kbd>I</kbd><span>Inventory</span></div>
                 <div><kbd>O</kbd><span>Branch Lattice</span></div>
                 <div><kbd>Esc</kbd><span>Pause</span></div>
               </div>
               <div class="control-list mobile-control-list" aria-label="Phone controls">
-                <div><kbd>Pad</kbd><span>Move</span></div>
-                <div><kbd>Edge</kbd><span>Sprint</span></div>
-                <div><kbd>Dodge</kbd><span>Roll through danger</span></div>
                 <div><kbd>Target</kbd><span>Lock nearest enemy</span></div>
                 <div><kbd>1-3</kbd><span>Specials</span></div>
-                <div><kbd>Talk</kbd><span>Talk / loot</span></div>
+                <div><kbd>Loot</kbd><span>Collect reward</span></div>
                 <div><kbd>Bag</kbd><span>Inventory</span></div>
                 <div><kbd>Menu</kbd><span>Pause</span></div>
               </div>
@@ -346,19 +336,12 @@ export function createAppShell(): AppShell {
         <button class="mobile-button mobile-branch-lattice-button" type="button" aria-label="Open Branch Lattice">Lattice</button>
         <button class="mobile-button mobile-pause-button" type="button" aria-label="Pause game">Menu</button>
       </div>
-      <div class="mobile-move-pad" role="application" aria-label="Move">
-        <div class="mobile-move-ring">
-          <div class="mobile-move-thumb"></div>
-        </div>
-        <span>Move</span>
-      </div>
       <div class="mobile-action-cluster" aria-label="Phone action controls">
         <button class="mobile-button mobile-target-button" type="button" aria-label="Lock target">Target</button>
-        <button class="mobile-button mobile-dodge-button" type="button" aria-label="Dodge">Dodge</button>
         <button class="mobile-button mobile-special-button" type="button" data-mobile-special="0" aria-label="Use special 1">1</button>
         <button class="mobile-button mobile-special-button" type="button" data-mobile-special="1" aria-label="Use special 2">2</button>
         <button class="mobile-button mobile-special-button" type="button" data-mobile-special="2" aria-label="Use special 3">3</button>
-        <button class="mobile-button mobile-equip-button" type="button" aria-label="Talk or loot">Talk</button>
+        <button class="mobile-button mobile-equip-button" type="button" aria-label="Collect loot">Loot</button>
       </div>
     </section>
     <section class="mobile-rotate-prompt" aria-label="Rotate phone">
@@ -446,9 +429,6 @@ export function createAppShell(): AppShell {
     musicVolumeValue: document.querySelector<HTMLElement>("#music-volume-value")!,
     sfxVolumeValue: document.querySelector<HTMLElement>("#sfx-volume-value")!,
     mobileControls: document.querySelector<HTMLElement>(".mobile-controls")!,
-    mobileMovePad: document.querySelector<HTMLElement>(".mobile-move-pad")!,
-    mobileMoveThumb: document.querySelector<HTMLElement>(".mobile-move-thumb")!,
-    mobileDodgeButton: document.querySelector<HTMLButtonElement>(".mobile-dodge-button")!,
     mobileTargetButton: document.querySelector<HTMLButtonElement>(".mobile-target-button")!,
     mobileSpecialButtons: Array.from(document.querySelectorAll<HTMLButtonElement>(".mobile-special-button")),
     mobileEquipButton: document.querySelector<HTMLButtonElement>(".mobile-equip-button")!,

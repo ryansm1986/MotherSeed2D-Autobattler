@@ -422,13 +422,6 @@ const farPoint = { x: world.center.x + 5000, y: world.center.y + 5000 };
 clampToArena(farPoint);
 assert(distance(farPoint, world.center) < world.safeRadius * 1.1, "arena clamp should pull far point near safe radius");
 
-state.player.stamina = 100;
-const input = createInputState();
-input.pressedActions.add("dodge");
-const dodgeEvents = updateSimulation(state, input, 0.016);
-assert(state.player.invulnerableTime > 0, "dodge should grant invulnerability time");
-assert(dodgeEvents.some((event) => event.kind === "log" && event.message === "Dodge window"), "dodge should emit a log event");
-
 const noTargetFacingState = createInitialGameState("warrior");
 noTargetFacingState.player.direction = "up";
 noTargetFacingState.enemy.state = "idle";
@@ -438,7 +431,7 @@ noTargetFacingState.enemy.x = noTargetFacingState.player.x + 80;
 noTargetFacingState.enemy.y = noTargetFacingState.player.y + 80;
 noTargetFacingState.combat.targetLocked = false;
 updateSimulation(noTargetFacingState, createInputState(), 0.016);
-assert(noTargetFacingState.player.direction === "up", "cleared target should leave idle facing controlled by movement");
+assert(noTargetFacingState.player.direction === "up", "cleared target should preserve idle facing");
 
 const nightbloomState = createInitialGameState("warrior");
 nightbloomState.combat.roomIndex = 4;

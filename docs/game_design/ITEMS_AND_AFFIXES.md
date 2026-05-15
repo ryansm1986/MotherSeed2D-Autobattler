@@ -22,8 +22,8 @@ The player has nine equipped item positions:
 | Ring | 2 | Flexible stat fixing, unusual modifiers, narrow build hooks. |
 | Amulet | 1 | High-impact identity piece, rare modifiers, class scaling. |
 | Weapon | 1 | Primary source of Specials. Weapons do not grant Branch Lattice Abilities. |
-| Pants | 1 | Mobility, stamina, vitality, dodge-adjacent modifiers. |
-| Boots | 1 | Movement, dodge recovery, haste, positional effects. |
+| Pants | 1 | Formation tempo, vitality, recovery-adjacent modifiers. |
+| Boots | 1 | Positioning, haste, and quickstep-adjacent effects. |
 
 Implementation note: the current inventory UI labels body and pants as `chest` and `legs`. That can remain as internal UI wording during the prototype, but item data should use a stable slot model that can display `Body Armour` and `Pants` to the player.
 
@@ -215,7 +215,7 @@ Each slot should have a preferred affix personality. This keeps loot readable an
 | Ring | Any single stat | Ember Seed, small pulses | Fire Modifier, Amber Vein, Sap Fed. |
 | Amulet | Associated class stat, Vitality | Haste, Ward Pulse, rare identity abilities | Motherseed Echo, Star Bloom, Amber Vein. |
 | Weapon | Associated class stat | None | None. Weapons provide Specials instead. |
-| Pants | Vitality, Dexterity | Root Snare, Haste | Dodge and stamina-adjacent modifiers. |
+| Pants | Vitality, Dexterity | Root Snare, Haste | Formation tempo and recovery-adjacent modifiers. |
 | Boots | Dexterity, Vitality | Haste, Root Snare | Quickroot, movement-triggered modifiers. |
 
 ## Item Naming
@@ -266,7 +266,7 @@ They slot:
 | Ability 4 | Thorn Jab | Receives Wardwoven and Fire Modifier. |
 | Modifier 4 | Fire Modifier | Affects Thorn Jab only. |
 
-This turns gear into a mini rotation without making the player manually press every action.
+This turns gear into a mini rotation without making the player trigger every action.
 
 ## Derived Power
 

@@ -37,7 +37,7 @@ The current playable character path has these stages:
 2. `applySelectedClass()` in `src/game/state.ts` copies class stats into player state.
 3. `loadPlayerSprites()` in `src/render/canvas2d/character-sprites.ts` loads a `PlayerSpriteSet` for implemented classes.
 4. `renderer.ts` chooses the active sprite set for animation and drawing.
-5. `updatePlayer()` in `src/game/combat/player.ts` chooses movement/dodge animation intent.
+5. `updatePartyCompanions()` in `src/game/combat/party-ai.ts` drives party positioning and combat animation intent.
 6. `updateAutoAttack()` in `src/game/combat/abilities.ts` runs the Branch Lattice auto-attack loop.
 7. Finisher-tagged Branch abilities run as Branch Lattice identity attacks, but do not open Mother Load.
 8. `activeWeaponSpecials()` collects Specials from equipped gear, falling back to class baseline Specials. `castSpecial()` dispatches Special behavior by `special.id`; Specials tagged `MotherLoad` prime Mother Load and trigger it when chained back to back.
@@ -380,7 +380,7 @@ Use this table for common changes.
 | Goal | File or function |
 | --- | --- |
 | Rename class, title, weapon, role | `src/game/content/classes.ts` |
-| Change health, stamina, or max meter | `stats` in `classes.ts` |
+| Change health or max meter | `stats` in `classes.ts` |
 | Change special cost, cooldown, or range | `abilities` in `classes.ts` |
 | Change special behavior or damage | `castSpecial()` in `src/game/combat/abilities.ts` |
 | Add a gear-granted Special | Add `weaponSpecials` to the gear frame; debug starter gear does this in `src/game/combat/gear.ts` |
@@ -389,7 +389,7 @@ Use this table for common changes.
 | Change projectile speed or lifetime | The class projectile state/update functions |
 | Change sprite scale or baseline | Character draw profile in `src/render/canvas2d/renderer.ts` |
 | Change portrait | `portraitUrl` import and asset file |
-| Change keyboard mapping | `src/game/input-actions.ts` |
+| Change command key mapping | `src/game/input-actions.ts` |
 | Change target lock or click-to-clear targeting | `lockTarget()`, `clearTarget()`, and `isEnemyAtWorldPoint()` in `src/game/combat/player.ts` |
 | Change character select order | `characterOrder` in `classes.ts` |
 
@@ -410,7 +410,7 @@ Before marking a character implemented:
 - Projectiles or spell effects are not huge raw source images at runtime scale.
 - Special effects do not hide enemy telegraphs for too long.
 - The class has a meaningful default attack and at least one special.
-- Empty left-click clears target lock so movement-facing and auto-attack gating still feel intentional.
+- Empty left-click clears target lock so auto-attack gating stays intentional.
 
 ## Smoke Test Checklist
 
@@ -426,32 +426,31 @@ Then run locally:
 npm run dev
 ```
 
-Manual smoke test:
+Local smoke test:
 
 1. Open the app.
 2. Start from the title screen.
 3. Select the character.
 4. Confirm the portrait, class name, stats, and ability list.
-5. Enter the grove.
-6. Move in the four cardinal directions.
-7. Sprint and dodge.
-8. Let the default attack fire.
-9. Use each implemented special.
-10. Confirm event log messages, enemy health changes, cooldowns, and meter changes.
-11. Die or defeat the enemy once if the change touched reset, death, loot, or respawn.
+5. Enter the autobattler loop.
+6. Start a fight and watch the party position itself.
+7. Let the default attack fire.
+8. Use each implemented special.
+9. Confirm event log messages, enemy health changes, cooldowns, and meter changes.
+10. Die or defeat the enemy once if the change touched reset, death, loot, or respawn.
 
-Browser automation can also verify the happy path: select the class, enter the grove, wait for auto attacks, trigger a special, and check that no page errors were logged.
+Browser automation can also verify the happy path: select the class, enter the loop, wait for auto attacks, trigger a special, and check that no page errors were logged.
 
 ## Good Defaults
 
 Use these as starting points for new classes:
 
-| Archetype | Health | Stamina | Meter | Auto range | Auto cadence | Special range |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Melee tank | 130-150 | 90-110 | 100 | 100-140 | 1.2-1.5s | 100-220 |
-| Mobile melee | 100-120 | 120-140 | 100 | 90-125 | 0.8-1.2s | 100-300 |
-| Ranged caster | 85-105 | 85-105 | 110-130 | 520-760 | 0.8-1.1s | 360-600 |
-| Support | 110-130 | 85-110 | 100-120 | 140-240 | 1.1-1.4s | 180-360 |
+| Archetype | Health | Meter | Auto range | Auto cadence | Special range |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Melee tank | 130-150 | 100 | 100-140 | 1.2-1.5s | 100-220 |
+| Mobile melee | 100-120 | 100 | 90-125 | 0.8-1.2s | 100-300 |
+| Ranged caster | 85-105 | 110-130 | 520-760 | 0.8-1.1s | 360-600 |
+| Support | 110-130 | 100-120 | 140-240 | 1.1-1.4s | 180-360 |
 
 These are not rules. They are safe first values for a prototype fight against the current Rootbound Elite.
 

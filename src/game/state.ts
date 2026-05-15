@@ -649,8 +649,6 @@ export type SoundEventId =
   | "shroomSporeCloud"
   | "shroomMouthToss"
   | "shroomlingChomp"
-  | "playerDodge"
-  | "playerSprint"
   | "magicMissileCast"
   | "magicMissileImpact"
   | "radiantBrand"

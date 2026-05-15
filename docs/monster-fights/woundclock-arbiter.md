@@ -9,7 +9,7 @@ Woundclock Arbiter is a large clockwork time-magic boss built to feel different 
 | Ability | Role | Timing | Damage | Counterplay |
 | --- | --- | --- | --- | --- |
 | `chrono_lance` | Fast locked line projectile | 0.66s windup, 0.08s active, 0.42s recovery | 23 | Sidestep the line after the boss locks its facing; phase 2 fires three narrow lances. |
-| `gear_orbit` | Orbiting delayed projectiles | 0.92s windup, 0.12s active, 0.68s recovery | 14 per gear | Watch the orbit, then dodge the release vector as gears fling toward you. |
+| `gear_orbit` | Orbiting delayed projectiles | 0.92s windup, 0.12s active, 0.68s recovery | 14 per gear | Watch the orbit, then steer away from the release vector as gears fling toward you. |
 | `clockhand_sweep` | Rotating radial blade | 0.96s windup, 0.10s active, 0.70s recovery | 30 | Move inside or outside the sweeping hand rather than only side-stepping. |
 | `time_rift` | Delayed position traps | 1.08s windup, delayed burst hits | 25 | Leave your marked position before the rifts snap shut. |
 | `hour_zero` | Phase transition | One-time below 50% health | 0 | Clears active time hazards and begins denser second-phase patterns. |

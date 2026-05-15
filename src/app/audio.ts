@@ -24,8 +24,6 @@ import motherloadBreakerHitUrl from "../../assets/characters/green_warrior/sound
 import motherloadBreakerDetonationUrl from "../../assets/characters/green_warrior/sounds/skills/motherload_breaker_detonation.mp3?url";
 import verdantGuillotineLeapUrl from "../../assets/characters/green_warrior/sounds/skills/verdant_guillotine_leap.mp3?url";
 import verdantGuillotineDropUrl from "../../assets/characters/green_warrior/sounds/skills/verdant_guillotine_drop.mp3?url";
-import playerDodgeUrl from "../../assets/characters/green_warrior/sounds/movement/dodge_roll.mp3?url";
-import playerSprintUrl from "../../assets/characters/green_warrior/sounds/movement/sprint_start.mp3?url";
 import magicMissileCastUrl from "../../assets/characters/purple_mage/sounds/magic_missile_cast.mp3?url";
 import magicMissileImpactUrl from "../../assets/characters/purple_mage/sounds/magic_missile_impact.mp3?url";
 import radiantBrandUrl from "../../assets/characters/cleric/sounds/radiant_brand.mp3?url";
@@ -99,11 +97,6 @@ const warriorAudio = {
   motherloadBreakerDetonationVolume: 0.76,
   verdantGuillotineLeapVolume: 0.52,
   verdantGuillotineDropVolume: 0.7,
-} as const;
-
-const playerMovementAudio = {
-  dodgeVolume: 0.5,
-  sprintVolume: 0.38,
 } as const;
 
 const mageAudio = {
@@ -279,8 +272,6 @@ export function createAudioManager(controls: AudioControls) {
     if (id === "shroomSporeCloud") playSound(shroomSporeCloudUrl, shroomAudio.sporeCloudVolume);
     if (id === "shroomMouthToss") playSound(shroomMouthTossUrl, shroomAudio.mouthTossVolume);
     if (id === "shroomlingChomp") playSound(shroomlingChompUrl, shroomAudio.shroomlingChompVolume);
-    if (id === "playerDodge") playSound(playerDodgeUrl, playerMovementAudio.dodgeVolume);
-    if (id === "playerSprint") playSound(playerSprintUrl, playerMovementAudio.sprintVolume);
     if (id === "magicMissileCast") playSound(magicMissileCastUrl, mageAudio.magicMissileCastVolume);
     if (id === "magicMissileImpact") playSound(magicMissileImpactUrl, mageAudio.magicMissileImpactVolume);
     if (id === "radiantBrand") playSound(radiantBrandUrl, clericAudio.radiantBrandVolume);

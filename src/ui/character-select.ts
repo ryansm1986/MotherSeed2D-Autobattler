@@ -51,7 +51,6 @@ export function renderCharacterSelect(selectedClassIdOrState: ClassId | GameStat
     <div class="detail-stat-grid">
       <div><span>Weapon</span><strong>${currentClass.weapon}</strong></div>
       <div><span>Health</span><strong>${currentClass.stats.health}</strong></div>
-      <div><span>Stamina</span><strong>${currentClass.stats.stamina}</strong></div>
       <div><span>Bloom Meter</span><strong>${currentClass.stats.meter}</strong></div>
     </div>
     <div class="detail-abilities">

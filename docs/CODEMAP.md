@@ -19,7 +19,7 @@
 - `src/game/debug.ts` owns debug-only helpers for encounter teleporting and pause-menu test actions.
 - `src/game/rewards.ts` owns authored autobattler victory rewards, including encounter gear grants.
 - `src/game/simulation.ts` coordinates the frame update and returns `GameEvent[]`.
-- `src/game/combat/player.ts` owns movement, stamina, dodge, target lock, and facing.
+- `src/game/combat/player.ts` owns active-party animation upkeep, target lock, enemy hit picking, and party-member picking helpers.
 - `src/game/combat/enemy-ai.ts` owns Rootbound Elite movement, windup/active/recovery states, and hit checks.
 - `src/game/combat/abilities.ts` owns Branch Lattice auto-loop execution, MotherLoad-tagged Special chaining, Special cooldowns, and special dispatch by `special.id`.
 - `src/game/combat/projectiles.ts` owns Magic Missile, Moonfall, and Mother Load effect state updates.
@@ -52,7 +52,7 @@
 - `src/ui/character-select.ts` creates and applies character select view models.
 - `src/ui/inventory.ts` creates and applies the DOM inventory view model.
 - `src/ui/branch-lattice.ts` creates and applies the Branch Lattice overlay view model.
-- `src/ui/mobile-controls.ts` maps phone-only virtual controls onto the existing `InputState`.
+- `src/ui/mobile-controls.ts` maps phone-only command buttons onto targeting, specials, inventory, Branch Lattice, loot, and pause actions.
 - `src/ui/pause-menu.ts` owns pause tabs and copy.
 - `src/ui/debug-menu.ts` owns the pause-menu debug encounter controls.
 - `src/ui/event-log.ts` applies log events.
@@ -69,6 +69,6 @@
 
 - Keep `main.ts` small; do not put gameplay, rendering, or DOM templates back into it.
 - Keep Canvas objects in `render/canvas2d`, DOM objects in `ui`, and plain serializable state in `game`.
-- Keep touch controls as UI input adapters that emit existing gameplay actions; do not add mobile-only simulation state.
+- Keep phone controls as UI command adapters; do not add mobile-only simulation state.
 - When adding a new feature, choose the module by ownership, not by convenience.
 - Preserve current asset paths unless the task is specifically about asset cleanup.

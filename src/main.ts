@@ -113,9 +113,6 @@ const audio = createAudioManager({
 const mobileControls = createMobileControls({
   elements: {
     root: shell.mobileControls,
-    movePad: shell.mobileMovePad,
-    moveThumb: shell.mobileMoveThumb,
-    dodgeButton: shell.mobileDodgeButton,
     targetButton: shell.mobileTargetButton,
     specialButtons: shell.mobileSpecialButtons,
     equipButton: shell.mobileEquipButton,
@@ -124,7 +121,6 @@ const mobileControls = createMobileControls({
     pauseButton: shell.mobilePauseButton,
     rotatePrompt: shell.mobileRotatePrompt,
   },
-  inputState,
   canUseGameplayInput: () => isGameplayActive(state),
   onTarget: () => {
     if (state.round.phase !== "battle") handleEvents(lockTarget(state));
@@ -1132,9 +1128,6 @@ function handleKeyUp(event: KeyboardEvent) {
   const action = gameplayActionForCode(event.code);
   if (action) {
     inputState.pressedActions.delete(action);
-    if (action === "sprint") {
-      inputState.sprintExhaustedUntilRelease = false;
-    }
   }
 }
 
@@ -1457,7 +1450,7 @@ function ensureRenderAssetsReady(sourceState: typeof state) {
       gameCursor.setCanvasState(null);
     });
 
-    pushLog(shell.eventLog, "MotherSeed prototype ready", "Close for melee, dodge the red telegraphs");
+    pushLog(shell.eventLog, "MotherSeed autobattler ready", "Draft the party, tune gear, and let the loop fight");
     requestAnimationFrame((now) => {
       lastFrame = now;
       animate(now);

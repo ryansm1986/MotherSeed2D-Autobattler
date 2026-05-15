@@ -14,7 +14,7 @@ Build an auto battler RPG loop:
 
 ## Fork Strategy
 
-Keep the Vite + TypeScript + Canvas 2D foundation, but pivot the game loop from direct ARPG control to party management plus AI-resolved battles.
+Keep the Vite + TypeScript + Canvas 2D foundation, with the game loop focused on party management, gear decisions, and AI-resolved battles.
 
 Reuse the current renderer, content files, gear systems, inventory UI, event pipeline, monster-fight content, and existing `party-ai.ts` direction where possible. Replace the control model, encounter flow, and progression loop over time.
 
@@ -49,10 +49,10 @@ Goal: one party vs one monster group, fully AI-controlled.
 
 Core changes:
 
-- `[x]` Replace direct player movement/combat input with party AI.
+- `[x]` Replace manual combat control with party AI.
 - `[~]` Treat the player side as multiple combatants, not one `player`.
 - `[x]` Add round states: `preparing`, `battle`, `victory`, `defeat`, `shop`.
-- `[x]` Make combat run without player input once battle starts.
+- `[x]` Make combat resolve through AI once battle starts.
 - `[x]` Award gold on victory.
 - `[x]` Return to shop after victory or defeat.
 
@@ -175,7 +175,7 @@ This keeps AI debuggable and renderable. The UI can later show intent lines, tar
 
 ## Phase 6: Formation And Preparation
 
-Goal: give the player meaningful control without direct combat input.
+Goal: give the player meaningful control through party setup rather than realtime combat control.
 
 Add a preparation screen where the player can:
 
@@ -222,7 +222,7 @@ For each major phase:
   - Gold is awarded only once.
   - Shop purchases subtract gold.
   - Gear modifies stats correctly.
-  - PvP-style team-vs-team fights resolve without player input.
+  - PvP-style team-vs-team fights resolve entirely through AI.
 
 ## First Implementation Slice
 
@@ -231,7 +231,7 @@ The best first slice is:
 1. Add `GamePhase` / round state.
 2. Add party array to `GameState`.
 3. Make existing selected character become party member 1.
-4. Disable direct combat control during battle.
+4. Disable manual combat control during battle.
 5. Use `party-ai.ts` to drive the player unit.
 6. Award gold on victory.
 7. Add a simple post-battle shop placeholder.

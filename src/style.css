@@ -1535,10 +1535,6 @@ canvas {
   background: linear-gradient(90deg, #8c2f32, var(--ui-red));
 }
 
-.stamina {
-  background: linear-gradient(90deg, #397f55, var(--ui-green));
-}
-
 .meter {
   background: linear-gradient(90deg, var(--ui-blue), var(--ui-gold));
 }
@@ -5335,68 +5331,8 @@ body .game-shell * {
     pointer-events: auto;
   }
 
-  .mobile-move-pad {
-    position: absolute;
-    left: max(16px, env(safe-area-inset-left));
-    bottom: max(16px, env(safe-area-inset-bottom));
-    width: 136px;
-    height: 136px;
-    display: grid;
-    place-items: center;
-    pointer-events: auto;
-  }
-
-  .mobile-controls:not(.is-gameplay-active) .mobile-move-pad,
   .mobile-controls:not(.is-gameplay-active) .mobile-action-cluster {
     display: none;
-  }
-
-  .mobile-move-ring {
-    position: absolute;
-    inset: 0;
-    border: 2px solid rgba(255, 240, 168, 0.48);
-    border-radius: 50%;
-    background:
-      radial-gradient(circle, rgba(242, 211, 107, 0.1), transparent 48%),
-      rgba(4, 10, 14, 0.5);
-    box-shadow:
-      0 12px 34px rgba(0, 0, 0, 0.42),
-      inset 0 0 0 10px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(8px);
-  }
-
-  .mobile-move-pad.is-sprinting .mobile-move-ring {
-    border-color: rgba(143, 202, 104, 0.84);
-    box-shadow:
-      0 12px 34px rgba(0, 0, 0, 0.42),
-      0 0 26px rgba(143, 202, 104, 0.2),
-      inset 0 0 0 10px rgba(143, 202, 104, 0.08);
-  }
-
-  .mobile-move-thumb {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 48px;
-    height: 48px;
-    border: 2px solid rgba(255, 240, 168, 0.68);
-    border-radius: 50%;
-    background: linear-gradient(180deg, rgba(242, 211, 107, 0.32), rgba(7, 18, 15, 0.62));
-    box-shadow:
-      0 6px 18px rgba(0, 0, 0, 0.44),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%);
-  }
-
-  .mobile-move-pad > span {
-    position: absolute;
-    bottom: 18px;
-    color: rgba(246, 239, 208, 0.58);
-    font-family: "Lucida Console", Monaco, Consolas, monospace;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
   }
 
   .mobile-action-cluster {
@@ -5439,11 +5375,6 @@ body .game-shell * {
     transform: translateY(1px);
   }
 
-  .mobile-dodge-button {
-    grid-column: span 2;
-    color: #ffe08a;
-  }
-
   .mobile-target-button,
   .mobile-equip-button {
     grid-column: span 1;
@@ -5469,7 +5400,7 @@ body .game-shell * {
   .hud-bottom {
     grid-template-columns: 1fr;
     justify-items: center;
-    padding: 0 230px 4px 158px;
+    padding: 0 230px 4px 12px;
   }
 
   .action-bar,
@@ -5543,11 +5474,6 @@ body .game-shell * {
 }
 
 @media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 380px) {
-  .mobile-move-pad {
-    width: 118px;
-    height: 118px;
-  }
-
   .mobile-action-cluster {
     width: 188px;
     gap: 6px;
@@ -5560,7 +5486,7 @@ body .game-shell * {
 
   .hud-bottom {
     padding-right: 206px;
-    padding-left: 136px;
+    padding-left: 12px;
   }
 
   .event-log {

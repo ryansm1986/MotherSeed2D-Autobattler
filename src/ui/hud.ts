@@ -163,7 +163,6 @@ export function renderHud(state: GameState): HudViewModel {
         ? state.round.shop.message
         : `Round ${state.round.roundIndex || 1}`;
   const healthValue = state.player.health / state.player.maxHealth;
-  const staminaValue = state.player.stamina / state.player.maxStamina;
   const meterValue = state.player.meter / state.player.maxMeter;
   const playerHtml = `
     <div class="party-rail" aria-label="Party members">
@@ -184,8 +183,6 @@ export function renderHud(state: GameState): HudViewModel {
     <div class="label-row"><span>Gold</span><span>${state.round.gold}</span></div>
     <div class="label-row"><span>Phase</span><span>${escapeHtml(phaseLabel)}</span></div>
     <div class="label-row"><span>Round</span><span>${escapeHtml(resultLabel)}</span></div>
-    <div class="label-row"><span>Stamina</span><span>${Math.floor(state.player.stamina)}</span></div>
-    <div class="bar"><div class="fill stamina" style="--value:${staminaValue}"></div></div>
     <div class="label-row"><span>Bloom Meter</span><span>${Math.floor(state.player.meter)}</span></div>
     <div class="bar"><div class="fill meter" style="--value:${meterValue}"></div></div>
   `;

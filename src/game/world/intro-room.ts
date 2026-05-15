@@ -20,7 +20,7 @@ export const codgerLatticeModifiersText =
 export const codgerLatticeLoopText =
   "When the last slotted ability resolves, the loop rests for three seconds, then begins again. The tree likes rhythm.";
 export const codgerAutoAttackText =
-  "In battle, lock a target and your lattice begins working. You move, dodge, and aim; the auto-loop handles the steady strikes.";
+  "In battle, lock a target and your lattice begins working. Your party positions itself while the auto-loop handles the steady strikes.";
 export const codgerMeterText = "Those strikes build Bloom Meter. Bloom Meter feeds your numbered Specials.";
 export const codgerMotherLoadText =
   "Some Specials carry the Mother Load mark. Cast one to prime Mother Load, then cast another marked Special back to back to wake it up meaner.";

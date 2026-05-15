@@ -9,7 +9,7 @@ Briarheart Sovereign is the next solo boss encounter after Abyssal Bellwraith. I
 | Ability | Role | Timing | Damage | Counterplay |
 | --- | --- | --- | --- | --- |
 | `briar_skewer` | Narrow line projectile | 0.74s windup, 0.08s active, 0.44s recovery | 22 | Sidestep the locked thorn line after the cast faces you. |
-| `seed_barrage` | Projectile fan | 1.00s windup, 0.12s active, 0.62s recovery | 13 per seed | Read the spread and dodge through a gap; phase 2 fires 11 seeds. |
+| `seed_barrage` | Projectile fan | 1.00s windup, 0.12s active, 0.62s recovery | 13 per seed | Read the spread and steer through a gap; phase 2 fires 11 seeds. |
 | `strangler_grove` | Delayed ground eruptions | 1.12s windup, delayed burst hits | 24 | Leave the locked vine circles before the ground erupts. |
 | `pollen_nova` | Expanding hollow ring | 1.28s windup, 0.16s active, 0.94s recovery | 32 | Stay inside the hollow center or cross the rim cleanly. |
 | `sovereign_bloom` | Phase transition | One-time below 45% health | 0 | Clears active boss hazards and announces denser phase 2 patterns. |

@@ -9,9 +9,9 @@ Obsidian Reliquary is the fifth-room solo boss encounter. It is a slow shrine-kn
 | Ability | Role | Timing | Damage | Counterplay |
 | --- | --- | --- | --- | --- |
 | `glass_lance` | Narrow line projectile | 0.68s windup, 0.08s active, 0.42s recovery | 20 | Sidestep the locked line after the cast turns toward you. |
-| `shard_spiral` | Wide projectile fan | 0.96s windup, 0.12s active, 0.58s recovery | 12 per shard | Read the fan arc and dodge through a gap; phase 2 fires 12 shards. |
+| `shard_spiral` | Wide projectile fan | 0.96s windup, 0.12s active, 0.58s recovery | 12 per shard | Read the fan arc and steer through a gap; phase 2 fires 12 shards. |
 | `reliquary_smite` | Delayed ground eruptions | 1.08s windup, delayed burst hits | 22 | Leave the locked sigils before the black glass erupts. |
-| `penitent_wheel` | Expanding donut/ring | 1.22s windup, 0.14s active, 0.90s recovery | 30 | Stay inside the safe center or dodge across the rim once. |
+| `penitent_wheel` | Expanding donut/ring | 1.22s windup, 0.14s active, 0.90s recovery | 30 | Stay inside the safe center or cross the rim once. |
 | `phase_rupture` | Phase transition | One-time below 45% health | 0 | Clears active boss hazards and announces the denser pattern. |
 
 ## Asset Manifest

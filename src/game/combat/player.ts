@@ -1,10 +1,9 @@
-import { movementFromActions, type InputState } from "../input-actions";
-import { directionFromVector, distance, lengthSq, normalize } from "../math";
-import { livingEnemies, logEvent, promoteEnemy, soundEvent, type GameEvent, type GameState, type PartyMemberState } from "../state";
+import type { InputState } from "../input-actions";
+import { directionFromVector, distance, lengthSq } from "../math";
+import { livingEnemies, logEvent, promoteEnemy, type GameEvent, type GameState, type PartyMemberState } from "../state";
 import type { AnimationName, Vec2 } from "../types";
-import { clampToArena, resolveObstacleCollision } from "../world/collision";
 
-export function updatePlayer(state: GameState, inputState: InputState, delta: number, events: GameEvent[]) {
+export function updatePlayer(state: GameState, _inputState: InputState, delta: number, _events: GameEvent[]) {
   const { player } = state;
   if (player.lifeState === "dead") {
     player.dodgeTime = 0;
@@ -26,55 +25,8 @@ export function updatePlayer(state: GameState, inputState: InputState, delta: nu
   if (player.specialFlash <= 0) player.specialAnim = null;
   player.frontFlipSlashTime = Math.max(0, player.frontFlipSlashTime - delta);
   player.autoTimer = Math.max(0, player.autoTimer - delta);
-
-  const input = movementFromActions(inputState.pressedActions);
-
-  const moving = lengthSq(input) > 0;
-  if (moving) {
-    normalize(input);
-    player.direction = directionFromVector(input);
-    player.facing = { ...input };
-  }
-
-  const sprinting = moving
-    && inputState.pressedActions.has("sprint")
-    && !inputState.sprintExhaustedUntilRelease
-    && player.stamina > 0
-    && player.dodgeTime <= 0;
-
-  if (sprinting) {
-    player.stamina = Math.max(0, player.stamina - player.sprintStaminaCost * delta);
-    if (player.stamina <= 0) {
-      inputState.sprintExhaustedUntilRelease = true;
-    }
-  } else {
-    player.stamina = Math.min(player.maxStamina, player.stamina + player.staminaRegen * delta);
-  }
-
-  if (inputState.pressedActions.has("dodge") && player.stamina >= 28 && player.dodgeTime <= 0) {
-    player.stamina -= 28;
-    player.dodgeTime = 0.24;
-    player.dodgeAnimTime = 0.44;
-    player.invulnerableTime = 0.38;
-    events.push(soundEvent("playerDodge"), logEvent("Dodge window", ""));
-  }
-
-  if (sprinting && player.dodgeTime <= 0 && player.anim !== "sprint") {
-    events.push(soundEvent("playerSprint"));
-  }
-
-  const speed = player.dodgeTime > 0 ? player.dodgeSpeed : sprinting ? player.sprintSpeed : player.speed;
-  const direction = moving ? input : player.dodgeTime > 0 ? player.facing : null;
-  if (direction) {
-    player.x += direction.x * speed * delta;
-    player.y += direction.y * speed * delta;
-  }
-
-  clampToArena(player);
-  resolveObstacleCollision(player, player.radius, state.obstacles);
-  if (!sprinting && player.dodgeTime <= 0) {
-    updateTargetFacing(state);
-  }
+  player.stamina = Math.min(player.maxStamina, player.stamina + player.staminaRegen * delta);
+  updateTargetFacing(state);
 
   const nextAnim: AnimationName =
     player.frontFlipSlashTime > 0
@@ -83,13 +35,7 @@ export function updatePlayer(state: GameState, inputState: InputState, delta: nu
       ? player.specialAnim ?? "attack2"
       : player.attackFlash > 0
         ? getAttackAnimation(state)
-        : player.dodgeAnimTime > 0
-          ? "dodge_roll"
-          : sprinting
-            ? "sprint"
-            : moving
-              ? "walk"
-              : "idle";
+        : "idle";
   setPlayerAnimation(state, nextAnim);
 }
 
@@ -126,7 +72,7 @@ export function clearTarget(state: GameState): GameEvent[] {
   if (!state.combat.targetLocked && !state.combat.pendingMagicMissileCast) return [];
   state.combat.targetLocked = false;
   state.combat.pendingMagicMissileCast = null;
-  return [logEvent("Target cleared", "Movement controls facing")];
+  return [logEvent("Target cleared", "Autobattle targeting paused")];
 }
 
 export function isEnemyAtWorldPoint(state: GameState, point: Vec2) {

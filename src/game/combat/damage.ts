@@ -28,7 +28,7 @@ function dropGearOnEnemyCorpse(state: GameState, enemy: EnemyState, events: Game
   state.combat.droppedGearSourceLabel = null;
   state.combat.lootCorpseId = enemy.instanceId;
   state.combat.hoveredLootCorpseId = null;
-  events.push(logEvent(`${droppedGear.rarity} drop: ${droppedGear.name}`, "Loot the fallen body or press E to open loot"));
+  events.push(logEvent(`${droppedGear.rarity} drop: ${droppedGear.name}`, "Collect the fallen reward or open the loot panel"));
 }
 
 export function dealSpecificEnemyDamage(state: GameState, enemy: EnemyState, amount: number, source: string, events: GameEvent[]) {

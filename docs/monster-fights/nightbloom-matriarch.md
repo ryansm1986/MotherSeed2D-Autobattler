@@ -17,7 +17,7 @@ Nightbloom Matriarch is the fourth-room solo boss encounter. It is a corrupted b
 | Ability | Role | Timing | Damage | Counterplay |
 | --- | --- | --- | --- | --- |
 | `thorn_lance` | Narrow line projectile | 0.72s windup, 0.08s active, 0.42s recovery | 18 | Sidestep the line after the cast locks direction. |
-| `petal_fan` | Projectile spread | 0.92s windup, 0.10s active, 0.56s recovery | 11 per petal | Dodge through a gap; phase 2 widens to 7 petals. |
+| `petal_fan` | Projectile spread | 0.92s windup, 0.10s active, 0.56s recovery | 11 per petal | Leaves readable gaps; phase 2 widens to 7 petals. |
 | `root_snare` | Delayed ground hazards | 1.05s windup, delayed burst hits | 16 | Move out of locked circles before roots erupt. |
 | `nightbloom_nova` | Expanding donut/ring | 1.18s windup, 0.16s active, 0.86s recovery | 28 | Stay inside the initial safe center or leave the ring. |
 | `phase_bloom` | Phase transition | One-time below 50% health | 0 | Clears active boss hazards and announces phase 2. |
