@@ -42,6 +42,7 @@ Progress log:
 - 2026-05-15: Completed the first functional Phase 3 shop loop with rolled gear offers, gold costs, buying into the backpack, rerolls, persisted shop state, and a start-next-fight action.
 - 2026-05-15: Started Phase 4 with an authored encounter plan that drives room spawns, debug teleport options, gold rewards, and shop offer/reroll unlocks.
 - 2026-05-15: Added authored post-victory gear rewards for elite/boss encounters, granted directly into the backpack with encounter-defined rarity.
+- 2026-05-15: Researched autobattler itemization patterns and updated the item design doc around party/MMO roles, Branch Lattice loops, Specials, shop offers, and reward pacing.
 
 ## Phase 1: Auto Battler MVP
 
