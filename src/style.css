@@ -3298,6 +3298,7 @@ canvas {
   background:
     var(--shop-panel-art) center / 100% 100% no-repeat,
     linear-gradient(180deg, #07120d, #020706);
+  background-attachment: local, scroll;
   border: 0;
   border-radius: 8px;
   box-shadow:
@@ -3381,37 +3382,23 @@ canvas {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  align-items: start;
 }
 
 .shop-item,
 .shop-empty {
   position: relative;
   display: grid;
-  gap: 8px;
-  min-height: 230px;
-  padding: 30px 28px 24px;
+  gap: 7px;
+  min-height: 318px;
+  padding: 42px 38px 34px;
   overflow: hidden;
   background:
     var(--shop-card-art) center / 100% 100% no-repeat,
     transparent;
   border: 0;
   border-radius: 8px;
-  box-shadow:
-    inset 0 0 46px rgba(0, 0, 0, 0.48),
-    0 10px 28px rgba(0, 0, 0, 0.28);
-}
-
-.shop-item.uncommon {
-  box-shadow:
-    0 0 22px rgba(118, 203, 150, 0.1),
-    0 10px 28px rgba(0, 0, 0, 0.28);
-}
-
-.shop-item.rare {
-  box-shadow:
-    inset 0 0 42px rgba(98, 105, 204, 0.18),
-    0 0 24px rgba(153, 166, 255, 0.14),
-    0 10px 28px rgba(0, 0, 0, 0.28);
+  box-shadow: none;
 }
 
 .shop-item-topline {
@@ -3422,13 +3409,14 @@ canvas {
 
 .shop-item-topline strong {
   color: #ffd56d;
-  padding-right: 6px;
+  padding-right: 12px;
 }
 
 .shop-item h2 {
   margin: 0;
   color: #fff3c8;
-  font-size: 0.98rem;
+  font-size: 0.94rem;
+  line-height: 1.14;
   letter-spacing: 0;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.72);
 }
@@ -3438,8 +3426,8 @@ canvas {
 .shop-empty span {
   margin: 0;
   color: #cdbf9a;
-  font-size: 0.82rem;
-  line-height: 1.3;
+  font-size: 0.78rem;
+  line-height: 1.26;
 }
 
 .shop-item em {
@@ -3448,7 +3436,7 @@ canvas {
 
 .shop-stat-list {
   display: grid;
-  gap: 4px;
+  gap: 2px;
   margin: 0;
 }
 
@@ -3463,12 +3451,12 @@ canvas {
 .shop-stat-list dd {
   margin: 0;
   color: #b8f18d;
-  padding-right: 8px;
+  padding-right: 14px;
 }
 
 .shop-button,
 .shop-buy-button {
-  min-height: 40px;
+  min-height: 36px;
   padding: 0 20px;
   color: #ffe9a8;
   font-weight: 800;
@@ -3520,7 +3508,7 @@ canvas {
     max-height: none;
     padding: 42px 20px 28px;
     background:
-      var(--shop-panel-art) center / cover no-repeat,
+      var(--shop-panel-art) center top / auto 1600px no-repeat,
       linear-gradient(180deg, #07120d, #020706);
   }
 
@@ -3536,18 +3524,18 @@ canvas {
 
   .shop-item,
   .shop-empty {
-    min-height: 260px;
-    padding: 36px 28px 30px;
+    min-height: 338px;
+    padding: 44px 34px 34px;
   }
 
   .shop-item h2 {
-    font-size: 0.94rem;
+    font-size: 0.9rem;
   }
 
   .shop-item p,
   .shop-item em,
   .shop-empty span {
-    font-size: 0.8rem;
+    font-size: 0.76rem;
   }
 }
 
