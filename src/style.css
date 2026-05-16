@@ -3461,16 +3461,12 @@ canvas {
   padding: 0 20px;
   color: #ffe9a8;
   font-weight: 800;
+  line-height: 1;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.84);
-  background:
-    linear-gradient(rgba(36, 18, 7, 0.08), rgba(36, 18, 7, 0.18)),
-    var(--shop-button-art) center / 100% 100% no-repeat,
-    linear-gradient(180deg, #7f541e, #2f1d0e);
+  background: var(--shop-button-art) center / 100% 74% no-repeat;
   border: 0;
-  border-radius: 8px;
-  box-shadow:
-    inset 0 0 18px rgba(255, 198, 70, 0.12),
-    0 6px 18px rgba(0, 0, 0, 0.24);
+  border-radius: 0;
+  box-shadow: none;
   cursor: pointer;
 }
 
@@ -3480,9 +3476,7 @@ canvas {
 
 .shop-button.is-primary {
   color: #efffc5;
-  background:
-    var(--shop-button-art) center / 100% 100% no-repeat,
-    linear-gradient(180deg, #6fa84d, #1d4a29);
+  background: var(--shop-button-art) center / 100% 74% no-repeat;
 }
 
 .shop-button:hover,
