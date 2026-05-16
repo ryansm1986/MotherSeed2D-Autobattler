@@ -3463,7 +3463,7 @@ canvas {
   font-weight: 800;
   line-height: 1;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.84);
-  background: var(--shop-button-art) center / 100% 74% no-repeat;
+  background: var(--shop-button-art) center / 100% 100% no-repeat;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -3476,7 +3476,7 @@ canvas {
 
 .shop-button.is-primary {
   color: #efffc5;
-  background: var(--shop-button-art) center / 100% 74% no-repeat;
+  background: var(--shop-button-art) center / 100% 100% no-repeat;
 }
 
 .shop-button:hover,
