@@ -3390,8 +3390,8 @@ canvas {
   position: relative;
   display: grid;
   gap: 7px;
-  min-height: 318px;
-  padding: 42px 38px 34px;
+  min-height: 344px;
+  padding: 54px 58px 42px;
   overflow: hidden;
   background:
     var(--shop-card-art) center / 100% 100% no-repeat,
@@ -3404,21 +3404,22 @@ canvas {
 .shop-item-topline {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 14px;
 }
 
 .shop-item-topline strong {
   color: #ffd56d;
-  padding-right: 12px;
+  padding-right: 6px;
 }
 
 .shop-item h2 {
   margin: 0;
   color: #fff3c8;
-  font-size: 0.94rem;
+  font-size: 0.88rem;
   line-height: 1.14;
   letter-spacing: 0;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.72);
+  overflow-wrap: anywhere;
 }
 
 .shop-item p,
@@ -3426,8 +3427,9 @@ canvas {
 .shop-empty span {
   margin: 0;
   color: #cdbf9a;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   line-height: 1.26;
+  overflow-wrap: anywhere;
 }
 
 .shop-item em {
@@ -3444,14 +3446,13 @@ canvas {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  padding: 2px 0;
+  padding: 1px 0;
   border-bottom: 1px solid rgba(221, 186, 101, 0.14);
 }
 
 .shop-stat-list dd {
   margin: 0;
   color: #b8f18d;
-  padding-right: 14px;
 }
 
 .shop-button,
@@ -3524,18 +3525,20 @@ canvas {
 
   .shop-item,
   .shop-empty {
-    min-height: 338px;
-    padding: 44px 34px 34px;
+    min-height: 372px;
+    padding: 56px 54px 44px;
   }
 
   .shop-item h2 {
-    font-size: 0.9rem;
+    font-size: 0.78rem;
+    line-height: 1.16;
   }
 
   .shop-item p,
   .shop-item em,
   .shop-empty span {
-    font-size: 0.76rem;
+    font-size: 0.68rem;
+    line-height: 1.24;
   }
 }
 
