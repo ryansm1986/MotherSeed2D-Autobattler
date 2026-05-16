@@ -3299,7 +3299,7 @@ canvas {
     linear-gradient(rgba(6, 11, 8, 0.28), rgba(6, 11, 8, 0.42)),
     var(--shop-panel-art) center / 100% 100% no-repeat,
     linear-gradient(180deg, #07120d, #020706);
-  border: 1px solid rgba(235, 197, 103, 0.42);
+  border: 0;
   border-radius: 8px;
   box-shadow:
     0 30px 90px rgba(0, 0, 0, 0.68),
@@ -3348,7 +3348,7 @@ canvas {
   background:
     linear-gradient(90deg, rgba(31, 18, 8, 0.48), rgba(6, 12, 9, 0.78)),
     rgba(6, 12, 10, 0.72);
-  border: 1px solid rgba(236, 190, 82, 0.52);
+  border: 0;
   border-radius: 8px;
   box-shadow: inset 0 0 24px rgba(255, 192, 67, 0.1);
 }
@@ -3394,13 +3394,13 @@ canvas {
   display: grid;
   gap: 8px;
   min-height: 230px;
-  padding: 34px 24px 26px;
+  padding: 30px 28px 24px;
   overflow: hidden;
   background:
-    linear-gradient(rgba(7, 14, 10, 0.66), rgba(4, 9, 7, 0.76)),
+    linear-gradient(rgba(7, 14, 10, 0.3), rgba(4, 9, 7, 0.46)),
     var(--shop-card-art) center / 100% 100% no-repeat,
     rgba(8, 16, 13, 0.86);
-  border: 1px solid rgba(232, 190, 95, 0.34);
+  border: 0;
   border-radius: 8px;
   box-shadow:
     inset 0 0 46px rgba(0, 0, 0, 0.48),
@@ -3408,16 +3408,16 @@ canvas {
 }
 
 .shop-item.uncommon {
-  border-color: rgba(118, 203, 150, 0.48);
   box-shadow:
     inset 0 0 42px rgba(39, 115, 72, 0.16),
+    0 0 22px rgba(118, 203, 150, 0.1),
     0 10px 28px rgba(0, 0, 0, 0.28);
 }
 
 .shop-item.rare {
-  border-color: rgba(153, 166, 255, 0.56);
   box-shadow:
     inset 0 0 42px rgba(98, 105, 204, 0.18),
+    0 0 24px rgba(153, 166, 255, 0.14),
     0 10px 28px rgba(0, 0, 0, 0.28);
 }
 
@@ -3429,6 +3429,7 @@ canvas {
 
 .shop-item-topline strong {
   color: #ffd56d;
+  padding-right: 6px;
 }
 
 .shop-item h2 {
@@ -3469,6 +3470,7 @@ canvas {
 .shop-stat-list dd {
   margin: 0;
   color: #b8f18d;
+  padding-right: 8px;
 }
 
 .shop-button,
@@ -3482,7 +3484,7 @@ canvas {
     linear-gradient(rgba(36, 18, 7, 0.08), rgba(36, 18, 7, 0.18)),
     var(--shop-button-art) center / 100% 100% no-repeat,
     linear-gradient(180deg, #7f541e, #2f1d0e);
-  border: 1px solid rgba(255, 220, 133, 0.7);
+  border: 0;
   border-radius: 8px;
   box-shadow:
     inset 0 0 18px rgba(255, 198, 70, 0.12),
@@ -3496,7 +3498,6 @@ canvas {
 
 .shop-button.is-primary {
   color: #efffc5;
-  border-color: rgba(201, 241, 129, 0.72);
   background:
     linear-gradient(rgba(64, 126, 44, 0.2), rgba(15, 54, 29, 0.36)),
     var(--shop-button-art) center / 100% 100% no-repeat,
@@ -3544,7 +3545,17 @@ canvas {
   .shop-item,
   .shop-empty {
     min-height: 260px;
-    padding: 40px 24px 30px;
+    padding: 36px 28px 30px;
+  }
+
+  .shop-item h2 {
+    font-size: 0.94rem;
+  }
+
+  .shop-item p,
+  .shop-item em,
+  .shop-empty span {
+    font-size: 0.8rem;
   }
 }
 
